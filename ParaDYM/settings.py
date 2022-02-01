@@ -130,3 +130,4 @@ STATICFILES_DIRS = ['static']  # On Compute
 
 #a test
 #mike test
+# ChenYang test
