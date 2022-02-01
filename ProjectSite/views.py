@@ -24,7 +24,7 @@ def view_resources(request):
     allcontacts = conFilters.qs
 
     context = {'allcontacts': allcontacts, 'conFilters': conFilters}
-    return render(request, 'ProjectSite/contacts.html', context)
+    return render(request, 'ProjectSite/resources.html', context)
 
 
 @login_required(login_url='login')
