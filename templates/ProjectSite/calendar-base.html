@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Main CSS-->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    {% block extracss %}
+    {% endblock extracss %}
+</head>
+
+<body class="">
+<section class="custom-nav">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container px-4">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/KO-NB-Cares-logo.png' %}" alt="logo"></a>
+    </div>
+</nav>
+</section>
+{% block content %}
+{% endblock content %}
+{% block extrascripts %}
+{% endblock extrascripts %}
+<section class="custom-footer">
+    <footer class="pt-4 my-md-1 pt-md-5" tabindex="-1">
+    <div class="container px-5">
+        <div class="row">
+            <div class="col-12 col-md">
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="https://static.wixstatic.com/media/aa6dd5_c2c807f592a344edaa25e7fea06f6b3b~mv2.png/v1/fill/w_278,h_144,al_c,q_85,usm_0.66_1.00_0.01/aa6dd5_c2c807f592a344edaa25e7fea06f6b3b~mv2.webp" alt="logo"></a>
+                <p style="color: #D7B030">Powered by ParaDYM Academy &copy;2020-2021</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</section>
+</body>
+</html>

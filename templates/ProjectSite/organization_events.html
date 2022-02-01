@@ -1,0 +1,38 @@
+{% extends 'ProjectSite/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Organization Event Submission</title>
+{% endblock %}
+
+{% block body %}
+    <br>
+    <div class="row px-5 mx-5 my-5">
+        <div class="col-md">
+            <h5>All Events by You</h5>
+            <hr>
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Event Description</th>
+                        <th>Tag</th>
+                        <th>Event Status</th>
+                        <th>Date Submitted</th>
+                    </tr>
+
+                    {% for orgevent in orgevents %}
+
+                        <tr>
+                            <td>{{ orgevent.event_name }}</td>
+                            <td>{{ orgevent.event_description }}</td>
+                            <td>{{ orgevent.event_tag }}</td>
+                            <td>{{ orgevent.event_status }}</td>
+                            <td>{{ orgevent.event_date_created }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

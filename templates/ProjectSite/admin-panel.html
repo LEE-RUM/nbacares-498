@@ -1,0 +1,146 @@
+{% extends 'ProjectSite/log-base.html' %}
+{% load static %}
+{% block title %}
+    <title>Admin Panel</title>
+{% endblock %}
+
+{% block body %}
+    <br>
+    <div class="row px-5">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="total-orders">
+                    <div class="card-header">
+                        <h2 class="card-title">Total Events</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ total_events }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="orders-delivered">
+                    <div class="card-header">
+                        <h2 class="card-title">Events Accepted</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ Accepted_events_Count }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="orders-pending">
+                    <div class="card-header">
+                        <h2 class="card-title">Events Pending</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ pending_events_Count }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="row px-5">
+        <div class="col-md-12 pb-4">
+            <h5>Organizations:</h5>
+            <hr>
+            <div class="card card-body">
+                <a class="btn btn-primary btn-sm btn-block btn-outline-light" href="{% url 'admin_user_creation' %}">Create
+                    Organization</a>
+                <table class="table table-lg">
+                    <tr>
+                        <th></th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                    </tr>
+
+                    {% for org in orgs %}
+                        <tr>
+                            <td><a class="btn btn-primary btn-outline-light btn-sm btn-block"
+                                   href="{% url 'admin_organization' org.id %}">View</a></td>
+                            <td>{{ org.org_name }}</td>
+                            <td>{{ org.org_status }}</td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <h5>Pending Events</h5>
+            <hr>
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>By Organization</th>
+                        <th>Event Name</th>
+                        <th>Description</th>
+                        <th>Start Time</th>
+                        <th>End time</th>
+                        <th>Tag</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+
+                    {% for event in pending_events %}
+                        <tr>
+                            <td>{{ event.user }}</td>
+                            <td>{{ event.event_name }}</td>
+                            <td>{{ event.event_description }}</td>
+                            <td>{{ event.event_sTime }}</td>
+                            <td>{{ event.event_eTime }}</td>
+                            <td>{{ event.event_tag }}</td>
+                            <td><a class="btn btn-success btn-outline-light btn-sm btn-block"
+                                   href="{% url 'update_events' event.id %}">Update</a></td>
+                            <td><a class="btn btn-danger btn-outline-light btn-sm btn-block"
+                                   href="{% url 'delete_events' event.id %}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <h5>Accepted Events</h5>
+            <hr>
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>By Organization</th>
+                        <th>Event Name</th>
+                        <th>Description</th>
+                        <th>Start Time</th>
+                        <th>End time</th>
+                        <th>Tag</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+
+                    {% for event in Accepted_events %}
+                        <tr>
+                            <td>{{ event.user }}</td>
+                            <td>{{ event.event_name }}</td>
+                            <td>{{ event.event_description }}</td>
+                            <td>{{ event.event_sTime }}</td>
+                            <td>{{ event.event_eTime }}</td>
+                            <td>{{ event.event_tag }}</td>
+                            <td><a class="btn btn-success btn-outline-light btn-sm btn-block"
+                                   href="{% url 'update_events' event.id %}">Update</a></td>
+                            <td><a class="btn btn-danger btn-outline-light btn-sm btn-block"
+                                   href="{% url 'delete_events' event.id %}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

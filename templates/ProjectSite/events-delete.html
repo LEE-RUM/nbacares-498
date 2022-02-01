@@ -1,0 +1,26 @@
+{% extends 'ProjectSite/log-base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Event Delete</title>
+{% endblock %}
+
+{% block body %}
+    <form action="{% url 'delete_events' form.id %}" method="post">
+        {% csrf_token %}
+        <div class="mx-5 px-5">
+            <div class="card">
+                <div class="card-header">
+                    Delete Event
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Are you sure that you want to delete
+                        <span id="task-deleted">{{ form }}</span>?</h5>
+                    <button class="btn btn-danger btn-outline-light btn-lg btn-block" type="submit">Yes, Delete</button>
+                    <a href="{% url 'admin_panel' %}" class="btn btn-primary btn-outline-light btn-lg btn-block"><- Go
+                        Back</a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

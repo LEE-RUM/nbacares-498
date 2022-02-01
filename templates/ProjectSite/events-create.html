@@ -1,0 +1,29 @@
+{% extends 'ProjectSite/log-base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Event Create</title>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    {% for form in formset %}
+                        {{ form }}
+                        <hr>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col mt-4">
+                            <input type="submit" name="Submit">
+                            <a href="{% url 'admin_panel' %}" class="btn btn-info"><- Go Back</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

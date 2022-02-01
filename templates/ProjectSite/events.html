@@ -1,0 +1,187 @@
+{% extends 'ProjectSite/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Events</title>
+{% endblock %}
+
+
+
+{% block body %}
+    <section>
+    </section>
+
+    <section>
+        <div class="container px-5">
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn" style="background: dodgerblue">Day</button>
+                <button type="button" class="btn" style="background: dodgerblue">Week</button>
+                <button type="button" class="btn" style="background: dodgerblue">Month</button>
+                <button type="button" class="btn" style="background: dodgerblue">Year</button>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn" style="background: dodgerblue" data-bs-toggle="modal"
+                        data-bs-target="#event-creation" data-bs-whatever="@getbootstrap">Add Events
+                </button>
+                <div class="modal fade" id="event-creation" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Submit Event</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Event Name</label>
+                                        <!--<input type="text" class="form-control" id="recipient-name">-->
+                                        {{ event_add.event_name }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Event Date</label>
+                                        {{ event_add.event_date }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Event Start Time</label>
+                                        {{ event_add.event_sTime }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Event End Time</label>
+                                        {{ event_add.event_eTime }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Event Description</label>
+                                        {{ event_add.event_description }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label"
+                                               for="inputGroupSelect01">Tag</label>
+                                        <!-- { event_add.event_tag }} -->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Submit Event</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container px-5">
+            <div class="gx-5 align-items-center">
+                <div class="col-lg-12 order-lg-1">
+                    <div class="p-5">
+                        <h2 class="display-4 text-center">Completed/Accepted Events</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container px-5 d-flex justify-content-end">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">More Info</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for completed_event in completed_events %}
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#event-summary">+
+                            </button>
+                        </td>
+                        <td>{{ completed_event }}</td>
+                        <!--{ url 'update_events' event.id %} -->
+                        <td><a class="update-icon" href=""><i class="fas fa-edit"></i></a></td>
+                        <!--{ url 'delete_events' event.id %} -->
+                        <td><a href="" class="delete-icon"><i class="fas fa-trash"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <div class="container px-5">
+            <div class="gx-5 align-items-center">
+                <div class="col-lg-12 order-lg-1">
+                    <div class="p-5">
+                        <h2 class="display-4 text-center">Events Awaiting approval/Canceled/Requested for change</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container px-5 d-flex justify-content-end">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">More Info</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#event-summary">+
+                            </button>
+                        </td>
+                        <td>{{ event.event_name }}</td>
+                        <!--{ url 'update_events' event.id %} -->
+                        <td><a class="update-icon" href=""><i class="fas fa-edit"></i></a></td>
+                        <!--{ url 'delete_events' event.id %} -->
+                        <td><a href="" class="delete-icon"><i class="fas fa-trash"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="event-summary" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3"><label for="recipient-name" class="col-form-label-sm">Event Name</label></div>
+                    <div class="mb-3"><label for="recipient-name" class="col-form-label">Event Date</label></div>
+                    <div class="mb-3"><label for="recipient-name" class="col-form-label">Event Start Time</label></div>
+                    <div class="mb-3"><label for="recipient-name" class="col-form-label">Event End Time</label></div>
+                    <div class="mb-3"><label for="message-text" class="col-form-label">Event Description</label></div>
+                    <div class="mb-3"><label for="recipient-name" class="col-form-label">Tags</label></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'ProjectSite/base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block title %}
+    <title>Organization Settings</title>
+{% endblock %}
+
+{% block body %}
+    <div class="row mx-5 px-5 my-5">
+        <div class="col-md-1">
+            <div class="card card-body">
+                <hr>
+                <h4 style="text-align: center">Account Settings</h4>
+                <hr>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-body">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label class="col-form-label">Organization Name</label>
+                    {{ form.org_name }}
+                    <label class="col-form-label">Organization Address</label>
+                    {{ form.org_address }}
+                    <label class="col-form-label">Organization Phone Number</label>
+                    {{ form.org_phone }}
+                    <label class="col-form-label">Organization Email</label>
+                    {{ form.org_email }}
+                    <button class="btn btn-success btn-outline-light btn-lg btn-block mt-3" type="submit">Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h5 class="display-4">All Events by You</h5>
+            <hr>
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Event Description</th>
+                        <th>Tag</th>
+                        <th>Event Status</th>
+                        <th>Date Submitted</th>
+                    </tr>
+
+                    {% for orgevent in orgevents %}
+
+                        <tr>
+                            <td>{{ orgevent.event_name }}</td>
+                            <td>{{ orgevent.event_description }}</td>
+                            <td>{{ orgevent.event_tag }}</td>
+                            <td>{{ orgevent.event_status }}</td>
+                            <td>{{ orgevent.event_date_created }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

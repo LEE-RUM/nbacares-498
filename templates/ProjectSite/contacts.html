@@ -1,0 +1,91 @@
+{% extends 'ProjectSite/base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+    <title>Contacts</title>
+{% endblock %}
+
+{% block more-styles %}
+    <link rel="stylesheet" href="{% static 'css/ProjectSite.css' %}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="container pt-2">
+        <div class="col-12 col-sm-12 col-xxl-10">
+            <div class="card card-body">
+                <form method="get">
+                    {{ conFilters.form|crispy }}
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-xxl-10">
+                <div class="card card-body table-responsive">
+                    <table class="table table-sm">
+                        <tr class="">
+                            <th>Services</th>
+                            <th>Resource Provider</th>
+                            <th>Ages or Grades</th>
+                            <th>Website</th>
+                            <th>Location</th>
+                            <th>Phone Number</th>
+                        </tr>
+                        {% for allcontact in allcontacts %}
+                            <tr>
+                                <td>{{ allcontact.services }}</td>
+                                <td>{{ allcontact.contact_resource_provider }}</td>
+                                <td>{{ allcontact.contact_ages }}</td>
+                                <td>{{ allcontact.contact_websites }}</td>
+                                <td>{{ allcontact.contact_location }}</td>
+                                <td>{{ allcontact.contact_number }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-xxl-2">
+                <h1 class="display-3">Our Partners</h1>
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-xxl-1">
+                    <div class="col"><a href="https://www.211ct.org/"><img class="img-fluid"
+                                                                           src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/CT_211-1.png?time=1638790774"
+                                                                           alt="partner"></a></div>
+                    <div class="col"><a href="http://www.ctfairhousing.org/"><img class="img-fluid"
+                                                                                  src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/CT_Fair_housing_act-1.jpg?time=1638790774"
+                                                                                  alt="partner"></a></div>
+                    <div class="col"><a href="http://www.conn-nahro.org/index.htm"><img class="img-fluid"
+                                                                                        src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/CT_NAHRO-1.png?time=1638790774"
+                                                                                        alt="partner"></a></div>
+                    <div class="col"><a href="http://www.ctdol.state.ct.us/ajc/americanjobcenters.htm"><img
+                            class="img-fluid"
+                            src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/ctworks-1.gif?time=1638790774"
+                            alt="partner"></a></div>
+                    <div class="col"><a href="http://www.portal.ct.gov/dcf"><img class="img-fluid"
+                                                                                 src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/DCF-1.jpg?time=1638790774"
+                                                                                 alt="partner"></a></div>
+                    <div class="col"><a href="https://www.hud.gov/"><img class="img-fluid"
+                                                                         src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/HUD-1.jpg?time=1638790774"
+                                                                         alt="partner"></a></div>
+                    <div class="col"><a href="https://www.ctunitedway.org/"><img class="img-fluid"
+                                                                                 src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/United_way_CT-1.png?time=1638790774"
+                                                                                 alt="partner"></a></div>
+                    <div class="col"><a href="https://greaternewbritainchamber.com/"><img class="img-fluid"
+                                                                                          src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/new_britain_chamber_of_commerce.png?time=1638790774"
+                                                                                          alt="partner"></a></div>
+                    <div class="col"><a href="http://www.ctdol.state.ct.us/"><img class="img-fluid"
+                                                                                  src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/ct_dept_labor_logo.gif?time=1638790774"
+                                                                                  alt="partner"></a></div>
+                    <div class="col"><a href="http://www.newbritainct.gov/"><img class="img-fluid"
+                                                                                 src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/city_of_new_britain_logo.png?time=1638790774"
+                                                                                 alt="partner"></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrascripts %}
+
+{% endblock extrascripts %}
