@@ -18,7 +18,7 @@ def view_about(request):
     return render(request, 'ProjectSite/about.html')
 
 
-def view_contacts(request):
+def view_resources(request):
     allcontacts = Contact.objects.all()
     conFilters = ContactFilter(request.GET, queryset=allcontacts)
     allcontacts = conFilters.qs

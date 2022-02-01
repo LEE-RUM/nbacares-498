@@ -28,19 +28,15 @@
                         <tr class="">
                             <th>Services</th>
                             <th>Resource Provider</th>
-                            <th>Ages or Grades</th>
                             <th>Website</th>
-                            <th>Location</th>
                             <th>Phone Number</th>
                         </tr>
                         {% for allcontact in allcontacts %}
                             <tr>
                                 <td>{{ allcontact.services }}</td>
                                 <td>{{ allcontact.contact_resource_provider }}</td>
-                                <td>{{ allcontact.contact_ages }}</td>
-                                <td>{{ allcontact.contact_websites }}</td>
-                                <td>{{ allcontact.contact_location }}</td>
-                                <td>{{ allcontact.contact_number }}</td>
+                                <td><a style="color: darkblue;" href="//{{ allcontact.contact_websites }}">{{ allcontact.contact_websites }}</a></td>                                                                <!--<td>{{ allcontact.contact_location }}</td>-->
+                                <td><a style="color: darkblue;" href="tel:{{allcontact.contact_number}}">{{ allcontact.contact_number }}</a></td>
                             </tr>
                         {% endfor %}
                     </table>
