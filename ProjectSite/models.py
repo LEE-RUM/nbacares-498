@@ -73,36 +73,8 @@ class Service(models.Model):
         return self.service
 
 class Contact(models.Model):
-    domains = (
-        ('After-school', 'After-school'), ('Art', 'Art'), ('Babysitting', 'Babysitting'), ('Baseball', 'Baseball'),
-        ('Culinary', 'Culinary'), ('Dance', 'Dance'), ('Engineering', 'Engineering'), ('Fashion', 'Fashion'),
-        ('Football', 'Football'), ('Gardening & Nutrition', 'Gardening & Nutrition'), ('Gymnastics', 'Gymnastics'),
-        ('Karate', 'Karate'), ('Leadership', 'Leadership'), ('Literacy', 'Literacy'), ('Music', 'Music'),
-        ('Nature', 'Nature'),
-        ('Science and Engineering', 'Science and Engineering'), ('Soccer', 'Soccer'), ('Softball', 'Softball'),
-        ('Sports', 'Sports'), ('Theatre', 'Theatre'), ('Wrestling', 'Wrestling'),
-        ('Summer Camp/Activities', 'Summer Camp/Activities'), ('Summer Employment', 'Summer Employment'),
-        ('Adult Mental Health', 'Adult Mental Health'), ('Adult Residential', 'Adult Residential'),
-        ('Alternative Education', 'Alternative Education'), ('Behavioral Health', 'Behavioral Health'),
-        ('Case Management', 'Case Management'), ('Children\'s Outpatient', 'Children\'s Outpatient'),
-        ('Children\'s Group Care', 'Children\'s Group Care'), ('Children\'s Intensive', 'Children\'s Intensive'),
-        ('Family Services', 'Family Services'), ('Parenting Groups', 'Parenting Groups'),
-        ('Substance Abuse', 'Substance Abuse'), ('Autism', 'Autism'),
-        ('Childcare & Preschool', 'Childcare & Preschool'),
-        ('College Readiness', 'College Readiness'), ('Community Engagement', 'Community Engagement'),
-        ('People with Disabilities', 'People with Disabilities'), ('Domestic Violence', 'Domestic Violence'),
-        ('Educational Advocacy', 'Educational Advocacy'), ('Elderly Services', 'Elderly Services'),
-        ('Employment', 'Employment'), ('Employment (Youth)', 'Employment (Youth)'),
-        ('ESL (English 2ndLanguage)', 'ESL (English 2ndLanguage)'),
-        ('Financial Lit. & Assist.', 'Financial Lit. & Assist.'),
-        ('G.E.D Programs', 'G.E.D Programs'), ('Housing', 'Housing'), ('Immigrant Resources', 'Immigrant Resources'),
-        ('Legal Aide', 'Legal Aide'), ('Literacy', 'Literacy'), ('Mentoring', 'Mentoring'),
-        ('Pregnancy Prevention', 'Pregnancy Prevention'), ('Transportation', 'Transportation'),
-        ('Tutoring', 'Tutoring'),
-        ('Veteran Services', 'Veteran Services'),
-    )
+    
     service = models.ForeignKey(Service, null=True, on_delete=models.CASCADE)
-    services = models.CharField(max_length=30, null=True, choices=domains)
     contact_resource_provider = models.CharField(max_length=50)
     contact_ages = models.CharField(max_length=20)
     contact_websites = models.CharField(max_length=40, null=True, )

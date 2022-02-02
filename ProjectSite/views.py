@@ -30,8 +30,6 @@ def view_resources(request):
     categories = Category.objects.all()
     services = Service.objects.all()
 
-    print(services)
-
     context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService }
     return render(request, 'ProjectSite/resources.html', context)
 
