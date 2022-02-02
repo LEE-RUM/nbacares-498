@@ -19,7 +19,7 @@ class OrgEventFilter(django_filters.FilterSet):
 class ContactFilter(django_filters.FilterSet):
     class Meta:
         model = Contact
-        fields = ['services']
+        fields = ['service']
         exclude = ['contact_resource_provider', 'contact_ages', 'contact_websites', 'contact_location',
                    'contact_number']
 

@@ -19,11 +19,20 @@ def view_about(request):
 
 
 def view_resources(request):
+    selectedService = " "
+    if request.GET:
+        selectedService = request.GET['service']
+
     allcontacts = Contact.objects.all()
-    conFilters = ContactFilter(request.GET, queryset=allcontacts)
+    conFilters = ContactFilter({'service': selectedService}, queryset=allcontacts)
     allcontacts = conFilters.qs
 
-    context = {'allcontacts': allcontacts, 'conFilters': conFilters}
+    categories = Category.objects.all()
+    services = Service.objects.all()
+
+    print(services)
+
+    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService }
     return render(request, 'ProjectSite/resources.html', context)
 
 

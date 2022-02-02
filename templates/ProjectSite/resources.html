@@ -8,6 +8,7 @@
 
 {% block more-styles %}
     <link rel="stylesheet" href="{% static 'css/ProjectSite.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ContactFilter.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -15,11 +16,30 @@
     <div class="container pt-2">
         <div class="col-12 col-sm-12 col-xxl-10">
             <div class="card card-body">
-                <form method="get">
-                    {{ conFilters.form|crispy }}
-                    <button class="btn btn-primary" type="submit">Search</button>
+                <form method="GET">
+                    {% csrf_token %}
+                    <div class="dropdown">
+                        <input class="dropdown-toggle px-3 w-100" id="selected-service" data-bs-toggle="dropdown" name="service" value="{{ selectedService }}" readonly />
+                        <ul class="dropdown-menu">
+                            <!-- Category -->
+                            {% for category in categories %}
+                                <li><a class="dropdown-item" href="#">{{ category }} &raquo; </a>
+                                    <ul class="submenu dropdown-menu">
+                                        <!-- Service -->
+                                        {% for service in services %}
+                                            {% if service.category == category %}
+                                                <li><a class="dropdown-item" href="#" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary rounded" type="submit" name="search">Search</button>
                 </form>
-            </div>
+                <!-- End Dropdown -->
+            </div> 
         </div>
         <div class="row">
             <div class="col-12 col-sm-12 col-xxl-10">
@@ -33,7 +53,7 @@
                         </tr>
                         {% for allcontact in allcontacts %}
                             <tr>
-                                <td>{{ allcontact.services }}</td>
+                                <td>{{ allcontact.service }}</td>
                                 <td>{{ allcontact.contact_resource_provider }}</td>
                                 <td><a style="color: darkblue;" href="//{{ allcontact.contact_websites }}">{{ allcontact.contact_websites }}</a></td>                                                                <!--<td>{{ allcontact.contact_location }}</td>-->
                                 <td><a style="color: darkblue;" href="tel:{{allcontact.contact_number}}">{{ allcontact.contact_number }}</a></td>

@@ -59,6 +59,18 @@ class OrgEvent(models.Model):
     def __str__(self):
         return str(self.org_event_event.event_name)
 
+class Category(models.Model):
+    category = models.CharField(max_length=30, primary_key=True)
+
+    def __str__(self):
+        return self.category
+
+class Service(models.Model):
+    service = models.CharField(max_length=30, primary_key=True)
+    category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.service
 
 class Contact(models.Model):
     domains = (
@@ -89,6 +101,7 @@ class Contact(models.Model):
         ('Tutoring', 'Tutoring'),
         ('Veteran Services', 'Veteran Services'),
     )
+    service = models.ForeignKey(Service, null=True, on_delete=models.CASCADE)
     services = models.CharField(max_length=30, null=True, choices=domains)
     contact_resource_provider = models.CharField(max_length=50)
     contact_ages = models.CharField(max_length=20)
