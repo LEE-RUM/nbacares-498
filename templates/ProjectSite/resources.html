@@ -22,10 +22,14 @@
                         <input class="dropdown-toggle px-3 w-100" id="selected-service" data-bs-toggle="dropdown" name="service" value="{{ selectedService }}" readonly />
                         <ul class="dropdown-menu">
                             <!-- Category -->
+                            <li><strong class="dropdown-item">Category</strong>
+                            <li><hr class="dropdown-divider"></li>
                             {% for category in categories %}
                                 <li><a class="dropdown-item" href="#">{{ category }} &raquo; </a>
                                     <ul class="submenu dropdown-menu">
                                         <!-- Service -->
+                                        <li><b class="dropdown-item">Service</b>
+                                        <li><hr class="dropdown-divider"></li>
                                         {% for service in services %}
                                             {% if service.category == category %}
                                                 <li><a class="dropdown-item" href="#" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>
