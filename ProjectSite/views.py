@@ -19,7 +19,7 @@ def view_about(request):
 
 
 def view_resources(request):
-    selectedService = " "
+    selectedService = "All"
     if request.GET:
         selectedService = request.GET['service']
 
