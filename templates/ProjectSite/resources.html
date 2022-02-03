@@ -62,15 +62,24 @@
                             <th>Website</th>
                             <th>Phone Number</th>
                         </tr>
-                        {% for allcontact in allcontacts %}
+                        {% for pagcontact in pagContacts %}
                             <tr>
-                                <td>{{ allcontact.service }}</td>
-                                <td>{{ allcontact.contact_resource_provider }}</td>
-                                <td><a class="fs-6" style="color: darkblue;" href="//{{ allcontact.contact_websites }}">{{ allcontact.contact_websites }}</a></td>                                                                <!--<td>{{ allcontact.contact_location }}</td>-->
-                                <td><a style="color: darkblue;" href="tel:{{allcontact.contact_number}}">{{ allcontact.contact_number }}</a></td>
+                                <td>{{ pagcontact.service }}</td>
+                                <td>{{ pagcontact.contact_resource_provider }}</td>
+                                <td><a class="fs-6" style="color: darkblue;" href="//{{ allcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>                                                                <!--<td>{{ allcontact.contact_location }}</td>-->
+                                <td><a style="color: darkblue;" href="tel:{{allcontact.contact_number}}">{{ pagcontact.contact_number }}</a></td>
                             </tr>
                         {% endfor %}
                     </table>
+                    {{pagContacts}}
+                    {% if pagContacts.has_other_pages %}
+                        {% if pagContacts.has_previous %}
+                        <a href="?page={{ pagContacts.previous_page_number }}">&laquo;</a>
+                        {% endif %}
+                        {% if pagContacts.has_next %}
+                        <a href="?page={{ pagContacts.next_page_number }}">&raquo;</a>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-xxl-2">

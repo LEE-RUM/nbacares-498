@@ -8,7 +8,7 @@ from .models import *
 from .filters import OrgEventFilter, ContactFilter, CalendarFilter
 from .decorators import allowed_users
 from django.views import generic
-
+from django.core.paginator import Paginator
 
 def view_home(request):
     return render(request, 'ProjectSite/home.html')
@@ -26,11 +26,13 @@ def view_resources(request):
     allcontacts = Contact.objects.all()
     conFilters = ContactFilter({'service': selectedService}, queryset=allcontacts)
     allcontacts = conFilters.qs
-
+    p = Paginator(Contact.objects.all(),30)
+    page = request.GET.get('page')
+    pagContacts = p.get_page(page)
     categories = Category.objects.all()
     services = Service.objects.all()
 
-    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService }
+    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService , 'pagContacts': pagContacts}
     return render(request, 'ProjectSite/resources.html', context)
 
 
