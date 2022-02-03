@@ -76,9 +76,9 @@ class Contact(models.Model):
     
     service = models.ForeignKey(Service, null=True, on_delete=models.CASCADE)
     contact_resource_provider = models.CharField(max_length=50)
-    contact_ages = models.CharField(max_length=20)
+    # contact_ages = models.CharField(max_length=20)
     contact_websites = models.CharField(max_length=40, null=True, )
-    contact_location = models.CharField(max_length=45)
+    # contact_location = models.CharField(max_length=45)
     contact_number = models.CharField(max_length=18)
 
     def __str__(self):
