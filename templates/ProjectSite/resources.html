@@ -66,19 +66,25 @@
                             <tr>
                                 <td>{{ pagcontact.service }}</td>
                                 <td>{{ pagcontact.contact_resource_provider }}</td>
-                                <td><a class="fs-6" style="color: darkblue;" href="//{{ allcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>                                                                <!--<td>{{ allcontact.contact_location }}</td>-->
-                                <td><a style="color: darkblue;" href="tel:{{allcontact.contact_number}}">{{ pagcontact.contact_number }}</a></td>
+                                <td><a class="fs-6" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>                                                                <!--<td>{{ allcontact.contact_location }}</td>-->
+                                <td><a style="color: darkblue;" href="tel:{{pagcontact.contact_number}}">{{ pagcontact.contact_number }}</a></td>
                             </tr>
                         {% endfor %}
                     </table>
-                    {{pagContacts}}
+                    <h5>{{pagContacts}}</h5>
                     {% if pagContacts.has_other_pages %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            
                         {% if pagContacts.has_previous %}
-                        <a href="?page={{ pagContacts.previous_page_number }}">&laquo;</a>
+                              <li class="page-item"><a class="page-link" href="?page={{ pagContacts.previous_page_number }}">Previous</a></li>
                         {% endif %}
                         {% if pagContacts.has_next %}
-                        <a href="?page={{ pagContacts.next_page_number }}">&raquo;</a>
+                        
+                             <li class="page-item"><a class="page-link" href="?page={{ pagContacts.next_page_number }}">Next</a></li>
                         {% endif %}
+                    </ul>
+                    </nav>
                     {% endif %}
                 </div>
             </div>
