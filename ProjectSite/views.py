@@ -17,6 +17,9 @@ def view_home(request):
 def view_about(request):
     return render(request, 'ProjectSite/about.html')
 
+def view_blog(request):
+    return render(request, 'ProjectSite/blog.html')
+
 
 def view_resources(request):
     selectedService = "All"

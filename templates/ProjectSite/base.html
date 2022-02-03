@@ -4,6 +4,7 @@
 
 <head>
     <!-- Required meta tags -->
+    <link rel="icon" href="{% static 'images/KO-NB-Cares-logo.png' %}">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <!-- CSS Framework: Bootstrap CSS through jsDelivr -->
@@ -38,6 +39,7 @@
                 <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                 <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'calendar' %}">Calendar</a></li>
                 <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'resources' %}">Resources</a></li>
+                <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
                 {% if user.is_superuser %}
                     <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'admin_panel' %}">Admin
                         Panel</a></li>
@@ -79,6 +81,7 @@
                 <li>Our Resources</li>
             </a></div>
             <div class="col-12 col-md"><h4> Contact Us </h4><a href="{% url 'about' %}#about_mission">
+                <li><a href="mailto:newbritaincares@gmail.com">Our Email </a></li>
             </a></div>
         </div>
     </div>
