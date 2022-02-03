@@ -20,14 +20,13 @@ def view_about(request):
 
 def view_resources(request):
     selectedService = "All"
-    if request.GET:
-        # selectedService = request.GET['service']
-        selectedService = request.GET.get('service')
+    if request.GET.get("service"):
+        selectedService = request.GET.get("service")
 
     allcontacts = Contact.objects.all()
     conFilters = ContactFilter({'service': selectedService}, queryset=allcontacts)
-    allcontacts = conFilters.qs
-    p = Paginator(Contact.objects.all(),30)
+    filterdContacts = conFilters.qs # filter contacts
+    p = Paginator(filterdContacts, 30) # paginator based on filterd contacts
     page = request.GET.get('page')
     pagContacts = p.get_page(page)
     categories = Category.objects.all()
