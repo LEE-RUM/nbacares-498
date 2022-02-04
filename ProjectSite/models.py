@@ -83,3 +83,12 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.contact_resource_provider
+
+class Blog(models.Model):
+
+    post_title = models.CharField(max_length=200)
+    post = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return self.post_title

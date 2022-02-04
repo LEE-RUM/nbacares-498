@@ -3,8 +3,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.forms import inlineformset_factory
-from .forms import ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, ProjectForms
+from .forms import ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, ProjectForms, BlogForm
 from .models import *
+from .models import Blog
 from .filters import OrgEventFilter, ContactFilter, CalendarFilter
 from .decorators import allowed_users
 from django.views import generic
@@ -13,12 +14,23 @@ from django.views import generic
 def view_home(request):
     return render(request, 'ProjectSite/home.html')
 
-
 def view_about(request):
     return render(request, 'ProjectSite/about.html')
 
-def view_blog(request):
-    return render(request, 'ProjectSite/blog.html')
+def view_blog(request,id):
+    post = Blog.objects.get(id=id)
+    context = {'post': post}
+    return render(request, 'ProjectSite/blog.html', context)
+
+def create_blog(request):
+    form = BlogForm(request.POST or None)
+    if form.is_valid():
+        forum = form.save(commit=False)
+        forum.user = request.user
+        forum.save()
+        return redirect('view_blog')
+
+    return render(request, 'ProjectSite/create-bloh.html', {'form': form})
 
 
 def view_resources(request):

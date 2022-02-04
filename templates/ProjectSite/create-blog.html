@@ -1,0 +1,26 @@
+{% extends 'ProjectSite/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}
+    <title>Blog</title>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1 class="text-center">Monthly Blog Update</h1>
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <div class="my-3">
+                <button type="reset" class="btn btn-danger">Discard</button>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}
+

@@ -2,7 +2,7 @@ from django.forms import ModelForm, models, DateInput
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import OrgEvent, Organization, Event
+from .models import OrgEvent, Organization, Event, Blog
 
 
 class AdminUserCreation(UserCreationForm):
@@ -54,3 +54,21 @@ class ProjectForms(ModelForm):
         super(ProjectForms, self).__init__(*args, **kwargs)
         self.fields["event_sTime"].input_formats = ("%Y-%m-%dT%H:%M",)
         self.fields["event_eTime"].input_formats = ("%Y-%m-%dT%H:%M",)
+
+
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        # fields = '__all__'
+        fields = ['post_title', 'post']
+
+        widgets = {
+            'post_title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': "Title"
+            }),
+            'post': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': "Post Content"
+            }),
+        }
