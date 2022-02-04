@@ -30,7 +30,7 @@ def create_blog(request):
         forum.save()
         return redirect('view_blog')
 
-    return render(request, 'ProjectSite/create-bloh.html', {'form': form})
+    return render(request, 'ProjectSite/create-blog.html', {'form': form})
 
 
 def view_resources(request):
