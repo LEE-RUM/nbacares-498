@@ -17,8 +17,9 @@ def view_home(request):
 def view_about(request):
     return render(request, 'ProjectSite/about.html')
 
-def view_blog(request,id):
-    post = Blog.objects.get(id=id)
+def view_blog(request):
+    #post = Blog.objects.get(id=id)
+    post = Blog.objects.all()
     context = {'post': post}
     return render(request, 'ProjectSite/blog.html', context)
 
@@ -28,7 +29,7 @@ def create_blog(request):
         forum = form.save(commit=False)
         forum.user = request.user
         forum.save()
-        return redirect('view_blog')
+        return redirect('blog')
 
     return render(request, 'ProjectSite/create-blog.html', {'form': form})
 

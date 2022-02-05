@@ -6,12 +6,20 @@
 {% endblock %}
 
 {% block body %}
-
-        <div>
-            <container class="text-center">
-                <p>{{ post.post }}</p>
+    <div class="text-end mt-3">
+    <a href="{% url "create_blog" %}" class="btn btn-primary">ADD POST</a>
+    </div>
+    {% for post in post %}
+        <div style="font-size: 20px">
+            <container>
+                {{ post.post_title }}
             </container>
         </div>
-
+        <div class="text-center" style="font-size: 20px">
+            <container class="text-center">
+                {{ post.post }}
+            </container>
+        </div>
+    {% endfor %}
 {% endblock %}
 

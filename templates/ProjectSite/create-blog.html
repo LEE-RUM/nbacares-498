@@ -9,14 +9,14 @@
 {% block body %}
 
     <div class="container">
-        <h1 class="text-center">Monthly Blog Update</h1>
+        <h1 class="text-center mt-4">Monthly Blog Update</h1>
         <form method="post" action=".">
             {% csrf_token %}
             {{ form|crispy }}
 
             <div class="my-3">
                 <button type="reset" class="btn btn-danger">Discard</button>
-                <button type="submit" class="btn btn-primary">Post</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #834655">Post</button>
             </div>
 
         </form>
