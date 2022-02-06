@@ -2,8 +2,12 @@ from django.forms import ModelForm, models, DateInput
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import OrgEvent, Organization, Event, Blog
+from .models import OrgEvent, Organization, Event, Blog, Videos
 
+#videoChoices = Videos.objects.all().values_list('title', 'title')
+#videoChoicesList = []
+#for item in videoChoices:
+#    videoChoicesList.append(item)
 
 class AdminUserCreation(UserCreationForm):
     class Meta:
@@ -55,21 +59,29 @@ class ProjectForms(ModelForm):
         self.fields["event_sTime"].input_formats = ("%Y-%m-%dT%H:%M",)
         self.fields["event_eTime"].input_formats = ("%Y-%m-%dT%H:%M",)
 
-
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = '__all__'
         #fields = ['post_title', 'post', 'image']
 
-        '''widgets = {
+        widgets = {
             'post_title': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control blog-form',
                 'placeholder': "Title"
             }),
             'post': forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'form-control blog-form',
                 'placeholder': "Post Content"
             }),
-        }'''
+            #'video_urls': forms.CheckboxSelectMultiple(choices=videoChoicesList, attrs={
+            #    'class': 'blog-form',
+            #}),
+            'video_urls': forms.CheckboxSelectMultiple(attrs={
+                'class': 'blog-form',
+            }),
+            'images': forms.CheckboxSelectMultiple(attrs={
+                'class': 'blog-form',
+            }),
+        }
     

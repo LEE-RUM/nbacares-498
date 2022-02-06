@@ -8,6 +8,12 @@
 
 {% block body %}
 
+<style>
+    a, label{
+        color: black;
+    }
+</style>
+<div class="container">
     <div class="card">
 
         <div class="card-header">
@@ -20,15 +26,22 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-9 col-lg-10">
-
-                        {{form.as_p}}
+                        <labeL class="blog-title">Title</labeL>
+                        {{form.post_title}}
+                        <labeL class="blog-title">Content</labeL>
+                        {{form.post}}
+                        <labeL class="blog-title">Videos</labeL>
+                        {{form.video_urls}}
+                        <labeL class="blog-title">Main Image</labeL><br>
+                        {{form.main_image}}<br>
+                        <labeL class="blog-title">Images</labeL>
+                        {{form.images}}
                         {{form.media}}
                     </div>
-
                     <div class="row my-3">
-                        <div class="col">
-                            <a href="{% url 'blog' %}" class="btn btn-info text-white"> <-Go Back</a>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                        <div class="col text-center">
+                            <a href="{% url 'blog' %}" class="btn blog-button"> <-Go Back</a>
+                            <button type="submit" class="btn blog-button">Update</button>
                         </div>
                     </div>
 
@@ -36,6 +49,7 @@
             </form>
 
         </div>
+    </div>
     </div>
 
 {% endblock %}

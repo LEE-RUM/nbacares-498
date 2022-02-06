@@ -7,19 +7,18 @@
 
 {% block body %}
 {% if user.is_authenticated %}
-    <div class="text-end mt-3">
-    <a style="font-size: 25px;" href="{% url 'create_blog' %}" class="btn btn-primary">ADD POST</a>
+    <div class="text-center mt-3 mb-3">
+    <a href="{% url 'create_blog' %}" class="btn blog-button">Add Post</a>
     </div>
-    {% endif %}
+{% endif %}
     <div class="container">
-
         {% for post in post %}
         <div class="row text-center mb-5">
             <div class="card border rounded">
                 <div class="card-body">
                     <container>
-                        <img style="width: 200px;" src="{{ post.main_image.url }}"><br>
-                        <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 style="margin-top: 20px; margin-bottom: 0px; font-size: 50px;">{{post.post_title }}</h1></a><br>
+                        <img class="blog-image-main"  src="{{ post.main_image.url }}"><br>
+                        <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 class="blog-title mt-2">{{post.post_title }}</h1></a>
                         <p style="margin-bottom: 10px; font-size: small;" class="text-muted">{{ post.created_at}}</p>
                     </container>
                 </div>
@@ -29,9 +28,9 @@
                     </container>
                 </div>
                 {% if user.is_authenticated %}
-                    <div>
-                    <a style="font-size: 25px;" href="{% url 'edit_blog' post.slug %}" class="btn btn-primary btn-sm">Edit</a>
-                    <a style="font-size: 25px;" href="{% url 'delete_blog' post.slug %}" class="btn btn-danger btn-sm">Delete</a>
+                <div>
+                    <a href="{% url 'edit_blog' post.slug %}" class="btn blog-button">Edit</a>
+                    <a href="{% url 'delete_blog' post.slug %}" class="btn blog-button">Delete</a>
                 </div>
                 {% endif %}
             </div>
