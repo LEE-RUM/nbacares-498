@@ -6,9 +6,11 @@
 {% endblock %}
 
 {% block body %}
+    {% if user.is_superuser %}
     <div class="text-end mt-3">
     <a href="{% url "create_blog" %}" class="btn btn-primary">ADD POST</a>
     </div>
+    {% endif %}
     {% for post in post %}
         <div style="font-size: 20px">
             <container>
@@ -21,9 +23,11 @@
             </container>
         </div>
         <div>
+         {% if user.is_superuser %}
         <a href="{% url 'edit_blog' post.id %}" class="btn btn-primary btn-sm">Edit</a>
         <a href="{% url 'delete_blog' post.id %}" class="btn btn-danger btn-sm">Delete</a>
         </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}
 

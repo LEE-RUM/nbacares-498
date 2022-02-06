@@ -23,6 +23,8 @@ def view_blog(request):
     context = {'post': post}
     return render(request, 'ProjectSite/blog.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles='admin')
 def create_blog(request):
     form = BlogForm(request.POST or None)
     if form.is_valid():
@@ -33,6 +35,8 @@ def create_blog(request):
 
     return render(request, 'ProjectSite/create-blog.html', {'form': form})
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles='admin')
 def edit_blog(request, id):
     post = Blog.objects.get(id=id)
     form = BlogForm(request.POST or None, instance=post)
@@ -43,6 +47,8 @@ def edit_blog(request, id):
 
     return render(request, 'ProjectSite/edit-blog.html', {'form': form})
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles='admin')
 def delete_blog(request,id):
     post = Blog.objects.get(id=id)
 
