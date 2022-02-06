@@ -2,7 +2,7 @@ from django.forms import ModelForm, models, DateInput
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import OrgEvent, Organization, Event, Blog, Videos
+from .models import OrgEvent, Organization, Event, Blog, Videos, Images
 
 #videoChoices = Videos.objects.all().values_list('title', 'title')
 #videoChoicesList = []
@@ -85,3 +85,12 @@ class BlogForm(forms.ModelForm):
             }),
         }
     
+class VideosForm(forms.ModelForm):
+    class Meta:
+        model = Videos
+        fields = '__all__'
+
+class ImagesForm(forms.ModelForm):
+    class Meta:
+        model = Images
+        fields = '__all__'

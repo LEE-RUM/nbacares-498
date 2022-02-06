@@ -8,7 +8,9 @@
 {% block body %}
 {% if user.is_authenticated %}
     <div class="text-center mt-3 mb-3">
-    <a href="{% url 'create_blog' %}" class="btn blog-button">Add Post</a>
+        <a href="{% url 'create_blog' %}" class="btn blog-button">Add Post</a>
+        <a href="{% url 'upload_video' %}" class="btn blog-button">Upload Video</a>
+        <a href="{% url 'upload_image' %}" class="btn blog-button">Upload Image</a>
     </div>
 {% endif %}
     <div class="container">
