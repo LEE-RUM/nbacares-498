@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import view_post, edit_blog, delete_blog
+from .views import view_post, edit_blog, delete_blog, create_blog
 
 urlpatterns = [
     path('', views.view_home, name="home"),
@@ -8,7 +8,7 @@ urlpatterns = [
     path('about', views.view_about, name="about"),
     path('blog/', views.view_blog, name="blog"),
     path('blog/<str:title>/view/', view_post.as_view(), name="view_post"),
-    path('blog/add/', views.create_blog, name='create_blog'),
+    path('blog/add/', create_blog.as_view(), name='create_blog'),
     path('blog/<str:title>/delete/', delete_blog.as_view(), name="delete_blog"),
     path('blog/<str:title>/edit/', edit_blog.as_view(), name="edit_blog"),
     path('resources', views.view_resources, name="resources"),

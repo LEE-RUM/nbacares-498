@@ -47,7 +47,7 @@ def view_blog(request):
     context = {'post': post}
     return render(request, 'ProjectSite/blog.html', context)
 
-@login_required(login_url='login')
+'''@login_required(login_url='login')
 def create_blog(request):
     form = BlogForm(request.POST or None, request.FILES)
     if form.is_valid():
@@ -57,6 +57,16 @@ def create_blog(request):
         return redirect('blog')
 
     return render(request, 'ProjectSite/create-blog.html', {'form': form})
+'''
+
+class create_blog(CreateView):
+    model = Blog
+    form_class = BlogForm
+    template_name = 'ProjectSite/create-blog.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog')
+
 
 
 '''def edit_blog(request, title):
