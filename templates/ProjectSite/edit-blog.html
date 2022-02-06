@@ -1,0 +1,45 @@
+{% extends 'ProjectSite/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}
+    <title>Blog</title>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+
+        <div class="card-header">
+            Edit Post
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-9 col-lg-10">
+
+                        {{ form.post_title.label }}
+                        {{ form.post_title }}
+
+                        {{ form.post.label }}
+                        {{ form.post }}
+                    </div>
+
+                    <div class="row my-3">
+                        <div class="col">
+                            <a href="{% url 'blog' %}" class="btn btn-info text-white"> <-Go Back</a>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
+

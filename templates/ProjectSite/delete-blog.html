@@ -1,0 +1,32 @@
+{% extends 'ProjectSite/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}
+    <title>Blog</title>
+{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="card">
+        <div class="card-header">
+            Delete Post
+        </div>
+        <div class="card-body">
+
+            <form method="post" action="{% url 'delete_blog' post.id %}">
+                {% csrf_token %}
+                <h4>Are you sure that you want to delete
+                    <span id="taskb">{{ post.post_title }}</span>?</h4>
+
+                <a href="{% url 'blog' %}" class="btn btn-info text-white"> No, Go Back</a>
+                <button type="submit" class="btn btn-danger">Yes, delete!</button>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
+

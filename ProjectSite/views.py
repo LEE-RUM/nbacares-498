@@ -33,6 +33,25 @@ def create_blog(request):
 
     return render(request, 'ProjectSite/create-blog.html', {'form': form})
 
+def edit_blog(request, id):
+    post = Blog.objects.get(id=id)
+    form = BlogForm(request.POST or None, instance=post)
+
+    if form.is_valid():
+        form.save()
+        return redirect('blog')
+
+    return render(request, 'ProjectSite/edit-blog.html', {'form': form})
+
+def delete_blog(request,id):
+    post = Blog.objects.get(id=id)
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog')
+
+    return render(request, 'ProjectSite/delete-blog.html', {'post': post})
+
 
 def view_resources(request):
     selectedService = "All"

@@ -20,6 +20,10 @@
                 {{ post.post }}
             </container>
         </div>
+        <div>
+        <a href="{% url 'edit_blog' post.id %}" class="btn btn-primary btn-sm">Edit</a>
+        <a href="{% url 'delete_blog' post.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
     {% endfor %}
 {% endblock %}
 
