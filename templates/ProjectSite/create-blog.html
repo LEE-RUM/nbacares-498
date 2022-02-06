@@ -10,9 +10,10 @@
 
     <div class="container">
         <h1 class="text-center mt-4">Monthly Blog Update</h1>
-        <form method="post" action=".">
+        <form method="post" enctype="multipart/form-data" action="">
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ form.media }}
+            {{ form.as_p }}
 
             <div class="my-3 mb-5">
                 <button type="reset" class="btn btn-danger">Discard</button>

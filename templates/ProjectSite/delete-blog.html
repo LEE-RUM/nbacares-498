@@ -16,7 +16,7 @@
         </div>
         <div class="card-body">
 
-            <form method="post" action="{% url 'delete_blog' post.id %}">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <h4>Are you sure that you want to delete
                     <span id="taskb">{{ post.post_title }}</span>?</h4>

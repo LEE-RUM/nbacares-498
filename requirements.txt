@@ -8,3 +8,5 @@ sqlparse==0.4.2
 typed-ast==1.4.3
 typing-extensions==3.10.0.2
 zipp==3.6.0
+Pillow==9.0.1
+django-embed-video==1.4.1

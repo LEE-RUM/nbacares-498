@@ -1,0 +1,20 @@
+
+{% extends 'ProjectSite/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block title %}
+    <title>Blog</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="container text-center" style="margin-top: 30px; margin-bottom: 30px;">
+    <img style="width: 400px;" src="{{ blog.image.url }}"><br>
+    <a style="color: black;" href="{% url 'view_post' blog.slug %}"><h1 style="margin-top: 20px; margin-bottom: 0px; font-size: 50px;">{{blog.blog_title }}</h1></a><br>
+    <p style="margin-bottom: 10px;" class="text-muted">{{ blog.created_at}}</p>
+    <p style="color: black; margin-top: 30px; margin-bottom: 30px;">{{ blog.post }}</p>
+    {% video blog.video_url '426x240' %}
+</div>
+
+{% endblock %}

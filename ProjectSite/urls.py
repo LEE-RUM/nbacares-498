@@ -1,14 +1,19 @@
 from django.urls import path
 from . import views
+from .views import view_post, edit_blog, delete_blog
 
 urlpatterns = [
     path('', views.view_home, name="home"),
     path('events', views.view_events, name="events"),
     path('about', views.view_about, name="about"),
-    path('blog', views.view_blog, name="blog"),
-    path('add/', views.create_blog, name='create_blog'),
-    path('delete/<str:id>', views.delete_blog, name="delete_blog"),
-    path('edit/<str:id>', views.edit_blog, name="edit_blog"),
+    path('blog/', views.view_blog, name="blog"),
+    #path('blog/<str:title>/view/', views.view_post, name="view_post"),
+    path('blog/<str:title>/view/', view_post.as_view(), name="view_post"),
+    path('blog/add/', views.create_blog, name='create_blog'),
+    #path('blog/<str:title>/edit/', views.delete_blog, name="delete_blog"),
+    #path('blog/<str:title>/delete/', views.delete_blog, name="delete_blog"),
+    path('blog/<str:title>/delete/', delete_blog.as_view(), name="delete_blog"),
+    path('blog/<str:title>/edit/', edit_blog.as_view(), name="edit_blog"),
     path('resources', views.view_resources, name="resources"),
     path('login', views.view_login, name="login"),
     path('logout', views.view_logout, name='logout'),

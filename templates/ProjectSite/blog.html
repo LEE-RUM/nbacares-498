@@ -6,28 +6,38 @@
 {% endblock %}
 
 {% block body %}
-    {% if user.is_superuser %}
+{% if user.is_authenticated %}
     <div class="text-end mt-3">
-    <a href="{% url "create_blog" %}" class="btn btn-primary">ADD POST</a>
+    <a style="font-size: 25px;" href="{% url 'create_blog' %}" class="btn btn-primary">ADD POST</a>
     </div>
     {% endif %}
-    {% for post in post %}
-        <div style="font-size: 20px">
-            <container>
-                {{ post.post_title }}
-            </container>
+    <div class="container">
+
+        {% for post in post %}
+        <div class="row text-center mb-5">
+            <div class="card border rounded">
+                <div class="card-body">
+                    <container>
+                        <img style="width: 200px;" src="{{ post.image.url }}"><br>
+                        <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 style="margin-top: 20px; margin-bottom: 0px; font-size: 50px;">{{post.post_title }}</h1></a><br>
+                        <p style="margin-bottom: 10px; font-size: small;" class="text-muted">{{ post.created_at}}</p>
+                    </container>
+                </div>
+                <div class="text-center" style="font-size: 20px">
+                    <container class="text-center">
+                        <p style="color: black;">{{ post.post|slice:"500" }}...</p>
+                    </container>
+                </div>
+                {% if user.is_authenticated %}
+                    <div>
+                    <a style="font-size: 25px;" href="{% url 'edit_blog' post.slug %}" class="btn btn-primary btn-sm">Edit</a>
+                    <a style="font-size: 25px;" href="{% url 'delete_blog' post.slug %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        <div class="text-center" style="font-size: 20px">
-            <container class="text-center">
-                {{ post.post }}
-            </container>
-        </div>
-        <div>
-         {% if user.is_superuser %}
-        <a href="{% url 'edit_blog' post.id %}" class="btn btn-primary btn-sm">Edit</a>
-        <a href="{% url 'delete_blog' post.id %}" class="btn btn-danger btn-sm">Delete</a>
-        </div>
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+        
+    </div>
 {% endblock %}
 

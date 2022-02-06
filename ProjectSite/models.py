@@ -1,7 +1,10 @@
+from operator import mod
 from django.db import models
 
 from django.contrib.auth.models import User
-
+from django.utils.text import slugify
+from embed_video.fields import EmbedVideoField
+import itertools
 
 class Organization(models.Model):
     ORGANIZATION_STATUS = (
@@ -89,6 +92,30 @@ class Blog(models.Model):
     post_title = models.CharField(max_length=200)
     post = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    #image = models.ImageField(null=True, blank=True, upload_to="images/")
+    image = models.ImageField(upload_to="images/", null=True)
+    slug = models.SlugField(
+        default='',
+        editable=False,
+    )
+    video_url = EmbedVideoField(null=True, blank=True)
+    #myvideos = models.ForeignKey(Videos, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.post_title
+
+    def _generate_slug(self):
+        value = self.post_title
+        slug_candidate = slug_original = slugify(value, allow_unicode=True)
+        for i in itertools.count(1):
+            if not Blog.objects.filter(slug=slug_candidate).exists():
+                break
+            slug_candidate = '{}-{}'.format(slug_original, i)
+
+        self.slug = slug_candidate
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self._generate_slug()
+        super().save(*args, **kwargs)

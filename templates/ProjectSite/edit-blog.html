@@ -16,16 +16,13 @@
 
         <div class="card-body">
 
-            <form method="post" action="">
+            <form method="post" enctype="multipart/form-data" action="">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-9 col-lg-10">
 
-                        {{ form.post_title.label }}
-                        {{ form.post_title }}
-
-                        {{ form.post.label }}
-                        {{ form.post }}
+                        {{form.as_p}}
+                        {{form.media}}
                     </div>
 
                     <div class="row my-3">

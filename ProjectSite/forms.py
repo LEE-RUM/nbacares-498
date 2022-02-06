@@ -59,10 +59,10 @@ class ProjectForms(ModelForm):
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        # fields = '__all__'
-        fields = ['post_title', 'post']
+        fields = '__all__'
+        #fields = ['post_title', 'post', 'image']
 
-        widgets = {
+        '''widgets = {
             'post_title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': "Title"
@@ -71,4 +71,5 @@ class BlogForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': "Post Content"
             }),
-        }
+        }'''
+    

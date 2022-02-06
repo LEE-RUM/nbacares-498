@@ -1,3 +1,4 @@
+from ast import Del
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,10 @@ from .models import Blog
 from .filters import OrgEventFilter, ContactFilter, CalendarFilter
 from .decorators import allowed_users
 from django.views import generic
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.urls.base import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 
 
 def view_home(request):
@@ -17,6 +22,25 @@ def view_home(request):
 def view_about(request):
     return render(request, 'ProjectSite/about.html')
 
+class view_post(DetailView):
+    model = Blog
+    template_name = 'ProjectSite/post.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    #query_pk_and_slug = False
+
+
+
+'''def view_post(request, title):
+    post = Blog.objects.get(slug=title)
+    videos = Blog.objects.get(slug=title, video_url='https://www.youtube.com/watch?v=dGF1x14QNGA')
+    context = {
+        'post': post,
+        'videos': videos
+    }
+   return render(request, 'ProjectSite/post.html', context)
+   '''
+
 def view_blog(request):
     #post = Blog.objects.get(id=id)
     post = Blog.objects.all()
@@ -24,9 +48,8 @@ def view_blog(request):
     return render(request, 'ProjectSite/blog.html', context)
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles='admin')
 def create_blog(request):
-    form = BlogForm(request.POST or None)
+    form = BlogForm(request.POST or None, request.FILES)
     if form.is_valid():
         forum = form.save(commit=False)
         forum.user = request.user
@@ -35,10 +58,9 @@ def create_blog(request):
 
     return render(request, 'ProjectSite/create-blog.html', {'form': form})
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles='admin')
-def edit_blog(request, id):
-    post = Blog.objects.get(id=id)
+
+'''def edit_blog(request, title):
+    post = Blog.objects.get(slug=title)
     form = BlogForm(request.POST or None, instance=post)
 
     if form.is_valid():
@@ -46,17 +68,34 @@ def edit_blog(request, id):
         return redirect('blog')
 
     return render(request, 'ProjectSite/edit-blog.html', {'form': form})
+    '''
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles='admin')
-def delete_blog(request,id):
-    post = Blog.objects.get(id=id)
+class edit_blog(LoginRequiredMixin, UpdateView):
+    model = Blog
+    form_class = BlogForm
+    template_name = 'ProjectSite/edit-blog.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog')
+
+
+'''def delete_blog(request,title):
+    post = Blog.objects.get(slug=title)
 
     if request.method == 'POST':
         post.delete()
         return redirect('blog')
 
     return render(request, 'ProjectSite/delete-blog.html', {'post': post})
+'''
+
+class delete_blog(LoginRequiredMixin, DeleteView):
+    model = Blog
+    form_class = BlogForm
+    template_name = 'ProjectSite/delete-blog.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog')
 
 
 def view_resources(request):
