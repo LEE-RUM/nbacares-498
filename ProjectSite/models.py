@@ -87,20 +87,33 @@ class Contact(models.Model):
     def __str__(self):
         return self.contact_resource_provider
 
+class Videos(models.Model):
+    #blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    title = models.CharField(default='video', max_length=128)
+    url = EmbedVideoField(null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+
+class Images(models.Model):
+    title = models.CharField(default='image', max_length=128)
+    img = models.ImageField(upload_to="images/", null=True)
+
+    def __str__(self):
+        return self.title
+
 class Blog(models.Model):
 
     post_title = models.CharField(max_length=200)
     post = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    #image = models.ImageField(null=True, blank=True, upload_to="images/")
-    image = models.ImageField(upload_to="images/", null=True)
     slug = models.SlugField(
         default='',
         editable=False,
     )
-    video_url = EmbedVideoField(null=True, blank=True)
-    #myvideos = models.ForeignKey(Videos, on_delete=models.CASCADE)
-
+    video_urls = models.ManyToManyField(Videos, blank=True)
+    main_image = models.ImageField(upload_to="images/", null=True)
+    images = models.ManyToManyField(Images, blank=True)
 
     def __str__(self):
         return self.post_title

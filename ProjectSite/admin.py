@@ -3,7 +3,7 @@ from .models import Event
 from .models import Organization
 from .models import OrgEvent
 from .models import Blog
-from .models import Contact, Service, Category#, Videos
+from .models import Contact, Service, Category, Videos, Images
 
 # Register your models here.
 admin.site.register(Organization)
@@ -13,8 +13,8 @@ admin.site.register(Contact)
 admin.site.register(Service)
 admin.site.register(Category)
 admin.site.register(Blog)
-#admin.site.register(Test)
-#admin.site.register(Videos)
+admin.site.register(Videos)
+admin.site.register(Images)
 
 """from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User

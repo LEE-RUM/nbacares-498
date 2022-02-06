@@ -9,12 +9,25 @@
 
 {% block body %}
 
+{% if user.is_authenticated %}
+    <div>
+        <a style="font-size: 25px;" href="{% url 'edit_blog' blog.slug %}" class="btn btn-primary btn-sm">Edit</a>
+        <a style="font-size: 25px;" href="{% url 'delete_blog' blog.slug %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+{% endif %}
+
 <div class="container text-center" style="margin-top: 30px; margin-bottom: 30px;">
-    <img style="width: 400px;" src="{{ blog.image.url }}"><br>
+    <img style="width: 400px;" src="{{ blog.main_image.url }}"><br>
     <a style="color: black;" href="{% url 'view_post' blog.slug %}"><h1 style="margin-top: 20px; margin-bottom: 0px; font-size: 50px;">{{blog.blog_title }}</h1></a><br>
     <p style="margin-bottom: 10px;" class="text-muted">{{ blog.created_at}}</p>
     <p style="color: black; margin-top: 30px; margin-bottom: 30px;">{{ blog.post }}</p>
-    {% video blog.video_url '426x240' %}
+    {% for v in blog.video_urls.all %}
+        {% video v.url '426x240' %}
+    {% endfor %}
+    <br><h1>Images</h1>
+    {% for i in blog.images.all %}
+        <img style="width: 400px;" src="{{ i.img.url }}"><br>
+    {% endfor %}
 </div>
 
 {% endblock %}

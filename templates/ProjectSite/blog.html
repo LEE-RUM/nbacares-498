@@ -18,7 +18,7 @@
             <div class="card border rounded">
                 <div class="card-body">
                     <container>
-                        <img style="width: 200px;" src="{{ post.image.url }}"><br>
+                        <img style="width: 200px;" src="{{ post.main_image.url }}"><br>
                         <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 style="margin-top: 20px; margin-bottom: 0px; font-size: 50px;">{{post.post_title }}</h1></a><br>
                         <p style="margin-bottom: 10px; font-size: small;" class="text-muted">{{ post.created_at}}</p>
                     </container>
