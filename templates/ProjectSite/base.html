@@ -92,10 +92,15 @@
         integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 <!-- Filter contact -->
 <script type="text/javascript">
+    const selectedService = document.getElementById("selected-service");
     function selectService(service) {
-        document.getElementById("selected-service").value = service;
-        console.log(service)
+        selectedService.value = service;
+        // console.log(service)
     }
+    function inputHandler(e) {
+        selectedService.value = e.target.value
+    }
+    selectedService.addEventListener('input', inputHandler);
 </script>
 </body>
 </html>
