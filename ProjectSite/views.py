@@ -1,24 +1,75 @@
+from ast import Del
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.forms import inlineformset_factory
-from .forms import ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, ProjectForms
+from .forms import VideosForm, ImagesForm, ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, ProjectForms, BlogForm
 from .models import *
+from .models import Blog
 from .filters import OrgEventFilter, ContactFilter, CalendarFilter
 from .decorators import allowed_users
 from django.views import generic
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.urls.base import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 
 
 def view_home(request):
     return render(request, 'ProjectSite/home.html')
 
-
 def view_about(request):
     return render(request, 'ProjectSite/about.html')
 
+class view_post(DetailView):
+    model = Blog
+    template_name = 'ProjectSite/post.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    #query_pk_and_slug = False
+
 def view_blog(request):
-    return render(request, 'ProjectSite/blog.html')
+    #post = Blog.objects.get(id=id)
+    post = Blog.objects.all()
+    context = {'post': post}
+    return render(request, 'ProjectSite/blog.html', context)
+
+class create_blog(LoginRequiredMixin, CreateView):
+    model = Blog
+    form_class = BlogForm
+    template_name = 'ProjectSite/create-blog.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog')
+
+class upload_video(LoginRequiredMixin, CreateView):
+    model = Videos
+    form_class = VideosForm
+    template_name = 'ProjectSite/upload-video.html'
+    success_url = reverse_lazy('blog')
+
+class upload_image(LoginRequiredMixin, CreateView):
+    model = Images
+    form_class = ImagesForm
+    template_name = 'ProjectSite/upload-image.html'
+    success_url = reverse_lazy('blog')
+
+class edit_blog(LoginRequiredMixin, UpdateView):
+    model = Blog
+    form_class = BlogForm
+    template_name = 'ProjectSite/edit-blog.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog')
+
+class delete_blog(LoginRequiredMixin, DeleteView):
+    model = Blog
+    form_class = BlogForm
+    template_name = 'ProjectSite/delete-blog.html'
+    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog')
 
 
 def view_resources(request):

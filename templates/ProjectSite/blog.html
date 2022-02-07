@@ -6,12 +6,39 @@
 {% endblock %}
 
 {% block body %}
-
-        <div>
-            <container class="text-center">
-                <p>Blog posts would go here</p>
-            </container>
+{% if user.is_authenticated %}
+    <div class="text-center mt-3 mb-3">
+        <a href="{% url 'create_blog' %}" class="btn blog-button">Add Post</a>
+        <a href="{% url 'upload_video' %}" class="btn blog-button">Upload Video</a>
+        <a href="{% url 'upload_image' %}" class="btn blog-button">Upload Image</a>
+    </div>
+{% endif %}
+    <div class="container">
+        {% for post in post %}
+        <div class="row text-center mb-5">
+            <div class="card border rounded">
+                <div class="card-body">
+                    <container>
+                        <img class="blog-image-main"  src="{{ post.main_image.url }}"><br>
+                        <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 class="blog-title mt-2">{{post.post_title }}</h1></a>
+                        <p style="margin-bottom: 10px; font-size: small;" class="text-muted">{{ post.created_at}}</p>
+                    </container>
+                </div>
+                <div class="text-center" style="font-size: 20px">
+                    <container class="text-center">
+                        <p style="color: black;">{{ post.post|slice:"500" }}...</p>
+                    </container>
+                </div>
+                {% if user.is_authenticated %}
+                <div>
+                    <a href="{% url 'edit_blog' post.slug %}" class="btn blog-button">Edit</a>
+                    <a href="{% url 'delete_blog' post.slug %}" class="btn blog-button">Delete</a>
+                </div>
+                {% endif %}
+            </div>
         </div>
-
+        {% endfor %}
+        
+    </div>
 {% endblock %}
 

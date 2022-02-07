@@ -247,7 +247,6 @@ h2 {
     padding-top: 10px
 }
 
-
 .in-login,.in-contact {
     flex-grow: 1;
     box-sizing: border-box;
@@ -293,3 +292,37 @@ h2 {
 
 
 /*-------------------------- FIlter Events --------------------------*/
+
+
+
+
+
+/*-------------------------- Blog Styling --------------------------*/
+.blog-title {
+  color: var(--primary-button-background);
+  font-size: 50px;
+}
+
+.blog-content {
+
+}
+
+.blog-button {
+  background-color: var(--primary-button-background);
+  color: var(--button-background);
+  font-size: 25px;
+}
+
+.blog-image-main {
+  width: 200px;
+}
+
+.blog-image {
+  margin: 30px 0px;
+  width: 400px;
+}
+
+.blog-form {
+  font-size: 24px;
+  color: black;
+}

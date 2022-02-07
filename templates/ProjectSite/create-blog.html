@@ -1,0 +1,44 @@
+{% extends 'ProjectSite/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}
+    <title>Blog</title>
+{% endblock %}
+
+{% block body %}
+<style>
+    a, label{
+        color: black;
+    }
+</style>
+
+    <div class="container">
+        <h1 class="text-center mt-4">Monthly Blog Update</h1>
+        <form method="post" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-9 col-lg-10">
+                    <labeL class="blog-title">Title</labeL>
+                    {{form.post_title}}
+                    <labeL class="blog-title">Content</labeL>
+                    {{form.post}}
+                    <labeL class="blog-title">Videos</labeL>
+                    {{form.video_urls}}
+                    <labeL class="blog-title">Main Image</labeL><br>
+                    {{form.main_image}}<br>
+                    <labeL class="blog-title">Images</labeL>
+                    {{form.images}}
+                    {{form.media}}
+                </div>
+            </div>
+            <div class="text-center my-3 mb-5">
+                <button type="reset" class="btn blog-button">Discard</button>
+                <button type="submit" class="btn blog-button">Post</button>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}
+
