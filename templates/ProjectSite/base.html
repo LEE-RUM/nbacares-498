@@ -18,6 +18,8 @@
     <!-- Google API -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
     <!-- Local CSS Source-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- jQuery-UI-->
     {% block more-styles %}
         <link rel="stylesheet" href="{% static 'css/ProjectSite.css' %}">
     {% endblock %}
@@ -93,12 +95,28 @@
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
         integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<!-- jQquery UI -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- Filter contact -->
 <script type="text/javascript">
+    const selectedService = document.getElementById("selected-service");
     function selectService(service) {
-        document.getElementById("selected-service").value = service;
-        console.log(service)
+        selectedService.value = service;
+        // console.log(service)
     }
+    function inputHandler(e) {
+        selectedService.value = e.target.value
+    }
+    selectedService.addEventListener('input', inputHandler);
+    //Auto complete for search bar
+    $(function () {
+        $("#selected").autocomplete({
+            source: "{% url 'autosuggest' %}",
+            minlength : 2
+            
+        });
+    });
 </script>
 </body>
 </html>

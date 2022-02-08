@@ -297,6 +297,7 @@ h2 {
 
 
 
+
 /*-------------------------- Blog Styling --------------------------*/
 .blog-title {
   color: var(--primary-button-background);
@@ -325,4 +326,9 @@ h2 {
 .blog-form {
   font-size: 24px;
   color: black;
+}
+
+.ui-menu-item-wrapper{
+  color: #495057;
+
 }
