@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-{% if user.is_authenticated %}
+{% if user.is_staff %}
     <div class="text-center mt-3 mb-3">
         <a href="{% url 'create_blog' %}" class="btn blog-button">Add Post</a>
         <a href="{% url 'upload_video' %}" class="btn blog-button">Upload Video</a>
@@ -29,7 +29,7 @@
                         <p style="color: black;">{{ post.post|slice:"500" }}...</p>
                     </container>
                 </div>
-                {% if user.is_authenticated %}
+                {% if user.is_staff %}
                 <div>
                     <a href="{% url 'edit_blog' post.slug %}" class="btn blog-button">Edit</a>
                     <a href="{% url 'delete_blog' post.slug %}" class="btn blog-button">Delete</a>

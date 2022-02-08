@@ -9,7 +9,7 @@
 
 {% block body %}
 
-{% if user.is_authenticated %}
+{% if user.is_staff %}
     <div class="text-center">
         <a href="{% url 'edit_blog' blog.slug %}" class="btn blog-button">Edit</a>
         <a href="{% url 'delete_blog' blog.slug %}" class="btn blog-button">Delete</a>
