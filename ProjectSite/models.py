@@ -64,6 +64,7 @@ class OrgEvent(models.Model):
 
 class Category(models.Model):
     category = models.CharField(max_length=30, primary_key=True)
+    orderingID = models.IntegerField(default=1)
 
     def __str__(self):
         return self.category
@@ -71,6 +72,7 @@ class Category(models.Model):
 class Service(models.Model):
     service = models.CharField(max_length=30, primary_key=True)
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
+    orderingID = models.IntegerField(default=1)
 
     def __str__(self):
         return self.service

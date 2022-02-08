@@ -105,8 +105,8 @@ def view_resources(request):
     p = Paginator(filterdContacts, 30) # paginator based on filterd contacts
     page = request.GET.get('page')
     pagContacts = p.get_page(page)
-    categories = Category.objects.all()
-    services = Service.objects.all()
+    categories = Category.objects.all().order_by('orderingID')
+    services = Service.objects.all().order_by('orderingID')
     
     
     context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService , 'pagContacts': pagContacts}
