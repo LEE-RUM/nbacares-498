@@ -16,7 +16,7 @@
     <div class="container pt-2">
         <div class="col-12 col-sm-12 col-xxl-10">
             <div class="card card-body">
-                <form method="GET">
+                <form method="GET" autocomplete="off">
                     {% csrf_token %}
                     <div class="dropdown">
                         <input class="dropdown-toggle px-3 w-100" id="selected-service" data-bs-toggle="dropdown" name="service" value="{{ selectedService }}" />
@@ -41,9 +41,9 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <br>
+                    <!--<br>
                     <label> <b>Keyword</b></label>
-                    <input class="form-control px-3" type="text" name ="service" id="selected">
+                    <input class="form-control px-3" type="text" name ="service" id="selected">-->
                     <button class="btn btn-primary rounded" type="submit" name="search">Search</button>
                 </form>
                 <!-- End Dropdown -->
