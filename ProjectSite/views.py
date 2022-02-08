@@ -9,6 +9,8 @@ from .filters import OrgEventFilter, ContactFilter, CalendarFilter
 from .decorators import allowed_users
 from django.views import generic
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+
 
 def view_home(request):
     return render(request, 'ProjectSite/home.html')
@@ -31,10 +33,19 @@ def view_resources(request):
     pagContacts = p.get_page(page)
     categories = Category.objects.all()
     services = Service.objects.all()
-
+    
+    
     context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService , 'pagContacts': pagContacts}
     return render(request, 'ProjectSite/resources.html', context)
 
+#Auto suggest function
+def autosuggest(request):
+    print(request.GET)
+    query = request.GET.get('term')
+    qs = Service.objects.filter(service__startswith = query)
+    mylist = []
+    mylist += [x.service for x in qs]
+    return JsonResponse(mylist,safe=False)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles='admin')

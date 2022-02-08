@@ -16,4 +16,5 @@ urlpatterns = [
     path('admin-user-creation', views.view_admin_user_creation, name="admin_user_creation"),
     path('organization-settings', views.view_organization_settings, name="organization_settings"),
     path('calendar-template/', views.view_calendar.as_view(), name="calendar"),
+    path('autosuggest/', views.autosuggest, name="autosuggest"),
 ]
