@@ -25,14 +25,14 @@
                         
                         <ul class="dropdown-menu">
                             <!-- Category -->
-                            <li><strong class="dropdown-item fw-bold">Category</strong></li>
+                            <li><strong class="dropdown-item fw-bold dropdown-heading">Category</strong></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" onclick="selectService('All')">All</a>
                                 {% for category in categories %}
-                                <li><a class="dropdown-item" >{{ category }} &raquo; </a>
+                                <li><a class="dropdown-item dropdown-heading" >{{ category }} &raquo; </a>
                                     <ul class="submenu dropdown-menu">
                                         <!-- Service -->
-                                        <li><b class="dropdown-item fw-bold">Service</b>
+                                        <li><b class="dropdown-item fw-bold dropdown-heading">Service</b>
                                         <li><hr class="dropdown-divider"></li>
                                         {% for service in services %}
                                             {% if service.category == category %}
@@ -111,12 +111,14 @@
     function selectService(service) {
         selectedService.value = service;
     }
-    //Auto complete for search bar
     $(function () {
+        //Auto complete for search bar
         $("#selected-service").autocomplete({
             source: "{% url 'autosuggest' %}",
             minlength : 2,
         });
+        // Prevent dropdown disappear when click on category
+        $('.dropdown-heading').click((e) => e.stopPropagation());
     });
 </script>
 {% endblock scripts %}
