@@ -14,6 +14,9 @@ from django.views.generic import DetailView, ListView, CreateView, UpdateView, D
 from django.urls.base import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+
 
 
 def view_home(request):
@@ -35,7 +38,7 @@ def view_blog(request):
     context = {'post': post}
     return render(request, 'ProjectSite/blog.html', context)
 
-class create_blog(LoginRequiredMixin, CreateView):
+class create_blog(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Blog
     form_class = BlogForm
     template_name = 'ProjectSite/create-blog.html'
@@ -43,19 +46,28 @@ class create_blog(LoginRequiredMixin, CreateView):
     slug_field = 'slug'
     success_url = reverse_lazy('blog')
 
-class upload_video(LoginRequiredMixin, CreateView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin')
+
+class upload_video(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Videos
     form_class = VideosForm
     template_name = 'ProjectSite/upload-video.html'
     success_url = reverse_lazy('blog')
 
-class upload_image(LoginRequiredMixin, CreateView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin')
+
+class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Images
     form_class = ImagesForm
     template_name = 'ProjectSite/upload-image.html'
     success_url = reverse_lazy('blog')
 
-class edit_blog(LoginRequiredMixin, UpdateView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin')
+
+class edit_blog(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Blog
     form_class = BlogForm
     template_name = 'ProjectSite/edit-blog.html'
@@ -63,7 +75,10 @@ class edit_blog(LoginRequiredMixin, UpdateView):
     slug_field = 'slug'
     success_url = reverse_lazy('blog')
 
-class delete_blog(LoginRequiredMixin, DeleteView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin')
+
+class delete_blog(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Blog
     form_class = BlogForm
     template_name = 'ProjectSite/delete-blog.html'
@@ -71,23 +86,37 @@ class delete_blog(LoginRequiredMixin, DeleteView):
     slug_field = 'slug'
     success_url = reverse_lazy('blog')
 
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin')
+
 
 def view_resources(request):
     selectedService = "All"
-    if request.GET:
-        # selectedService = request.GET['service']
-        selectedService = request.GET.get('service')
+
+    if request.GET.get("service"):
+        selectedService = request.GET.get("service")
 
     allcontacts = Contact.objects.all()
     conFilters = ContactFilter({'service': selectedService}, queryset=allcontacts)
-    allcontacts = conFilters.qs
-
-    categories = Category.objects.all()
-    services = Service.objects.all()
-
-    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService }
+    filterdContacts = conFilters.qs # filter contacts
+    p = Paginator(filterdContacts, 30) # paginator based on filterd contacts
+    page = request.GET.get('page')
+    pagContacts = p.get_page(page)
+    categories = Category.objects.all().order_by('orderingID')
+    services = Service.objects.all().order_by('orderingID')
+    
+    
+    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService , 'pagContacts': pagContacts}
     return render(request, 'ProjectSite/resources.html', context)
 
+#Auto suggest function
+def autosuggest(request):
+    print(request.GET)
+    query = request.GET.get('term')
+    qs = Service.objects.filter(service__startswith = query)
+    mylist = []
+    mylist += [x.service for x in qs]
+    return JsonResponse(mylist,safe=False)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles='admin')

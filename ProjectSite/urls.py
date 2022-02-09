@@ -24,4 +24,5 @@ urlpatterns = [
     path('calendar-template/', views.view_calendar.as_view(), name="calendar"),
     path('blog/upload-video/', upload_video.as_view(), name="upload_video"),
     path('blog/upload-image/', upload_image.as_view(), name="upload_image"),
+    path('autosuggest/', views.autosuggest, name="autosuggest"),
 ]
