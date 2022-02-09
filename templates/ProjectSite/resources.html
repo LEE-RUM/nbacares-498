@@ -13,7 +13,7 @@
 
 {% block body %}
 
-    <div class="container pt-2">
+    <div class="container pt-2 mb-3">
         <div class="col-12 col-sm-12 col-xxl-10">
             <div class="card card-body">
                 <form method="GET" autocomplete="off">
@@ -41,35 +41,48 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <!--<br>
-                    <label> <b>Keyword</b></label>
-                    <input class="form-control px-3" type="text" name ="service" id="selected">-->
-                    <button class="btn btn-primary rounded" type="submit" name="search">Search</button>
+                    <button class="btn btn-primary rounded mt-2" type="submit" name="search">Search</button>
+                    
+                    <br>
                 </form>
+                    <!--Form to search by keyword-->
+                    <label class="mt-4"> <b>Keyword</b></label> 
+                    
+                    <form method="GET">
+                        {% csrf_token %}
+                    
+                       <div class="input-group mb-3">
+                        <input class="form-control" type="text"  id="selected" name="service">
+                        <button class="btn btn-secondary" type="submit" ><span> <i class="bi bi-search"></i></span></button>
+                        
+                        </div>
+                    
+                    </form>
+                 
                 <!-- End Dropdown -->
             </div> 
         </div>
         <div class="row">
             <div class="col-12 col-sm-12 col-xxl-10">
                 <div class="card card-body table-responsive">
-                      <table class="table table-sm" style="table-layout: fixed;">
+                      <table class="table table-lg" >
                         <colgroup>
                             <col style="width: 15%;">
-                            <col style="width: 35%;">
+                           <!---- <col style="width: 35%;"> -->
                             <col style="width: 33%;">
                             <col style="width: 17%;">
                         </colgroup>
                         <tr class="">
                             <th>Services</th>
                             <th>Resource Provider</th>
-                            <th>Website</th>
+                           <!---- <th>Website</th> -->
                             <th>Phone Number</th>
                         </tr>
                         {% for pagcontact in pagContacts %}
                             <tr>
                                 <td>{{ pagcontact.service }}</td>
-                                <td>{{ pagcontact.contact_resource_provider }}</td>
-                                <td><a class="fs-6" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>                                                                <!--<td>{{ allcontact.contact_location }}</td>-->
+                                <td><a class="fs-5" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_resource_provider }}</a></td>
+                              <!---- <td><a class="fs-6" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>   -->                                                             <!--<td>{{ allcontact.contact_location }}</td>-->
                                 <td><a style="color: darkblue;" href="tel:{{pagcontact.contact_number}}">{{ pagcontact.contact_number }}</a></td>
                             </tr>
                         {% endfor %}
@@ -91,42 +104,9 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-xxl-2">
-                <h1 class="display-3">Our Partners</h1>
-                <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-xxl-1">
-                    <div class="col"><a href="https://www.211ct.org/"><img class="img-fluid"
-                                                                           src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/CT_211-1.png?time=1638790774"
-                                                                           alt="partner"></a></div>
-                    <div class="col"><a href="http://www.ctfairhousing.org/"><img class="img-fluid"
-                                                                                  src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/CT_Fair_housing_act-1.jpg?time=1638790774"
-                                                                                  alt="partner"></a></div>
-                    <div class="col"><a href="http://www.conn-nahro.org/index.htm"><img class="img-fluid"
-                                                                                        src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/CT_NAHRO-1.png?time=1638790774"
-                                                                                        alt="partner"></a></div>
-                    <div class="col"><a href="http://www.ctdol.state.ct.us/ajc/americanjobcenters.htm"><img
-                            class="img-fluid"
-                            src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/ctworks-1.gif?time=1638790774"
-                            alt="partner"></a></div>
-                    <div class="col"><a href="http://www.portal.ct.gov/dcf"><img class="img-fluid"
-                                                                                 src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/DCF-1.jpg?time=1638790774"
-                                                                                 alt="partner"></a></div>
-                    <div class="col"><a href="https://www.hud.gov/"><img class="img-fluid"
-                                                                         src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/HUD-1.jpg?time=1638790774"
-                                                                         alt="partner"></a></div>
-                    <div class="col"><a href="https://www.ctunitedway.org/"><img class="img-fluid"
-                                                                                 src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/United_way_CT-1.png?time=1638790774"
-                                                                                 alt="partner"></a></div>
-                    <div class="col"><a href="https://greaternewbritainchamber.com/"><img class="img-fluid"
-                                                                                          src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/new_britain_chamber_of_commerce.png?time=1638790774"
-                                                                                          alt="partner"></a></div>
-                    <div class="col"><a href="http://www.ctdol.state.ct.us/"><img class="img-fluid"
-                                                                                  src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/ct_dept_labor_logo.gif?time=1638790774"
-                                                                                  alt="partner"></a></div>
-                    <div class="col"><a href="http://www.newbritainct.gov/"><img class="img-fluid"
-                                                                                 src="https://secureservercdn.net/166.62.107.20/okt.47d.myftpupload.com/wp-content/uploads/2017/12/city_of_new_britain_logo.png?time=1638790774"
-                                                                                 alt="partner"></a></div>
-                </div>
-            </div>
+            
+           
+        
         </div>
     </div>
 {% endblock %}
