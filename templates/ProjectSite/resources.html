@@ -93,11 +93,11 @@
                         <ul class="pagination">
                             
                         {% if pagContacts.has_previous %}
-                              <li class="page-item"><a class="page-link" href="?page={{ pagContacts.previous_page_number }}">Previous</a></li>
+                              <li class="page-item"><a class="page-link" href="?page={{ pagContacts.previous_page_number }}&service={{ selectedService }}">Previous</a></li>
                         {% endif %}
                         {% if pagContacts.has_next %}
                         
-                             <li class="page-item"><a class="page-link" href="?page={{ pagContacts.next_page_number }}">Next</a></li>
+                             <li class="page-item"><a class="page-link" href="?page={{ pagContacts.next_page_number }}&service={{ selectedService }}">Next</a></li>
                         {% endif %}
                     </ul>
                     </nav>
