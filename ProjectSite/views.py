@@ -92,12 +92,9 @@ class delete_blog(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def view_resources(request):
     selectedService = "All"
-    if request.GET:
-        # selectedService = request.GET['service']
-        selectedService = request.GET.get('service')
+
     if request.GET.get("service"):
         selectedService = request.GET.get("service")
-
 
     allcontacts = Contact.objects.all()
     conFilters = ContactFilter({'service': selectedService}, queryset=allcontacts)

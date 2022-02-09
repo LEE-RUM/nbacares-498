@@ -18,14 +18,17 @@
             <div class="card card-body">
                 <form method="GET" autocomplete="off">
                     {% csrf_token %}
-                    <div class="dropdown">
-                        <input class="dropdown-toggle px-3 w-100" id="selected-service" data-bs-toggle="dropdown" name="service" value="{{ selectedService }}" />
+                    <div class="dropdown input-group mb-3">
+                        <button class="btn btn-secondary dropdown-toggle" id="dropdown-show" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <input class="form-control" type="text" id="selected-service" name="service" value="{{ selectedService }}" />
+                        <button class="btn btn-primary" type="submit" ><span> <i class="bi bi-search"></i></span></button>
+                        
                         <ul class="dropdown-menu">
                             <!-- Category -->
-                            <li><strong class="dropdown-item fw-bold">Category</strong>
+                            <li><strong class="dropdown-item fw-bold">Category</strong></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" onclick="selectService('All')">All</a>
-                            {% for category in categories %}
+                                {% for category in categories %}
                                 <li><a class="dropdown-item" >{{ category }} &raquo; </a>
                                     <ul class="submenu dropdown-menu">
                                         <!-- Service -->
@@ -40,25 +43,10 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                    </div>
-                    <button class="btn btn-primary rounded mt-2" type="submit" name="search">Search</button>
-                    
+                    </div> 
+                    <!-- End Dropdown & input-group -->
                     <br>
                 </form>
-                    <!--Form to search by keyword-->
-                    <label class="mt-4"> <b>Keyword</b></label> 
-                    
-                    <form method="GET">
-                        {% csrf_token %}
-                    
-                       <div class="input-group mb-3">
-                        <input class="form-control" type="text"  id="selected" name="service">
-                        <button class="btn btn-secondary" type="submit" ><span> <i class="bi bi-search"></i></span></button>
-                        
-                        </div>
-                    
-                    </form>
-                 
                 <!-- End Dropdown -->
             </div> 
         </div>
@@ -114,3 +102,21 @@
 {% block extrascripts %}
 
 {% endblock extrascripts %}
+
+{% block scripts %}
+<!-- Filter contact -->
+<script type="text/javascript">
+    // Select a different service
+    const selectedService = document.getElementById("selected-service");
+    function selectService(service) {
+        selectedService.value = service;
+    }
+    //Auto complete for search bar
+    $(function () {
+        $("#selected-service").autocomplete({
+            source: "{% url 'autosuggest' %}",
+            minlength : 2,
+        });
+    });
+</script>
+{% endblock scripts %}
