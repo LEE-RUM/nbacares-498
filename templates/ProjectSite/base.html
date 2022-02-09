@@ -20,6 +20,8 @@
     <!-- Local CSS Source-->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- jQuery-UI-->
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     {% block more-styles %}
         <link rel="stylesheet" href="{% static 'css/ProjectSite.css' %}">
     {% endblock %}
@@ -73,17 +75,14 @@
                         alt="logo"></a>
                 <p>Powered by ParaDYM Academy &copy;2020-2021</p>
             </div>
-            <div class="col-12 col-md"><h4> Home </h4><a href="{% url 'home' %}#home_vision">
-                <li>Our Vision</li>
+            <div class="col-12 col-md"><a href="{% url 'about' %}#about_mission">
+                <h4>Our Mission</h4>
             </a></div>
-            <div class="col-12 col-md"><h4> About </h4><a href="{% url 'about' %}#about_mission">
-                <li>Our Mission</li>
+            <div class="col-12 col-md"><a href="{% url 'resources' %}">
+                <h4>Our Resources</h4>
             </a></div>
-            <div class="col-12 col-md"><h4> Resources </h4><a href="{% url 'resources' %}">
-                <li>Our Resources</li>
-            </a></div>
-            <div class="col-12 col-md"><h4> Contact Us </h4><a href="{% url 'about' %}#about_mission">
-                <li><a href="mailto:newbritaincares@gmail.com">Our Email </a></li>
+            <div class="col-12 col-md"><a href="{% url 'about' %}#about_mission">
+                <li><a href="mailto:newbritaincares@gmail.com"><h4>Contact Us</h4></a></li>
             </a></div>
         </div>
     </div>
@@ -103,7 +102,7 @@
     const selectedService = document.getElementById("selected-service");
     function selectService(service) {
         selectedService.value = service;
-        // console.log(service)
+         //console.log(service)
     }
     function inputHandler(e) {
         selectedService.value = e.target.value
@@ -113,9 +112,11 @@
     $(function () {
         $("#selected").autocomplete({
             source: "{% url 'autosuggest' %}",
-            minlength : 2
+            minlength : 2,
+            
             
         });
+        
     });
 </script>
 </body>
