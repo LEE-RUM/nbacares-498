@@ -33,7 +33,6 @@ class view_post(DetailView):
     #query_pk_and_slug = False
 
 def view_blog(request):
-    #post = Blog.objects.get(id=id)
     post = Blog.objects.all()
     context = {'post': post}
     return render(request, 'ProjectSite/blog.html', context)
