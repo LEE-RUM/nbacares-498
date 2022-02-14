@@ -1,12 +1,13 @@
 from django.contrib import admin
 from .models import Event
-from .models import Organization
+from .models import Organization, Resident
 from .models import OrgEvent
 from .models import Blog
 from .models import Contact, Service, Category, Videos, Images
 
 # Register your models here.
 admin.site.register(Organization)
+admin.site.register(Resident)
 admin.site.register(Event)
 admin.site.register(OrgEvent)
 admin.site.register(Contact)
