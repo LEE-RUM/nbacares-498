@@ -1,0 +1,17 @@
+{% extends 'ProjectSite/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <span><a class="btn btn-dark m-3 p-3" href="{% url 'resident_profile' %}">&#8592; Back</a></span>
+    </div>
+</div>
+
+{% endblock %}
