@@ -39,7 +39,35 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'embed_video',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'height': 500,
+        'toolbar_Custom': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'Undo', 'Youtube'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['SpecialChar', 'Source'],
+        ],
+        'extraPlugins': 'youtube'
+    },
+    #'special': {
+    #    'toolbar': 'Special',
+    #    'toolbar_Special': [
+    #        ['Bold','Youtube']
+    #    ],
+    #    'extraPlugins': 'youtube'
+    #
+    #},
+}
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
@@ -119,7 +147,7 @@ USE_TZ = True
 
 #STATIC_ROOT = "home/jmkryzanski/nbacares-498/static"
 STATIC_URL = '/static/'
-
+STATIC_ROOT = 'static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -131,7 +159,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ###############################################################################
 #STATIC_ROOT = BASE_DIR / 'static' #Online
-STATICFILES_DIRS = ['static']  # On Compute
+#STATICFILES_DIRS = ['static']  # On Compute
 ###############################################################################
 
 #a test

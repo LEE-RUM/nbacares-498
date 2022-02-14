@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 
 from django.shortcuts import render, redirect
 from django.forms import inlineformset_factory
-from .forms import VideosForm, ImagesForm, ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, CreateResidentUserForm, ProjectForms, BlogForm
+from .forms import ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, CreateResidentUserForm, ProjectForms, BlogForm
 from .models import *
 from .models import Blog
 from .filters import OrgEventFilter, ContactFilter, CalendarFilter
@@ -45,24 +45,6 @@ class create_blog(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'ProjectSite/create-blog.html'
     slug_url_kwarg = 'title'
     slug_field = 'slug'
-    success_url = reverse_lazy('blog')
-
-    def test_func(self):
-        return self.request.user.groups.filter(name='admin')
-
-class upload_video(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-    model = Videos
-    form_class = VideosForm
-    template_name = 'ProjectSite/upload-video.html'
-    success_url = reverse_lazy('blog')
-
-    def test_func(self):
-        return self.request.user.groups.filter(name='admin')
-
-class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-    model = Images
-    form_class = ImagesForm
-    template_name = 'ProjectSite/upload-image.html'
     success_url = reverse_lazy('blog')
 
     def test_func(self):

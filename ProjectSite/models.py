@@ -3,8 +3,9 @@ from django.db import models
 
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-from embed_video.fields import EmbedVideoField
 import itertools
+
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Organization(models.Model):
     ORGANIZATION_STATUS = (
@@ -97,21 +98,6 @@ class Contact(models.Model):
     def __str__(self):
         return self.contact_resource_provider
 
-class Videos(models.Model):
-    #blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    title = models.CharField(default='video', max_length=128)
-    url = EmbedVideoField(null=True, blank=True)
-    
-    def __str__(self):
-        return self.title
-
-class Images(models.Model):
-    title = models.CharField(default='image', max_length=128)
-    img = models.ImageField(upload_to="images/", null=True)
-
-    def __str__(self):
-        return self.title
-
 class Blog(models.Model):
 
     post_title = models.CharField(max_length=200)
@@ -121,9 +107,12 @@ class Blog(models.Model):
         default='',
         editable=False,
     )
-    video_urls = models.ManyToManyField(Videos, blank=True)
+
+    post_content = RichTextUploadingField(null=True, default=True)
+
+    #test2 = RichTextUploadingField(null=True, default=True,external_plugin_resources=[('youtube', 'static/ckeditor/plugins/youtube/youtube/', 'plugin.js')])
+
     main_image = models.ImageField(upload_to="images/", null=True)
-    images = models.ManyToManyField(Images, blank=True)
 
     def __str__(self):
         return self.post_title
