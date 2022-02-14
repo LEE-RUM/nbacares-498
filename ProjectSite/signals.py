@@ -4,14 +4,14 @@ from django.dispatch import receiver
 from .models import Organization
 
 
-@receiver(post_save, sender=User)
-def create_or_update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        group = Group.objects.get(name='organizer')
-        instance.groups.add(group)
-        Organization.objects.create(user=instance, org_name=instance.username)
-        #profile = Organization(user=instance) WORKING
-    instance.organization.save()
+# @receiver(post_save, sender=User)
+# def create_or_update_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         group = Group.objects.get(name='organizer')
+#         instance.groups.add(group)
+#         Organization.objects.create(user=instance, org_name=instance.username)
+#         #profile = Organization(user=instance) WORKING
+#     instance.organization.save()
 
 
 """

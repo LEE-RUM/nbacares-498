@@ -2,9 +2,11 @@ from ast import Del
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+
 from django.shortcuts import render, redirect
 from django.forms import inlineformset_factory
-from .forms import VideosForm, ImagesForm, ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, ProjectForms, BlogForm
+from .forms import VideosForm, ImagesForm, ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, CreateResidentUserForm, ProjectForms, BlogForm
 from .models import *
 from .models import Blog
 from .filters import OrgEventFilter, ContactFilter, CalendarFilter
@@ -33,8 +35,7 @@ class view_post(DetailView):
     #query_pk_and_slug = False
 
 def view_blog(request):
-    #post = Blog.objects.get(id=id)
-    post = Blog.objects.all()
+    post = Blog.objects.all().order_by('-created_at')
     context = {'post': post}
     return render(request, 'ProjectSite/blog.html', context)
 
@@ -136,6 +137,26 @@ def view_events(request):
     return render(request, 'ProjectSite/events.html', context)
 
 
+def resident_signup(request):
+    form = CreateResidentUserForm()
+    if request.method == 'POST':
+        form = CreateResidentUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            phone = form.cleaned_data.get('phone')
+
+            group = Group.objects.get(name='resident')
+            user.groups.add(group) 
+            Resident.objects.create(
+                user=user,
+                phone=phone,
+            )
+            login(request, user)
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'ProjectSite/signup.html', context)
+
 def view_login(request):
     if request.method == 'POST':
         login_form = AuthenticationForm(data=request.POST)
@@ -152,6 +173,18 @@ def view_login(request):
 def view_logout(request):
     logout(request)
     return redirect('home')
+
+def resident_profile(request):
+    username = request.user.username
+    email = request.user.email
+    phone = request.user.resident.phone
+
+    context = { 'username': username, 'email': email, 'phone': phone }
+    return render(request, 'ProjectSite/resident/profile.html', context)
+
+def resident_profile_edit(request):
+    context = {}
+    return render(request, 'ProjectSite/resident/profile-edit.html', context)
 
 
 @login_required(login_url='login')

@@ -6,10 +6,7 @@
 body{
     background-color: #834655;
 }
-.row{
-    background: white;
-    border-radius: 30px;
-}
+
 .btn1{
     border: none;
     outline: none;
@@ -25,3 +22,4 @@ body{
     border: 1px solid;
     color: black;
 }
+

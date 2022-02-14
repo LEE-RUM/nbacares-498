@@ -27,6 +27,16 @@ class AdminUserCreationAdditionalFields(models.ModelForm):
             'org_email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Email'}),
         }
 
+class CreateResidentUserForm(UserCreationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mb-3 p-3', 'placeholder': 'Username'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Email'}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Phone', 'type': 'tel'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Confirm Password'}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2', 'email', 'phone')
 
 class ProjectUpdateForm(ModelForm):
     class Meta:

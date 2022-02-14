@@ -1,7 +1,7 @@
 {% extends 'ProjectSite/calendar-base.html' %}
 {% load static %}
 {% load crispy_forms_filters %}
-{% block title %}Event Calendar{% endblock title %}
+{% block title %}Calendar{% endblock title %}
 
 {% block extracss %}
   <link href="{% static 'calendar/main.css' %}" rel="stylesheet" />
@@ -14,6 +14,9 @@
     <div class="col-md-12">
         <div class="tile row">
             <div class="col-md-3">
+                {% if user.is_authenticated and not user.is_superuser %}
+                <button id="addEvent" type="button" class="btn btn-danger">ADD EVENT</button>
+                {% endif %}
                 <div id="external-events">
                     <h4 class="mb-4">Filter Event</h4>
                     <form method="get">
@@ -138,6 +141,7 @@
       });
       const closeBtn1 = document.getElementById('modalClose1');
       const closeBtn2 = document.getElementById('modalClose2');
+      const addBtn = document.getElementById('addEvent');
       closeBtn1.addEventListener('click',()=>{
         const eventModal = document.getElementById('eventModal')
         eventModal.style.display = 'none';
@@ -145,6 +149,10 @@
       closeBtn2.addEventListener('click',()=>{
         const eventModal = document.getElementById('eventModal')
         eventModal.style.display = 'none';
+      });
+      addBtn.addEventListener('click',()=>{
+          const modal = document.getElementById('eventModal')
+          modal.style.display = 'block'
       });
   </script>
 {% endblock extrascripts %}

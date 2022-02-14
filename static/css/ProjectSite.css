@@ -5,6 +5,8 @@
 }
 
 html{
+  position: relative;
+  min-height: 100%;
   font-size: 62%;
   scroll-behavior: smooth;
 }
@@ -15,6 +17,7 @@ body{
   --button-background: #FFF7B6; /*Light Gold, Used for contrast against darker background */
   --primary-button-background: #b67786; /*Lighter RED, Subheadings? */
   --background-color:  #834655; /*Darker RED, Background */
+  margin-bottom: 180px;
 }
 
 /* -------------------------- HOME SECTION-------------------------- */
@@ -172,15 +175,22 @@ background-size: 100%;
 
 /* -------------------------- FOOTER SECTION-------------------------- */
 footer{
+  position: absolute;
+  bottom: 0;
   width: 100%;
   background: var(--background-color);
-  height: auto;
+  height: 170px;
   padding: 1rem 1rem;
+  overflow-y: scroll;
+}
+footer::-webkit-scrollbar {
+  display: none;
 }
 footer img{width: 14rem;height: 8rem;}
 footer div h4{font-size: 3rem;text-transform: capitalize;}
 footer div a{font-size: 1.7rem;line-height: 150%;}
 footer p {font-size: small;}
+
 
 /*-------------------------- RESPONSIVE CONTAINERS --------------------------*/
 .container{
