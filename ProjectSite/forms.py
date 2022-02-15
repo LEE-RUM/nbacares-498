@@ -80,18 +80,12 @@ class BlogForm(forms.ModelForm):
                 'class': 'form-control blog-form',
                 'placeholder': "Title"
             }),
-            'post': forms.Textarea(attrs={
-                'class': 'form-control blog-form',
-                'placeholder': "Post Content"
-            }),
+            #'post': forms.Textarea(attrs={
+            #    'class': 'form-control blog-form',
+            #    'placeholder': "Post Content"
+            #}),
             #'video_urls': forms.CheckboxSelectMultiple(choices=videoChoicesList, attrs={
             #    'class': 'blog-form',
             #}),
-            'video_urls': forms.CheckboxSelectMultiple(attrs={
-                'class': 'blog-form',
-            }),
-            'images': forms.CheckboxSelectMultiple(attrs={
-                'class': 'blog-form',
-            }),
         }
 

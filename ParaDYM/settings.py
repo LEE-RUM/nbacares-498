@@ -56,7 +56,8 @@ CKEDITOR_CONFIGS = {
             ['TextColor', 'BGColor'],
             ['SpecialChar', 'Source'],
         ],
-        'extraPlugins': 'youtube'
+        'extraPlugins': 'youtube',
+        'mediaEmbed': {'previewsInData': True},
     },
     #'special': {
     #    'toolbar': 'Special',
