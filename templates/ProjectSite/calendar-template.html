@@ -15,7 +15,7 @@
         <div class="tile row">
             <div class="col-md-3">
                 {% if user.is_authenticated and not user.is_superuser %}
-                <button id="addEvent" type="button" class="btn btn-danger">ADD EVENT</button>
+                <button id="addEvent" type="button" class="btn btn-primary" style="background-color: #834655">ADD EVENT</button>
                 {% endif %}
                 <div id="external-events">
                     <h4 class="mb-4">Filter Event</h4>
