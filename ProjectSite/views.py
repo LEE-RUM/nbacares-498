@@ -21,6 +21,7 @@ from django.http import JsonResponse
 
 
 
+
 def view_home(request):
     return render(request, 'ProjectSite/home.html')
 
@@ -175,11 +176,10 @@ def view_logout(request):
     return redirect('home')
 
 def resident_profile(request):
-    username = request.user.username
-    email = request.user.email
-    phone = request.user.resident.phone
+    user = request.user
+    # phone = request.user.resident.formatted_phone
 
-    context = { 'username': username, 'email': email, 'phone': phone }
+    context = { 'user':user }
     return render(request, 'ProjectSite/resident/profile.html', context)
 
 def resident_profile_edit(request):

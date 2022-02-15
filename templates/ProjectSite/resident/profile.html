@@ -10,9 +10,9 @@
 
 <div class="container">
     <div class="row">
-        <h1 class="m-3">Username: <span class="text-dark">{{ username }}</span></h1>
-        <h1 class="m-3">Email: <span class="text-dark">{{ email }}</span></h1>
-        <h1 class="m-3">Phone: <span class="text-dark">{{ phone }}</span></h1>
+        <h1 class="m-3">Username: <span class="text-dark">{{ user.username }}</span></h1>
+        <h1 class="m-3">Email: <span class="text-dark">{{ user.email }}</span></h1>
+        <h1 class="m-3">Phone: <span class="text-dark">{{ user.resident.formatted_phone }}</span></h1>
         <span><a class="btn btn-dark m-3 p-3" href="{% url 'resident_profile_edit' %}">Edit Profile</a></span>
     </div>
 </div>
