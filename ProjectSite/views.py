@@ -133,32 +133,35 @@ def resident_signup(request):
         if form.is_valid():
             user = form.save()
             phone = form.cleaned_data.get('phone')
-            domain_name = get_current_site(request).domain
             email = user.email
             token = str(uuid.uuid4())
-            verifyURL = f'http://{domain_name}/verify/{token}'
 
             group = Group.objects.get(name='resident')
             user.groups.add(group) 
 
             resident = Resident.objects.create(user=user, phone=phone, token=token)
-
-            emailBodyTXT = render_to_string('ProjectSite/authentication/email-body.txt', { 'verifyURL': verifyURL })
-            emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html', { 'verifyURL': verifyURL, 'user': user })
-            send_mail(
-                'NBCARES Email Verfication',
-                emailBodyTXT, 
-                settings.EMAIL_HOST_USER,
-                [email],
-                fail_silently=False,
-                html_message=emailBodyHTML,
-            )
+            sendConfirmationEmail(request, user)
 
             msg = 'A confirmation email has been sent to {}! please verify your account.'.format(email)
             return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
 
     context = {'form': form}
     return render(request, 'ProjectSite/authentication/signup.html', context)
+
+def sendConfirmationEmail(request, user):
+    domain_name = get_current_site(request).domain
+    verifyURL = f'http://{domain_name}/verify/{user.resident.token}'
+    emailBodyTXT = render_to_string('ProjectSite/authentication/email-body.txt', { 'verifyURL': verifyURL })
+    emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html', { 'verifyURL': verifyURL, 'user': user })
+            
+    send_mail(
+        'NBCARES Email Verfication',
+        emailBodyTXT, 
+        settings.EMAIL_HOST_USER,
+        [user.email],
+        fail_silently=False,
+        html_message=emailBodyHTML,
+    )
 
 def verify(request, token):
     try:
@@ -179,6 +182,7 @@ def view_login(request):
             user = login_form.get_user()
 
             if user.groups.filter(name="resident") and not user.resident.is_verified:
+                sendConfirmationEmail(request, user)
                 msg = "Account is not verified, please check your email inbox. {}".format(user.email)
                 return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
 
