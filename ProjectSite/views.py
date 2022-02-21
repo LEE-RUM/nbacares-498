@@ -6,9 +6,8 @@ from django.contrib.auth.models import Group
 
 from django.shortcuts import render, redirect
 from django.forms import inlineformset_factory
-from .forms import ProjectUpdateForm, AdminUserCreation, AdminUserCreationAdditionalFields, CreateResidentUserForm, ProjectForms, BlogForm
+from .forms import *
 from .models import *
-from .models import Blog
 from .filters import OrgEventFilter, ContactFilter, CalendarFilter
 from .decorators import allowed_users
 from django.views import generic
@@ -19,6 +18,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
+# send email
+from django.contrib.sites.shortcuts import get_current_site
+import uuid
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
 
 
 def view_home(request):
@@ -121,35 +126,68 @@ def view_events(request):
 
 def resident_signup(request):
     form = CreateResidentUserForm()
+
     if request.method == 'POST':
         form = CreateResidentUserForm(request.POST)
+
         if form.is_valid():
             user = form.save()
             phone = form.cleaned_data.get('phone')
+            domain_name = get_current_site(request).domain
+            email = user.email
+            token = str(uuid.uuid4())
+            verifyURL = f'http://{domain_name}/verify/{token}'
 
             group = Group.objects.get(name='resident')
             user.groups.add(group) 
-            Resident.objects.create(
-                user=user,
-                phone=phone,
+
+            resident = Resident.objects.create(user=user, phone=phone, token=token)
+
+            emailBodyTXT = render_to_string('ProjectSite/authentication/email-body.txt', { 'verifyURL': verifyURL })
+            emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html', { 'verifyURL': verifyURL, 'user': user })
+            send_mail(
+                'NBCARES Email Verfication',
+                emailBodyTXT, 
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+                html_message=emailBodyHTML,
             )
-            login(request, user)
-            return redirect('home')
+
+            msg = 'A confirmation email has been sent to {}! please verify your account.'.format(email)
+            return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
 
     context = {'form': form}
-    return render(request, 'ProjectSite/signup.html', context)
+    return render(request, 'ProjectSite/authentication/signup.html', context)
+
+def verify(request, token):
+    try:
+        resident = Resident.objects.get(token=token)
+        if resident:
+            resident.is_verified = True
+            resident.save()
+            msg = 'Your email has been verified'
+            return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+    except Exception as e:
+        msg = e
+        return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg }) 
 
 def view_login(request):
     if request.method == 'POST':
         login_form = AuthenticationForm(data=request.POST)
         if login_form.is_valid():
             user = login_form.get_user()
+
+            if user.groups.filter(name="resident") and not user.resident.is_verified:
+                msg = "Account is not verified, please check your email inbox. {}".format(user.email)
+                return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+
             login(request, user)
             return redirect('home')
     else:
         login_form = AuthenticationForm()
     context = {'login_form': login_form}
-    return render(request, 'ProjectSite/login.html', context)
+    return render(request, 'ProjectSite/authentication/login.html', context)
 
 
 def view_logout(request):
@@ -157,11 +195,9 @@ def view_logout(request):
     return redirect('home')
 
 def resident_profile(request):
-    username = request.user.username
-    email = request.user.email
-    phone = request.user.resident.phone
+    user = request.user
 
-    context = { 'username': username, 'email': email, 'phone': phone }
+    context = { 'user':user }
     return render(request, 'ProjectSite/resident/profile.html', context)
 
 def resident_profile_edit(request):
@@ -250,6 +286,11 @@ def view_admin_user_creation(request, *args, **kwargs):
         user_form = AdminUserCreation(request.POST)
         if user_form.is_valid():
             user = user_form.save()
+            group = Group.objects.get(name='organizer')
+            user.groups.add(group) 
+
+            organization = Organization.objects.create(user=user)
+
             return redirect('admin_panel')
     context = {'user_form': user_form}
     return render(request, 'ProjectSite/admin-user-creation.html', context)

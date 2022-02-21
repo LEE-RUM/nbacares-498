@@ -3,6 +3,8 @@ from django.db import models
 
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from phonenumber_field.modelfields import PhoneNumberField
+import phonenumbers
 import itertools
 
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -25,8 +27,20 @@ class Organization(models.Model):
 
 class Resident(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    phone = models.CharField(max_length=20, null=True, blank=True)
+    phone = PhoneNumberField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+    token = models.CharField(max_length=100, null=True, default=None)
+
+    def formatted_phone(self, country=None):
+        if not self.phone:
+            return
+
+        phone = self.phone.as_e164
+        phone = phonenumbers.parse(phone, country)
+        if phone is not None:
+            phone = phonenumbers.format_number(phone, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+        return phone
 
     def __str__(self):
         return self.user.username

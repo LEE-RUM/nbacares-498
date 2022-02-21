@@ -1,0 +1,23 @@
+{% extends 'ProjectSite/authentication/auth_base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Info</title>
+{% endblock %}
+
+{% block auth_content %}
+<div class="col-12 col-md-6 col-lg-7 px-5 pb-5 my-auto">
+    <div class="d-flex justify-content-center">
+        <h4 class="text-dark h2 mt-5">{{ msg }}</h4>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="mt-4">
+        <div class="d-flex justify-content-center links h4">
+            <div class="h5">All set? <a href="{% url 'login' %}" class="ml-2 text-primary"> Login</a></div> 
+        </div>
+    </div>
+</div>
+
+{% endblock %}

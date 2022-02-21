@@ -1,0 +1,27 @@
+{% extends 'ProjectSite/base.html' %}
+{% load static %}
+
+{% block more-styles %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<style>
+    li {
+        color: black;
+        list-style-type: disc;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="row bg-white" style="border-radius: 30px;">
+        <div class="col-12 col-md-6 col-lg-5 p-0">
+            <img src="{% static 'images/IMG_0078.jpg' %}" class="img-fluid mx-auto" style="border-radius: 30px;" alt="">
+        </div>
+        {% block auth_content %}
+        {% endblock %}
+        
+    </div>
+</div>
+
+{% endblock %}

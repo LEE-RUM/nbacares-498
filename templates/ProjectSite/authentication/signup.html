@@ -1,0 +1,105 @@
+{% extends 'ProjectSite/authentication/auth_base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Signup</title>
+{% endblock %}
+
+{% block more-styles %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <!-- intlTelInput => handle user phone number input and convert to PhoneNumberField format -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <style>
+        span { color: rgb(119, 104, 104); }
+        .iti { width: 100%; }
+        #phone { padding-left: 80px !important; }
+    </style>
+    <!-- cleave.js => Number - auto format while typing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- cleave.js addons => phone number format for countries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/addons/cleave-phone.i18n.js" integrity="sha512-wO3cP0SU1vafMiwkGynionabWt/5ZI3tNzNNObj4B9QIrE7tdyWipmCMPWq8pUp0SdIeD/ZPqlTsPVGUimL6Rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block auth_content %}
+<div class="col-12 col-md-6 col-lg-7 px-5 pb-5 my-auto">
+    <div class="d-flex justify-content-center">
+        <img src="{% static 'images/NB Cares logo.jpg' %}" class="img-fluid mt-5" style="height: 10rem;" alt="">
+    </div>
+    <div class="d-flex justify-content-center">
+        <h4 class="text-dark h2 mt-5">Sign-Up</h4>
+    </div>
+    <!-- Error messages -->
+    {% if form.errors %}
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %} 
+            <div class="alert alert-danger">
+                <strong>{{ error }}</strong>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <form id="signup-form" action="" method="POST">
+        {% csrf_token %}
+        <!-- All fields in form -->
+        {% for field in form %}
+        <div class="d-flex justify-content-center">
+            <div class="col-10 col-lg-7 form-group">
+                <label for="{{ field.auto_id }}">
+                {% if field.field.required %}
+                    <span class="text-danger">* </span>{{ field.label_tag }}
+                {% else %}
+                    {{ field.label_tag }}
+                {% endif %}
+                </label>
+                <div class="">
+                    {{ field }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Signup Button -->
+        <div class="d-flex justify-content-center mt-3">
+            <div class="col-10 col-lg-7">
+                <button type="submit" class="btn1 h3">Signup</button>
+            </div>
+        </div>
+    </form>
+    <div class="mt-4">
+        <div class="d-flex justify-content-center links">
+            <div class="h5">Already have an account? <a href="{% url 'login' %}" class="ml-2 text-primary"> Login</a></div> 
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+    // Phone number input format
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        initialCountry: "US",
+        separateDialCode: true,
+        preferredCountries: ["US"],
+    });
+
+    $("#signup-form").submit(() => {
+        $(phoneInputField).val(phoneInput.getNumber());
+    });
+
+    var cleave = new Cleave('#phone', {
+        phone:true,
+        phoneRegionCode: 'US'
+    });
+
+    $(phoneInputField).on('input', () => {
+        let country = phoneInput.getSelectedCountryData().iso2;
+        cleave.setPhoneRegionCode(country)
+    })
+
+</script>
+{% endblock %}

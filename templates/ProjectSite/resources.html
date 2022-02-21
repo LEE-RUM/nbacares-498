@@ -31,14 +31,14 @@
                         <ul class="dropdown-menu">
                             <!-- Category -->
                             <li><strong class="dropdown-item fw-bold dropdown-heading">Category</strong></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li><hr class="dropdown-divider dropdown-heading"></li>
                                 <li><a class="dropdown-item" onclick="selectService('All')">All</a>
                                 {% for category in categories %}
                                 <li><a class="dropdown-item dropdown-heading" >{{ category }} &raquo; </a>
                                     <ul class="submenu dropdown-menu">
                                         <!-- Service -->
                                         <li><b class="dropdown-item fw-bold dropdown-heading">Service</b>
-                                        <li><hr class="dropdown-divider"></li>
+                                        <li><hr class="dropdown-divider dropdown-heading"></li>
                                         {% for service in services %}
                                             {% if service.category == category %}
                                                 <li><a class="dropdown-item" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>

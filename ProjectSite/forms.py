@@ -3,6 +3,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import OrgEvent, Organization, Event, Blog
+from phonenumber_field.formfields import PhoneNumberField
+from django.core.exceptions import ValidationError
 
 #videoChoices = Videos.objects.all().values_list('title', 'title')
 #videoChoicesList = []
@@ -30,13 +32,22 @@ class AdminUserCreationAdditionalFields(models.ModelForm):
 class CreateResidentUserForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mb-3 p-3', 'placeholder': 'Username'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Email'}))
-    phone = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Phone', 'type': 'tel'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control mb-3 p-3", 'placeholder': 'Confirm Password'}))
+    phone = PhoneNumberField(required=False, widget=forms.TextInput(attrs={'id':'phone', "class":"form-control mb-3 p-3"}))
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'email', 'phone')
+        fields = ('username', 'email', 'password1', 'password2', 'phone')
+    
+    # make sure the user enterd an unique email
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("Username taken, use another Username")
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Email taken, use another email")
 
 class ProjectUpdateForm(ModelForm):
     class Meta:

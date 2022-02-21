@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
 ]
-
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_CONFIGS = {
@@ -68,6 +67,14 @@ CKEDITOR_CONFIGS = {
     #
     #},
 }
+
+# Send email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'nbcares498@gmail.com'
+EMAIL_HOST_PASSWORD = 'Djangonbcares498'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
