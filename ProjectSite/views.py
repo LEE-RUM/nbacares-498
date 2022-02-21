@@ -298,7 +298,7 @@ class view_calendar(generic.View):
         return render(request, 'ProjectSite/calendar-template.html', context)
 
     def post(self, request, *args, **kwargs):
-        forms = self.class_form(request.POST)
+        forms = self.class_form(request.POST, request.FILES)
         if forms.is_valid():
             form = forms.save(commit=False)
             form.user = Organization.objects.get(user=request.user)

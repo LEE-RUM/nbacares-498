@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ProjectSite/migrations/0039_event_event_popper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ProjectSite/migrations/0040_alter_event_event_popper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSite/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSite/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSite/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSite/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" afterDir="false" />
-    </list>
+    <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,7 +62,7 @@
       <workItem from="1645065532003" duration="34000" />
       <workItem from="1645084087810" duration="337000" />
       <workItem from="1645415733112" duration="600000" />
-      <workItem from="1645416792768" duration="5735000" />
+      <workItem from="1645416792768" duration="5929000" />
     </task>
     <servers />
   </component>
