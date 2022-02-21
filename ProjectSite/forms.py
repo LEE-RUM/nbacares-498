@@ -50,7 +50,7 @@ class ProjectForms(ModelForm):
                    ('Child', 'Child'), ('Adolescent', 'Adolescent'), ('Adult', 'Adult'),
                    ('Elderly', 'Elderly'), ('Other', 'Other'))
         model = Event
-        fields = ['event_name', 'event_description', 'event_sTime', 'event_eTime', 'event_tag']
+        fields = ['event_name', 'event_description', 'event_sTime', 'event_eTime', 'event_tag', "event_popper"]
 
         widgets = {
             'event_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter event title'}),
