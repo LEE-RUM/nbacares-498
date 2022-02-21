@@ -29,8 +29,13 @@ class Resident(models.Model):
     # phone = models.CharField(max_length=20, null=True, blank=True)
     phone = PhoneNumberField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+    token = models.CharField(max_length=100, null=True, default=None)
 
     def formatted_phone(self, country=None):
+        if not self.phone:
+            return
+
         phone = self.phone.as_e164
         phone = phonenumbers.parse(phone, country)
         if phone is not None:

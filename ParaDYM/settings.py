@@ -134,6 +134,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = ['static']  # On Compute
 ###############################################################################
 
+# send mail
+# DEFAULT_FROM_USER = 'chenyanglinq@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'nbcares498@gmail.com'
+EMAIL_HOST_PASSWORD = 'Djangonbcares498'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 #a test
 #mike test
 # ChenYang test

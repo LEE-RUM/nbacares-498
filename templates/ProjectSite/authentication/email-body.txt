@@ -1,0 +1,1 @@
+Please click {{ verifyURL }} to verify you email.

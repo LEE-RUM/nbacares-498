@@ -1,6 +1,8 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 from .views import view_post, edit_blog, delete_blog, create_blog, upload_video, upload_image
+
 
 urlpatterns = [
     path('', views.view_home, name="home"),
@@ -16,11 +18,18 @@ urlpatterns = [
     path('blog/<str:title>/edit/', edit_blog.as_view(), name="edit_blog"),
     path('blog/upload-video/', upload_video.as_view(), name="upload_video"),
     path('blog/upload-image/', upload_image.as_view(), name="upload_image"),
-    
+
+    # Authentication
     path('resident-signup/', views.resident_signup, name="resident_signup"),
     path('login/', views.view_login, name="login"),
     path('logout/', views.view_logout, name='logout'),
+    path('verify/<str:token>', views.verify),
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="ProjectSite/authentication/password_reset/password_reset.html"), name="reset_password"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="ProjectSite/authentication/password_reset/password_reset_done.html"), name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="ProjectSite/authentication/password_reset/password_reset_confirm.html"), name="password_reset_confirm"),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="ProjectSite/authentication/password_reset/password_reset_complete.html"), name="password_reset_complete"),
 
+    # Resident
     path('resident/profile/', views.resident_profile, name="resident_profile"),
     path('resident/profile/edit', views.resident_profile_edit, name="resident_profile_edit"),
 

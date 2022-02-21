@@ -19,6 +19,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
+# send email
+from django.contrib.sites.shortcuts import get_current_site
+import uuid
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
 
 
 
@@ -140,35 +146,69 @@ def view_events(request):
 
 def resident_signup(request):
     form = CreateResidentUserForm()
+
     if request.method == 'POST':
         form = CreateResidentUserForm(request.POST)
+
         if form.is_valid():
             user = form.save()
             phone = form.cleaned_data.get('phone')
+            domain_name = get_current_site(request).domain
+            email = user.email
+            token = str(uuid.uuid4())
+            verifyURL = f'http://{domain_name}/verify/{token}'
 
             group = Group.objects.get(name='resident')
             user.groups.add(group) 
-            Resident.objects.create(
-                user=user,
-                phone=phone,
+
+            resident = Resident.objects.create(user=user, phone=phone, token=token)
+
+            emailBodyTXT = render_to_string('ProjectSite/authentication/email-body.txt', { 'verifyURL': verifyURL })
+            emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html', { 'verifyURL': verifyURL })
+            send_mail(
+                'NBCARES Email Verfication',
+                emailBodyTXT, 
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+                html_message=emailBodyHTML,
             )
-            login(request, user)
-            return redirect('home')
+
+            msg = 'A confirmation email has been sent to {}! please verify your account.'.format(email)
+            return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
 
     context = {'form': form}
-    return render(request, 'ProjectSite/signup.html', context)
+    return render(request, 'ProjectSite/authentication/signup.html', context)
+
+def verify(request, token):
+    try:
+        resident = Resident.objects.get(token=token)
+        if resident:
+            resident.is_verified = True
+            resident.save()
+            msg = 'Your email has been verified'
+            return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+    except Exception as e:
+        msg = e
+        return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+
 
 def view_login(request):
     if request.method == 'POST':
         login_form = AuthenticationForm(data=request.POST)
         if login_form.is_valid():
             user = login_form.get_user()
+
+            if user.groups.filter(name="resident") and not user.resident.is_verified:
+                msg = "Email is not verified, please check your email inbox"
+                return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+
             login(request, user)
             return redirect('home')
     else:
         login_form = AuthenticationForm()
     context = {'login_form': login_form}
-    return render(request, 'ProjectSite/login.html', context)
+    return render(request, 'ProjectSite/authentication/login.html', context)
 
 
 def view_logout(request):

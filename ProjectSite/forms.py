@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import OrgEvent, Organization, Event, Blog, Videos, Images
 from phonenumber_field.formfields import PhoneNumberField
+from django.core.exceptions import ValidationError
 
 
 #videoChoices = Videos.objects.all().values_list('title', 'title')
@@ -39,6 +40,15 @@ class CreateResidentUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2', 'phone')
+    
+    # make sure the user enterd an unique email
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("Username taken, use another Username")
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Email taken, use another email")
 
 class ProjectUpdateForm(ModelForm):
     class Meta:
