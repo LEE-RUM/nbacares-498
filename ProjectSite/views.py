@@ -164,7 +164,7 @@ def resident_signup(request):
             resident = Resident.objects.create(user=user, phone=phone, token=token)
 
             emailBodyTXT = render_to_string('ProjectSite/authentication/email-body.txt', { 'verifyURL': verifyURL })
-            emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html', { 'verifyURL': verifyURL })
+            emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html', { 'verifyURL': verifyURL, 'user': user })
             send_mail(
                 'NBCARES Email Verfication',
                 emailBodyTXT, 
@@ -200,7 +200,7 @@ def view_login(request):
             user = login_form.get_user()
 
             if user.groups.filter(name="resident") and not user.resident.is_verified:
-                msg = "Email is not verified, please check your email inbox"
+                msg = "Account is not verified, please check your email inbox. {}".format(user.email)
                 return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
 
             login(request, user)
@@ -308,6 +308,11 @@ def view_admin_user_creation(request, *args, **kwargs):
         user_form = AdminUserCreation(request.POST)
         if user_form.is_valid():
             user = user_form.save()
+            group = Group.objects.get(name='organizer')
+            user.groups.add(group) 
+
+            organization = Organization.objects.create(user=user)
+
             return redirect('admin_panel')
     context = {'user_form': user_form}
     return render(request, 'ProjectSite/admin-user-creation.html', context)
