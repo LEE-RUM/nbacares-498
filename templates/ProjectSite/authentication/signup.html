@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block more-styles %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
     <!-- intlTelInput => handle user phone number input and convert to PhoneNumberField format -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
@@ -67,7 +67,7 @@
     </form>
     <div class="mt-4">
         <div class="d-flex justify-content-center links">
-            Already have an account? <a href="{% url 'login' %}" class="ml-2 text-primary"> Login</a>
+            <div class="h5">Already have an account? <a href="{% url 'login' %}" class="ml-2 text-primary"> Login</a></div> 
         </div>
     </div>
 </div>
