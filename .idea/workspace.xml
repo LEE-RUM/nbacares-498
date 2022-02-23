@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" afterDir="false" />
     </list>
@@ -84,7 +83,7 @@
       <workItem from="1645516503104" duration="1423000" />
       <workItem from="1645580934142" duration="3110000" />
       <workItem from="1645587773493" duration="443000" />
-      <workItem from="1645644963201" duration="1834000" />
+      <workItem from="1645644963201" duration="3764000" />
     </task>
     <servers />
   </component>
