@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" afterDir="false" />
     </list>
@@ -17,6 +18,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="2586Te8SHVB8M4rGi8kUfMdT5KF" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,6 +36,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
     <configuration name="nbacares-498" type="Python.DjangoServer" factoryName="Django server">
@@ -67,7 +77,14 @@
       <workItem from="1645084087810" duration="337000" />
       <workItem from="1645415733112" duration="600000" />
       <workItem from="1645416792768" duration="5929000" />
-      <workItem from="1645470991445" duration="7592000" />
+      <workItem from="1645470991445" duration="8009000" />
+      <workItem from="1645490755106" duration="3819000" />
+      <workItem from="1645498141584" duration="1018000" />
+      <workItem from="1645501178662" duration="383000" />
+      <workItem from="1645516503104" duration="1423000" />
+      <workItem from="1645580934142" duration="3110000" />
+      <workItem from="1645587773493" duration="443000" />
+      <workItem from="1645644963201" duration="1834000" />
     </task>
     <servers />
   </component>
