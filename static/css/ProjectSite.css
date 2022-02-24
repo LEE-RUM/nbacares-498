@@ -23,7 +23,10 @@ body{
 /* -------------------------- HOME SECTION-------------------------- */
 h1,h2 {font-family: 'JetBrains Mono', monospace;color: var(--primary-button-background);}
 h3, h4 {font-family: 'Avenir', monospace;color: var(--primary-color);}
-p,button:hover{font-family: 'JetBrains Mono', monospace;color: var(--primary-color);}
+
+/*p,button:hover{font-family: 'JetBrains Mono', monospace;color: var(--primary-color);}*/
+p,button:hover{font-family: 'JetBrains Mono', monospace;color: black;}
+
 button{font-family: 'JetBrains Mono', monospace;color: var(--primary-button-background);}
 a,li{font-family: 'JetBrains Mono', monospace;color: var(--button-background);}
 p{
@@ -193,6 +196,9 @@ footer img{width: 14rem;height: 8rem;}
 footer div h4{font-size: 3rem;text-transform: capitalize;}
 footer div a{font-size: 1.7rem;line-height: 150%;}
 footer p {font-size: small;}
+.footer-text{
+  color: var(--primary-color);
+}
 
 
 /*-------------------------- RESPONSIVE CONTAINERS --------------------------*/
