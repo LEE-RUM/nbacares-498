@@ -75,8 +75,9 @@
 
 {% block body %}
 {% endblock %}
-<footer class="pt-4 my-md-1 pt-md-5" tabindex="-1">
-    <div class="container px-5">
+<!--<footer class="pt-4 my-md-1 pt-md-5" tabindex="-1">-->
+<footer tabindex="-1">
+    <div class="container">
         <div class="row">
             <div class="col-12 col-md">
                 <a class="navbar-brand" href="https://www.paradymacademy.org/"><img
@@ -85,13 +86,13 @@
                 <p class="footer-text">Powered by ParaDYM Academy</p>
                 <p class="footer-text">&copy;2020-2021</p>
             </div>
-            <div class="col-12 col-md"><a href="{% url 'about' %}#about_mission">
+            <div class="col-12 col-md" style="margin: auto;"><a href="{% url 'about' %}#about_mission">
                 <h4>Our Mission</h4>
             </a></div>
-            <div class="col-12 col-md"><a href="{% url 'resources' %}">
+            <div class="col-12 col-md" style="margin: auto;"><a href="{% url 'resources' %}">
                 <h4>Our Resources</h4>
             </a></div>
-            <div class="col-12 col-md"><a href="{% url 'about' %}#about_mission">
+            <div class="col-12 col-md" style="margin: auto;"><a href="{% url 'about' %}#about_mission">
                 <li><a href="mailto:newbritaincares@gmail.com"><h4>Contact Us</h4></a></li>
             </a></div>
         </div>

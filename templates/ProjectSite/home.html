@@ -1,6 +1,14 @@
 {% extends 'ProjectSite/base.html' %}
 {% load static %}
 
+<style>
+    @media screen and (min-width: 768px) {
+        .myimg{
+            display: block; margin: auto; height: 150px; width: auto;
+        }
+    }
+</style>
+
 {% block title %}
     <title>Home</title>
 {% endblock %}
@@ -31,26 +39,55 @@
         </div>
     </section>
     <section>
-        <div class="row text-center">
-            <h1>Access Services</h1>
-            <div>
-                <img class="img-fluid" src=" {% static 'images/logo-familypromise.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-healthcenter.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-hospitalcentral.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-housingauthority.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-hra.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-jobcenter.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-libertyintegrated.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-tunxis.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-wioa.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-seal.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-adulteducation.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-cahs.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-ccsu.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-coramdeo.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-ctdental.png' %}">
-                <img class="img-fluid" src=" {% static 'images/logo-ctmoneyschool.png' %}">
+        <div class="container">
+            <div class="row text-center">
+                <h1 class="mt-4 mb-4 display-4">Access Services</h1>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-familypromise.png' %}"></div>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-healthcenter.png' %}"></div>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-hospitalcentral.png' %}"></div>
+                <div class="w-100"></div>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-housingauthority.png' %}"></div>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-hra.png' %}"></div>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-jobcenter.png' %}"></div>
             </div>
+            <div class="row text-center">
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-libertyintegrated.png' %}"></div>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-tunxis.png' %}"></div>
+                <div class="col"><img class="img-fluid" src=" {% static 'images/logo-wioa.png' %}"></div>
+                <div class="w-100"></div>
+                <div class="col"><img class="img-fluid myimg" src=" {% static 'images/logo-seal.png' %}"></div>
+                <div class="col"><img class="img-fluid myimg" src=" {% static 'images/logo-adulteducation.png' %}"></div>
+                <div class="col"><img class="img-fluid myimg" src=" {% static 'images/logo-cahs.png' %}"></div>
+            </div>
+            <div class="row">
+                <div class="col"><img class="img-fluid myimg" src=" {% static 'images/logo-ccsu.png' %}"></div>
+                <div class="col"><img class="img-fluid myimg" src=" {% static 'images/logo-coramdeo.png' %}"></div>
+                <div class="col"><img class="img-fluid myimg" src=" {% static 'images/logo-ctdental.png' %}"></div>
+                <div class="w-100"></div>
+                <div class="col"><img class="img-fluid myimg" src=" {% static 'images/logo-ctmoneyschool.png' %}"></div>
+            </div>
+        <div class="row text-center">
+            <div>
+                <!--
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-familypromise.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-healthcenter.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-hospitalcentral.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-housingauthority.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-hra.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-jobcenter.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-libertyintegrated.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-tunxis.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-wioa.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-seal.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-adulteducation.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-cahs.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-ccsu.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-coramdeo.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-ctdental.png' %}">
+                <img style="width: 100px; height: 100px" src=" {% static 'images/logo-ctmoneyschool.png' %}">
+                -->
+            </div>
+        </div>
         </div>
     </section>
     <!--
