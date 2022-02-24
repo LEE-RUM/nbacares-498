@@ -82,13 +82,12 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content text-center">
                     <div class="modal-header">
-                        <h5 id="event-title" class="modal-title text-center">{{ event.event_name }}</h5>
+                        <h5 id="event-title" class="modal-title text-center"></h5>
                         <button id="popper-x" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div id="image-url" class="modal-body">
-                        <img src="{{ event.eventURL }}">
                     </div>
                     <div class="modal-footer">
                         <button id="closePopper" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -139,7 +138,6 @@
                     const image_url = document.getElementById('image-url')
                     event_title.innerHTML = arg.event._def.extendedProps.event_name
                     let url = arg.event._def.extendedProps.eventURL
-                    console.log(url)
                     image_url.innerHTML = `
                         <img src=${url}>
                     `
