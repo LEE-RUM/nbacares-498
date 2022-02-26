@@ -67,6 +67,7 @@ class Event(models.Model):
     event_tag = models.CharField(max_length=30, null=True, choices=EVENT_TAGS)
     event_status = models.CharField(max_length=30, choices=EVENT_STATUS, default='Pending')
     event_date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    event_popper = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
         return self.event_name

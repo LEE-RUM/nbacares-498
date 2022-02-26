@@ -2,6 +2,8 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 from .views import view_post, edit_blog, delete_blog, create_blog
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.view_home, name="home"),
@@ -40,4 +42,4 @@ urlpatterns = [
     path('admin-user-creation', views.view_admin_user_creation, name="admin_user_creation"),
     path('organization-settings', views.view_organization_settings, name="organization_settings"),
     path('calendar-template/', views.view_calendar.as_view(), name="calendar"),
-]
+]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

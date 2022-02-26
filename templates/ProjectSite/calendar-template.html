@@ -4,155 +4,204 @@
 {% block title %}Calendar{% endblock title %}
 
 {% block extracss %}
-  <link href="{% static 'calendar/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'calendar/main.css' %}" rel="stylesheet" />
 {% endblock extracss %}
 
 
 {% block content %}
     <main class="app-content">
-    <div class="row">
-    <div class="col-md-12">
-        <div class="tile row">
-            <div class="col-md-3">
-                {% if user.is_authenticated and not user.is_superuser %}
-                <button id="addEvent" type="button" class="btn btn-primary" style="background-color: #834655">ADD EVENT</button>
-                {% endif %}
-                <div id="external-events">
-                    <h4 class="mb-4">Filter Event</h4>
-                    <form method="get">
-                    {{ calendarFilter.form|crispy }}
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </form>
-                    <a class="btn btn-dark btn-outline-light btn-lg btn-block my-2" href="{% url 'home' %}">&#8592; Back to Home</a>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile row">
+                    <div class="col-md-3">
+                        {% if user.is_authenticated and not user.is_superuser %}
+                            <button id="addEvent" type="button" class="btn btn-primary" style="background-color: #834655">ADD EVENT</button>
+                        {% endif %}
+                        <div id="external-events">
+                            <h4 class="mb-4">Filter Event</h4>
+                            <form method="get">
+                                {{ calendarFilter.form|crispy }}
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
+                            <a class="btn btn-dark btn-outline-light btn-lg btn-block my-2" href="{% url 'home' %}">&#8592; Back to Home</a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="calendar"></div>
+                    </div>
+                    {% if user.is_authenticated and not user.is_superuser %}
+                        <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Event</h5>
+                                        <button id="modalClose1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="modal-body" style="height: 65vh;overflow-y: auto;">
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label">Event Title:</label>
+                                                {{ form.event_name }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Description:</label>
+                                                {{ form.event_description }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Start Date:</label>
+                                                {{ form.event_sTime }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">End Date:</label>
+                                                {{ form.event_eTime }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.event_tag|as_crispy_field }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.event_popper | as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button id="modalClose2" type="button" class="btn btn-danger">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-            <div class="col-md-9">
-                <div id="calendar"></div>
-            </div>
-            {% if user.is_authenticated and not user.is_superuser %}
-            <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary">
-                            <h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Event</h5>
-                            <button id="modalClose1" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="modal-body" style="height: 65vh;overflow-y: auto;">
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Event Title:</label>
-                                    {{ form.event_name }}
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Description:</label>
-                                    {{ form.event_description }}
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Start Date:</label>
-                                    {{ form.event_sTime }}
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">End Date:</label>
-                                    {{ form.event_eTime }}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.event_tag|as_crispy_field }}
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="modalClose2" type="button" class="btn btn-danger">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
+        </div>
+
+        <div class="modal" id="modal-popper" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content text-center">
+                    <div class="modal-header">
+                        <h5 id="event-title" class="modal-title text-center"></h5>
+                        <button id="popper-x" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="image-url" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closePopper" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
-            {% endif %}
         </div>
-    </div>
-</div>
+
+
     </main>
 {% endblock content %}
 
 {% block extrascripts %}
-  <script src="{% static 'calendar/main.js' %}"></script>
-  <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var today = new Date();
+    <script src="{% static 'calendar/main.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var today = new Date();
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
-          },
-          initialDate: today,
-          navLinks: true, // can click day/week names to navigate views
-          selectable: true,
-          selectMirror: true,
-          select: function(arg) {
-            console.log('clicked')
-            var modal = document.getElementById('eventModal')
-            modal.style.display = 'block'
-            calendar.unselect()
-          },
-          // THIS KEY WON'T WORK IN PRODUCTION!!!
-          // To make your own Google API key, follow the directions here:
-          // http://fullcalendar.io/docs/google_calendar/
-          // googleCalendarApiKey: 'AIzaSyCqCxjjLtjbtkX37aOtWB8OfwBLy_6QuYk',
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
+                },
+                initialDate: today,
+                navLinks: true, // can click day/week names to navigate views
+                selectable: true,
+                selectMirror: true,
+                select: function(arg) {
+                    console.log('clicked')
+                    var modal = document.getElementById('eventModal')
+                    modal.style.display = 'block'
+                    calendar.unselect()
+                },
+                // THIS KEY WON'T WORK IN PRODUCTION!!!
+                // To make your own Google API key, follow the directions here:
+                // http://fullcalendar.io/docs/google_calendar/
+                // googleCalendarApiKey: 'AIzaSyCqCxjjLtjbtkX37aOtWB8OfwBLy_6QuYk',
 
-          // bangladesh Holidays
-          // events: 'bn.bd#holiday@group.v.calendar.google.com',
-          eventClick: function(arg) {
-            //if (confirm('Are you sure you want to delete this event?')) {
-              //arg.event.remove()
-            //}
-          },
-          editable: true,
-          dayMaxEvents: true, // allow "more" link when too many events
-          events: {{ events|safe }},
-          // events: [
-          //   {
-          //     title: 'All Day Event',
-          //     start: '2021-06-26'
-          //   },
-          //   {
-          //     groupId: 999,
-          //     title: 'Repeating Event',
-          //     start: '2020-09-16T16:00:00'
-          //   },
-          //   {
-          //     title: 'Conference',
-          //     start: '2020-09-11',
-          //     end: '2020-09-13'
-          //   },
-          //   {
-          //     title: 'Click for Google',
-          //     url: 'http://google.com/',
-          //     start: '2020-09-28'
-          //   }
-          // ]
+                // bangladesh Holidays
+                // events: 'bn.bd#holiday@group.v.calendar.google.com',
+                eventClick: function(arg) {
+
+
+                    const modal_popper = document.getElementById('modal-popper')
+                    const event_title = document.getElementById('event-title')
+                    const image_url = document.getElementById('image-url')
+                    event_title.innerHTML = arg.event._def.extendedProps.event_name
+                    let url = arg.event._def.extendedProps.eventURL
+                    image_url.innerHTML = `
+                        <img src=${url}>
+                    `
+                    modal_popper.style.display = 'block'
+
+
+
+
+
+                    //if (confirm('Are you sure you want to delete this event?')) {
+                    //arg.event.remove()
+                    //}
+                },
+                editable: true,
+                dayMaxEvents: true, // allow "more" link when too many events
+                events: {{ events|safe }},
+                // events: [
+                //   {
+                //     title: 'All Day Event',
+                //     start: '2021-06-26'
+                //   },
+                //   {
+                //     groupId: 999,
+                //     title: 'Repeating Event',
+                //     start: '2020-09-16T16:00:00'
+                //   },
+                //   {
+                //     title: 'Conference',
+                //     start: '2020-09-11',
+                //     end: '2020-09-13'
+                //   },
+                //   {
+                //     title: 'Click for Google',
+                //     url: 'http://google.com/',
+                //     start: '2020-09-28'
+                //   }
+                // ]
+            });
+            calendar.render();
         });
-        calendar.render();
-      });
-      const closeBtn1 = document.getElementById('modalClose1');
-      const closeBtn2 = document.getElementById('modalClose2');
-      const addBtn = document.getElementById('addEvent');
-      closeBtn1.addEventListener('click',()=>{
-        const eventModal = document.getElementById('eventModal')
-        eventModal.style.display = 'none';
-      });
-      closeBtn2.addEventListener('click',()=>{
-        const eventModal = document.getElementById('eventModal')
-        eventModal.style.display = 'none';
-      });
-      addBtn.addEventListener('click',()=>{
-          const modal = document.getElementById('eventModal')
-          modal.style.display = 'block'
-      });
-  </script>
+        const closeBtn1 = document.getElementById('modalClose1');
+        const closeBtn2 = document.getElementById('modalClose2');
+        const closeBtn3 = document.getElementById('closePopper');
+        const closeBtn4 = document.getElementById('popper-x');
+        const addBtn = document.getElementById('addEvent');
+        closeBtn1.addEventListener('click',()=>{
+            const eventModal = document.getElementById('eventModal')
+            eventModal.style.display = 'none';
+        });
+        closeBtn2.addEventListener('click',()=>{
+            const eventModal = document.getElementById('eventModal')
+            eventModal.style.display = 'none';
+        });
+        closeBtn3.addEventListener('click',()=>{
+            const modal_popper = document.getElementById('modal-popper')
+            modal_popper.style.display = 'none';
+        });
+        closeBtn4.addEventListener('click',()=>{
+            const modal_popper = document.getElementById('modal-popper')
+            modal_popper.style.display = 'none';
+        });
+        addBtn.addEventListener('click',()=>{
+            const modal = document.getElementById('eventModal')
+            modal.style.display = 'block'
+        });
+    </script>
 {% endblock extrascripts %}

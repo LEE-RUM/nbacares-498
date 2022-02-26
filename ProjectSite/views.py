@@ -332,18 +332,23 @@ class view_calendar(generic.View):
         calendarFilter = CalendarFilter(request.GET, queryset=events)
         events = calendarFilter.qs
         for event in events:
+            url = ""
+            if event.event_popper:
+                url = str(event.event_popper.url)
             event_list.append(
                 {
+                    "event_name": event.event_name,
                     "title": event.event_name,
                     "start": event.event_sTime.date().strftime("%Y-%m-%dT%H:%M:%S"),
                     "end": event.event_eTime.date().strftime("%Y-%m-%dT%H:%M:%S"),
+                    "eventURL": url,
                 }
             )
         context = {'form': forms, 'events': event_list, 'calendarFilter': calendarFilter}
         return render(request, 'ProjectSite/calendar-template.html', context)
 
     def post(self, request, *args, **kwargs):
-        forms = self.class_form(request.POST)
+        forms = self.class_form(request.POST, request.FILES)
         if forms.is_valid():
             form = forms.save(commit=False)
             form.user = Organization.objects.get(user=request.user)
