@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ProjectSite/migrations/0041_merge_20220226_1553.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +89,7 @@
       <workItem from="1645849652585" duration="47000" />
       <workItem from="1645904266771" duration="683000" />
       <workItem from="1645905123795" duration="523000" />
+      <workItem from="1645908372140" duration="662000" />
     </task>
     <servers />
   </component>
