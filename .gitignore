@@ -1,1 +1,5 @@
-*.sqlite3
+*.log
+*.pot
+*.pyc
+pycache
+db.sqlite3
