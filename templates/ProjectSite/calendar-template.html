@@ -89,11 +89,10 @@
                     </div>
                     <div id="image-url" class="modal-body">
                     </div>
-                    <div id="add-to-calendar" class="btn btn-primary">
-                        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Your+Event+Name&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location=Waldorf+Astoria,+301+Park+Ave+,+New+York,+NY+10022&sf=true&output=xml">Add to caledar</a>
-                    </div>
+                    
                     <div class="modal-footer">
-                        <button id="closePopper" type="button" class="btn btn-danger" onclick='console.log("hello")'>Close</button>
+                        <div id="add-to-calendar" class="btn btn-secondary"></div>
+                        <button id="closePopper" type="button" class="btn btn-danger">Close</button>
                     </div>
                 </div>
             </div>
@@ -148,7 +147,7 @@
                     let endDate = arg.event._instance.range.end.toISOString().replace(/[-:.]/g, "")
                     let hrefEvent = `https://calendar.google.com/calendar/r/eventedit?text=${arg.event._def.extendedProps.event_name}&dates=${startDate}/${endDate}&ctz=America/New_York&details=detail`
                     console.log(hrefEvent)
-                    addToCalendarBtn.innerHTML = `<a href=${hrefEvent}>Add To Google Calendar</a>`
+                    addToCalendarBtn.innerHTML = `<a class="text-decoration-none text-white" href=${hrefEvent}>Add To Google Calendar</a>`
 
                     modal_popper.style.display = 'block'
 
