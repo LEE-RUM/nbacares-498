@@ -335,12 +335,14 @@ class view_calendar(generic.View):
             url = ""
             if event.event_popper:
                 url = str(event.event_popper.url)
+            print(event.event_sTime.strftime("%Y-%m-%dT%H:%M:%S"))
+            print(event.event_eTime.strftime("%Y-%m-%dT%H:%M:%S"))
             event_list.append(
                 {
                     "event_name": event.event_name,
                     "title": event.event_name,
-                    "start": event.event_sTime.date().strftime("%Y-%m-%dT%H:%M:%S"),
-                    "end": event.event_eTime.date().strftime("%Y-%m-%dT%H:%M:%S"),
+                    "start": event.event_sTime.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "end": event.event_eTime.strftime("%Y-%m-%dT%H:%M:%S"),
                     "eventURL": url,
                 }
             )
