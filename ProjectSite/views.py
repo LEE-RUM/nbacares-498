@@ -1,4 +1,5 @@
 from ast import Del
+from multiprocessing import context
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -27,7 +28,21 @@ from django.template.loader import render_to_string
 
 
 def view_home(request):
-    return render(request, 'ProjectSite/home.html')
+    images = GalleryImages.objects.all()
+    context = {
+        'images': images
+    }
+    return render(request, 'ProjectSite/home.html', context)
+
+class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = GalleryImages
+    form_class = GalleryImagesForm
+    template_name = 'ProjectSite/upload-image.html'
+    success_url = reverse_lazy('blog')
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin')
+
 
 def view_about(request):
     return render(request, 'ProjectSite/about.html')

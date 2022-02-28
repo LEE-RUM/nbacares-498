@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import view_post, edit_blog, delete_blog, create_blog
+from .views import view_post, edit_blog, delete_blog, create_blog, upload_image
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -17,6 +17,8 @@ urlpatterns = [
     path('blog/add/', create_blog.as_view(), name='create_blog'),
     path('blog/<str:title>/delete/', delete_blog.as_view(), name="delete_blog"),
     path('blog/<str:title>/edit/', edit_blog.as_view(), name="edit_blog"),
+
+    path('upload/', upload_image.as_view(), name="upload_image"),
     
     # Authentication
     path('resident-signup/', views.resident_signup, name="resident_signup"),
