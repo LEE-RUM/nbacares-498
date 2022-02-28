@@ -145,3 +145,10 @@ class Blog(models.Model):
         if not self.pk:
             self._generate_slug()
         super().save(*args, **kwargs)
+
+class GalleryImages(models.Model):
+    title = models.CharField(default='image', max_length=128)
+    image = models.ImageField(upload_to="images/", null=True)
+
+    def __str__(self):
+        return self.title

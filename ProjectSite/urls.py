@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import view_post, edit_blog, delete_blog, create_blog
+from .views import view_post, edit_blog, delete_blog, create_blog, upload_image
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -11,6 +11,8 @@ urlpatterns = [
 
     path('resources', views.view_resources, name="resources"),
     path('autosuggest/', views.autosuggest, name="autosuggest"),
+
+    path('upload/', upload_image.as_view(), name="upload_image"),
 
     path('blog/', views.view_blog, name="blog"),
     path('blog/<str:title>/view/', view_post.as_view(), name="view_post"),
