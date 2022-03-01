@@ -24,7 +24,7 @@
                 </div>
                 <div class="text-center" style="font-size: 20px">
                     <container class="text-center">
-                        <p style="color: black;">{{ post.post_content|safe|slice:"500" }}...</p>
+                        <p style="color: black;" class="img-fluid">{{ post.post_content|safe|slice:"500" }}...</p>
                     </container>
                 </div>
                 {% if user.is_staff %}

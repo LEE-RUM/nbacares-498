@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load user_tags %}
 <head>
     <title>{% block title %}{% endblock title %}</title>
     <link rel="icon" href="{% static 'images/KO-NB-Cares-logo.png' %}">
     <meta charset="utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <!-- Main CSS-->
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -13,6 +17,14 @@
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/ProjectSite.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'css/Navbar.css' %}">-->
     {% block extracss %}
     {% endblock extracss %}
 </head>
@@ -20,11 +32,43 @@
 <body class="">
 <section class="custom-nav">
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-    <div class="container px-4">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <img src="{% static 'images/KO-NB-Cares-logo.png' %}" alt="logo"></a>
-    </div>
-</nav>
+        <div class="container px-4">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/KO-NB-Cares-logo.png' %}" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'calendar' %}">Calendar</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'resources' %}">Resources</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+                    {% if user.is_superuser %}
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'admin_panel' %}">Admin
+                        Panel</a></li>
+                    {% endif %}
+                    {% if request.user|has_group:"organizer" and user.is_authenticated and not user.is_superuser %}
+                        <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'organization_settings' %}">Settings</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user|has_group:"resident" %} 
+                    <li class="nav-item align-self-end">
+                        <a class="nav-link" href="{% url 'resident_profile' %}">Profile</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item align-self-end">
+                        {% if user.is_authenticated %}
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </section>
 {% block content %}
 {% endblock content %}
