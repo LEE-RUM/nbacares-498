@@ -120,10 +120,11 @@
                 selectable: true,
                 selectMirror: true,
                 select: function(arg) {
-                    console.log('clicked')
                     var modal = document.getElementById('eventModal')
-                    modal.style.display = 'block'
-                    calendar.unselect()
+                    if (modal) {
+                        modal.style.display = 'block'
+                        calendar.unselect()
+                    }
                 },
                 // THIS KEY WON'T WORK IN PRODUCTION!!!
                 // To make your own Google API key, follow the directions here:
@@ -134,6 +135,8 @@
                 // events: 'bn.bd#holiday@group.v.calendar.google.com',
                 eventClick: function(arg) {
                     console.log(arg)
+                    let e = "{{ events }}"
+                    console.log(e)
 
                     const modal_popper = document.getElementById('modal-popper')
 
@@ -143,11 +146,14 @@
 
                     event_title.innerHTML = arg.event._def.extendedProps.event_name
                     image_url.innerHTML = `<img src=${arg.event._def.extendedProps.eventURL}> `
-                    let startDate = arg.event._instance.range.start.toISOString().replace(/[-:.]/g, "")
-                    let endDate = arg.event._instance.range.end.toISOString().replace(/[-:.]/g, "")
-                    let hrefEvent = `https://calendar.google.com/calendar/r/eventedit?text=${arg.event._def.extendedProps.event_name}&dates=${startDate}/${endDate}&ctz=America/New_York&details=detail`
-                    console.log(hrefEvent)
-                    addToCalendarBtn.innerHTML = `<a class="text-decoration-none text-white" href=${hrefEvent}>Add To Google Calendar</a>`
+                    // href - add to google calendar
+                    let eventName = encodeURIComponent(arg.event._def.extendedProps.event_name)
+                    let eventDescription = encodeURIComponent(arg.event._def.extendedProps.eventDescription)
+                    let startDate = arg.event._instance.range.start.toISOString().replace(/-|:|\.\d\d\d/g,"")
+                    let endDate = arg.event._instance.range.end.toISOString().replace(/-|:|\.\d\d\d/g,"")
+                    let hrefEvent = `https://calendar.google.com/calendar/r/eventedit?text=${eventName}&dates=${startDate}/${endDate}&ctz=America/New_York&details=${eventDescription}`
+                    // console.log(hrefEvent)
+                    addToCalendarBtn.innerHTML = `<a class="text-decoration-none text-white" href=${hrefEvent} target="_blank">Add To Google Calendar</a>`
 
                     modal_popper.style.display = 'block'
 
@@ -161,7 +167,7 @@
                 },
                 editable: true,
                 dayMaxEvents: true, // allow "more" link when too many events
-                events: {{ events|safe }},
+                events: {{ event_list|safe }},
                 // events: [
                 //   {
                 //     title: 'All Day Event',
@@ -205,7 +211,6 @@
             });
         }
         closeBtn3.addEventListener('click',()=>{
-            console.log("clos")
             const modal_popper = document.getElementById('modal-popper')
             modal_popper.style.display = 'none';
         });

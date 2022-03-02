@@ -346,21 +346,18 @@ class view_calendar(generic.View):
         calendarFilter = CalendarFilter(request.GET, queryset=events)
         events = calendarFilter.qs
         for event in events:
-            url = ""
-            if event.event_popper:
-                url = str(event.event_popper.url)
-            print(event.event_sTime.strftime("%Y-%m-%dT%H:%M:%S"))
-            print(event.event_eTime.strftime("%Y-%m-%dT%H:%M:%S"))
             event_list.append(
                 {
-                    "event_name": event.event_name,
-                    "title": event.event_name,
+                    "eventID": event.id,
                     "start": event.event_sTime.strftime("%Y-%m-%dT%H:%M:%S"),
                     "end": event.event_eTime.strftime("%Y-%m-%dT%H:%M:%S"),
-                    "eventURL": url,
+                    "title": event.event_name or "",
+                    "event_name": event.event_name or "",
+                    "eventURL": str(event.event_popper.url) if event.event_popper else "",
+                    "eventDescription": event.event_description or "",
                 }
             )
-        context = {'form': forms, 'events': event_list, 'calendarFilter': calendarFilter}
+        context = {'form': forms, 'event_list': event_list, 'events': events, 'calendarFilter': calendarFilter}
         return render(request, 'ProjectSite/calendar-template.html', context)
 
     def post(self, request, *args, **kwargs):
