@@ -39,9 +39,12 @@ urlpatterns = [
     path('update/<str:pk>', views.update_events, name="update_events"),
     path('delete/<str:pk>', views.delete_events, name="delete_events"),
 
+    path('calendar-template/', views.view_calendar.as_view(), name="calendar"),
+    path('calendar-template/event/', views.calendar_event, name="calendar_event"),
+    path('calendar-template/register/', views.register_event, name="register_event"),
+    
     path('admin-panel', views.view_admin_panel, name="admin_panel"),
     path('admin-organization/<str:pk>', views.view_admin_organzation, name="admin_organization"),
     path('admin-user-creation', views.view_admin_user_creation, name="admin_user_creation"),
     path('organization-settings', views.view_organization_settings, name="organization_settings"),
-    path('calendar-template/', views.view_calendar.as_view(), name="calendar"),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

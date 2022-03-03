@@ -352,12 +352,9 @@ class view_calendar(generic.View):
                     "start": event.event_sTime.strftime("%Y-%m-%dT%H:%M:%S"),
                     "end": event.event_eTime.strftime("%Y-%m-%dT%H:%M:%S"),
                     "title": event.event_name or "",
-                    "event_name": event.event_name or "",
-                    "eventURL": str(event.event_popper.url) if event.event_popper else "",
-                    "eventDescription": event.event_description or "",
                 }
             )
-        context = {'form': forms, 'event_list': event_list, 'events': events, 'calendarFilter': calendarFilter}
+        context = {'form': forms, 'event_list': event_list, 'calendarFilter': calendarFilter}
         return render(request, 'ProjectSite/calendar-template.html', context)
 
     def post(self, request, *args, **kwargs):
@@ -369,3 +366,39 @@ class view_calendar(generic.View):
             return redirect('calendar')
         context = {"form": forms}
         return render(request, 'ProjectSite/calendar-template.html', context)
+
+def calendar_event(request):
+    eventID = request.POST.get('event_id')
+    event = Event.objects.get(id=eventID)
+    resident = Resident.objects.get(user=request.user)
+    data = {
+        "event_name": event.event_name or "",
+        "eventURL": str(event.event_popper.url) if event.event_popper else "",
+        "eventDescription": event.event_description or "",
+        "registered": True if resident and event.registered.filter(user=request.user).exists() else False,
+        "registeredCount": event.registered.all().count(),
+        "eventID": eventID,
+    }
+    return JsonResponse(data)
+
+
+def register_event(request):
+    resident = Resident.objects.get(user=request.user)
+    if request.method == "POST":
+        eventID = request.POST.get('event_id')
+        event = Event.objects.get(id=eventID)
+
+        if resident in event.registered.all():
+            event.registered.remove(resident)
+        else:
+            event.registered.add(resident)
+
+        data = {
+            'registeredCount': event.registered.all().count(),
+            'registered': True if event.registered.filter(user=request.user).exists() else False,
+            'eventID': eventID,
+        }
+        return JsonResponse(data)
+    else:  
+        return redirect('calendar')
+
