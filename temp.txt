@@ -1,2 +1,0 @@
-
-                        // {% if request.user.resident not in Event.objects.get(pk=) %}
