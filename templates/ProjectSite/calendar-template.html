@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="tile row">
                     <div class="col-md-3">
-                        {% if user.is_authenticated and not user.is_superuser %}
+                        {% if request.user|has_group:"organizer" %}
                             <button id="addEvent" type="button" class="btn btn-primary" style="background-color: #834655">ADD EVENT</button>
                         {% endif %}
                         <div id="external-events">
@@ -32,7 +32,7 @@
                     <div class="col-md-9">
                         <div id="calendar"></div>
                     </div>
-                    {% if user.is_authenticated and not user.is_superuser %}
+                    {% if request.user|has_group:"organizer" %}
                         <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -90,7 +90,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="image-url" class="modal-body"></div>                    
+                    <div id="image-url" class="modal-body"></div>                   
                     <form id="registerBtnForm" class="m-3"></form> 
                     <div class="modal-footer">
                         <div id="add-to-calendar" class="btn btn-primary"></div>
@@ -139,6 +139,11 @@
                 eventClick: function(arg) {
                     console.log(arg)
 
+                    $('#event-title').html(arg.event._def.extendedProps.event_name)
+                    $('#image-url').html(`<img src=${arg.event._def.extendedProps.eventURL}> `)
+                    renderAddToCalendar(arg)
+
+                    // ajax request for user event registeration data
                     $.ajax({
                         type: "POST",
                         url: '{% url "calendar_event" %}',
@@ -148,16 +153,14 @@
                         },
                         dataType: 'json',
                         success: function (data, status) {
-                            $('#event-title').html(data.event_name)
-                            $('#image-url').html(`<img src=${data.eventURL}> `)
-                            renderAddToCalendar(arg, data)
                             renderRegisterBtn(data)
-                            $('#modal-popper').css("display", "block")
                         },
                         error: function (res) {
                             alert(res.status);                                                                                                                          
                         },
                     });
+                    
+                    $('#modal-popper').css("display", "block")
                     
                     //if (confirm('Are you sure you want to delete this event?')) {
                     //arg.event.remove()
@@ -166,74 +169,32 @@
                 editable: true,
                 dayMaxEvents: true, // allow "more" link when too many events
                 events: {{ event_list|safe }},
-                // events: [
-                //   {
-                //     title: 'All Day Event',
-                //     start: '2021-06-26'
-                //   },
-                //   {
-                //     groupId: 999,
-                //     title: 'Repeating Event',
-                //     start: '2020-09-16T16:00:00'
-                //   },
-                //   {
-                //     title: 'Conference',
-                //     start: '2020-09-11',
-                //     end: '2020-09-13'
-                //   },
-                //   {
-                //     title: 'Click for Google',
-                //     url: 'http://google.com/',
-                //     start: '2020-09-28'
-                //   }
-                // ]
             });
             calendar.render();
-            
-        });
+        }); // End Calendar
         
-        const closeBtn1 = document.getElementById('modalClose1');
-        const closeBtn2 = document.getElementById('modalClose2');
-        const closeBtn3 = document.getElementById('closePopper');
-        const closeBtn4 = document.getElementById('popper-x');
-        const addBtn = document.getElementById('addEvent');
-        if (closeBtn1) {
-            closeBtn1.addEventListener('click',()=>{
-                const eventModal = document.getElementById('eventModal')
-                eventModal.style.display = 'none';
-            });
-        }
-        if (closeBtn2) {
-            closeBtn2.addEventListener('click',()=>{
-                const eventModal = document.getElementById('eventModal')
-                eventModal.style.display = 'none';
-            });
-        }
-        closeBtn3.addEventListener('click',()=>{
-            const modal_popper = document.getElementById('modal-popper')
-            modal_popper.style.display = 'none';
-        });
-        closeBtn4.addEventListener('click',()=>{
-            const modal_popper = document.getElementById('modal-popper')
-            modal_popper.style.display = 'none';
-        });
-        if (addBtn) {
-            addBtn.addEventListener('click',()=>{
-                const modal = document.getElementById('eventModal')
-                modal.style.display = 'block'
-            });
-        }
+        // close btns for create event form
+        $('#modalClose1').click(() => $("#eventModal").css("display", "none"))
+        $('#modalClose2').click(() => $("#eventModal").css("display", "none"))
+        // close btns for popper
+        $('#closePopper').click(() => $("#modal-popper").css("display", "none"))
+        $('#popper-x').click(() => $("#modal-popper").css("display", "none"))
+        // add event btn => open event form
+        $('#addEvent').click(() => $("#eventModal").css("display", "block"))
 
-        const renderAddToCalendar = (arg, data) => {
+        // create a button => add current event (popper) to google calendar
+        const renderAddToCalendar = (arg) => {
             let startDate =  new Date(arg.event._instance.range.start.getTime() + arg.event._instance.range.start.getTimezoneOffset() * 60 *1000).toISOString().replace(/-|:|\.\d\d\d/g,"")
             let endDate =  new Date(arg.event._instance.range.end.getTime() + arg.event._instance.range.start.getTimezoneOffset() * 60 *1000).toISOString().replace(/-|:|\.\d\d\d/g,"")
-            let hrefEvent = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(data.event_name)}&dates=${startDate}/${endDate}&ctz=UTC&details=${encodeURIComponent(data.eventDescription)}`
+            let hrefEvent = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(arg.event._def.extendedProps.event_name)}&dates=${startDate}/${endDate}&ctz=UTC&details=${encodeURIComponent(arg.event._def.extendedProps.eventDescription)}`
             html = `<a class="text-decoration-none text-white" href=${hrefEvent} target="_blank"><i class="bi bi-calendar2-plus"></i> Add To Google Calendar</a>`
             $('#add-to-calendar').html(html)
         }
 
+        // create a button => allow users to register for current event
         const renderRegisterBtn = (data) => {
-            let likeBtn = (data.registered == true) ? `<button type="submit" class="btn btn-secondary"><i class="bi bi-bookmark-star-fill"></i> Registered</button>` : `<button type="submit" class="btn btn-success"><i class="bi bi-bookmark-star"></i> Register</button>`
+            likeBtn = (data.registered == true) ? `<button type="submit" class="btn btn-secondary"><i class="bi bi-bookmark-star-fill"></i> Registered</button>` : `<button type="submit" class="btn btn-success"><i class="bi bi-bookmark-star"></i> Register</button>`
+
             let html = `
                 <input type='hidden' id="event_id" name='event_id' value="${data.eventID}">
                 ${likeBtn}
@@ -242,8 +203,10 @@
             $('#registerBtnForm').html(html)
         }
 
+        // ajax request for register or unregister an event
         $("#registerBtnForm").on('submit', (e) => {
             e.preventDefault();
+
             $.ajax({
                 type: "POST",
                 url: '{% url "register_event" %}',
@@ -255,8 +218,14 @@
                 success: function (data, status) {
                     renderRegisterBtn(data)
                 },
+                statusCode: {
+                    401: function() {
+                        // Unauthorized, redirect to login
+                        window.location.href = '{% url "login" %}';
+                    },
+                },
                 error: function (res) {
-                    alert(res.status);                                                                                                                          
+                    // alert(res.status);                                                                                                                          
                 },
             });
         });

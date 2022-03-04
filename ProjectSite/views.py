@@ -16,7 +16,7 @@ from django.urls.base import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 # send email
 from django.contrib.sites.shortcuts import get_current_site
@@ -352,6 +352,9 @@ class view_calendar(generic.View):
                     "start": event.event_sTime.strftime("%Y-%m-%dT%H:%M:%S"),
                     "end": event.event_eTime.strftime("%Y-%m-%dT%H:%M:%S"),
                     "title": event.event_name or "",
+                    "event_name": event.event_name or "",
+                    "eventURL": str(event.event_popper.url) if event.event_popper else "",
+                    "eventDescription": event.event_description or "",
                 }
             )
         context = {'form': forms, 'event_list': event_list, 'calendarFilter': calendarFilter}
@@ -368,37 +371,36 @@ class view_calendar(generic.View):
         return render(request, 'ProjectSite/calendar-template.html', context)
 
 def calendar_event(request):
-    eventID = request.POST.get('event_id')
-    event = Event.objects.get(id=eventID)
-    resident = Resident.objects.get(user=request.user)
-    data = {
-        "event_name": event.event_name or "",
-        "eventURL": str(event.event_popper.url) if event.event_popper else "",
-        "eventDescription": event.event_description or "",
-        "registered": True if resident and event.registered.filter(user=request.user).exists() else False,
-        "registeredCount": event.registered.all().count(),
-        "eventID": eventID,
-    }
-    return JsonResponse(data)
-
-
-def register_event(request):
-    resident = Resident.objects.get(user=request.user)
     if request.method == "POST":
         eventID = request.POST.get('event_id')
         event = Event.objects.get(id=eventID)
 
-        if resident in event.registered.all():
-            event.registered.remove(resident)
+        data = {
+            # not registered - if current user is not signed in or this user hasn't register that event yet
+            "registered": True if not request.user.is_anonymous and event.registered.filter(username=request.user).exists() else False,
+            "registeredCount": event.registered.all().count(),
+            "eventID": eventID,
+        }
+        return JsonResponse(data)
+
+def register_event(request):
+    if request.method == "POST":
+        # if user is not logged in, redirect to login
+        if request.user.is_anonymous:
+            return HttpResponse("", status=401)
+            
+        eventID = request.POST.get('event_id')
+        event = Event.objects.get(id=eventID)
+
+        if request.user in event.registered.all():
+            event.registered.remove(request.user)
         else:
-            event.registered.add(resident)
+            event.registered.add(request.user)
 
         data = {
             'registeredCount': event.registered.all().count(),
-            'registered': True if event.registered.filter(user=request.user).exists() else False,
+            'registered': True if event.registered.filter(username=request.user).exists() else False,
             'eventID': eventID,
         }
         return JsonResponse(data)
-    else:  
-        return redirect('calendar')
 
