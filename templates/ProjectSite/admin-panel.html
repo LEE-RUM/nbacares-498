@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block body %}
+    <form action="{% url 'send_email_notifications' %}" method="GET" class="text-center">
+        <button type="submit" class="btn btn-success w-50 p-3 m-3">Send notifications</button>
+    </form>
     <br>
     <div class="row px-5">
         <div class="col">
@@ -143,4 +146,5 @@
             </div>
         </div>
     </div>
+    
 {% endblock %}

@@ -1,0 +1,5 @@
+
+Hi {{ user.username }},
+Title: {{ event.event_name }}
+Time: {{ event.event_sTime|date:"g:i a" }} - {{ event.event_eTime|date:"g:i a" }}
+Description: {{ event.event_description }}

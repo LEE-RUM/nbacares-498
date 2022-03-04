@@ -24,6 +24,8 @@ import uuid
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
+from datetime import datetime, timedelta, time
+from django.utils import timezone
 
 
 def view_home(request):
@@ -404,3 +406,28 @@ def register_event(request):
         }
         return JsonResponse(data)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles='admin')
+def send_email_notifications(request):
+    events = Event.objects.filter(
+        event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0), 
+        event_sTime__lte=datetime.now().replace(hour=23, minute=59, second=59)
+        )
+    for event in events:
+        users = event.registered.all()
+        for user in users:
+            sendNotificationEmail(request, event, user)
+    return redirect('admin_panel')
+
+def sendNotificationEmail(request, event, user):
+    emailBodyTXT = render_to_string('ProjectSite/notification-email.txt', { 'event': event, 'user': user })
+    emailBodyHTML = render_to_string('ProjectSite/notification-email.html', { 'event': event, 'user': user })
+            
+    send_mail(
+        'NBCARES Event Notification',
+        emailBodyTXT, 
+        settings.EMAIL_HOST_USER,
+        [user.email],
+        fail_silently=False,
+        html_message=emailBodyHTML,
+    )
