@@ -140,7 +140,7 @@
                     console.log(arg)
 
                     $('#event-title').html(arg.event._def.extendedProps.event_name)
-                    $('#image-url').html(`<img src=${arg.event._def.extendedProps.eventURL}> `)
+                    $('#image-url').html(`<img class="img-fluid" src=${arg.event._def.extendedProps.eventURL}> `)
                     renderAddToCalendar(arg)
 
                     // ajax request for user event registeration data
