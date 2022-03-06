@@ -18,15 +18,14 @@
                 <div class="tile row">
                     <div class="col-md-3">
                         {% if request.user|has_group:"organizer" %}
-                            <button id="addEvent" type="button" class="btn btn-primary" style="background-color: #834655">ADD EVENT</button>
+                            <button id="addEvent" type="button" class="btn btn-primary" style="background-color: #834655;border-color: #834655">ADD EVENT</button>
                         {% endif %}
                         <div id="external-events">
                             <h4 class="mb-4">Filter Event</h4>
                             <form method="get">
                                 {{ calendarFilter.form|crispy }}
-                                <button class="btn btn-primary" type="submit">Search</button>
+                                <button class="btn btn-primary" style="background-color: #834655;border-color: #834655" type="submit">SEARCH</button>
                             </form>
-                            <a class="btn btn-dark btn-outline-light btn-lg btn-block my-2" href="{% url 'home' %}">&#8592; Back to Home</a>
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -36,7 +35,7 @@
                         <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-primary">
+                                    <div class="modal-header bg-primary" style="background-color: #834655 !important;">
                                         <h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Event</h5>
                                         <button id="modalClose1" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -70,7 +69,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button id="modalClose2" type="button" class="btn btn-danger">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="submit" class="btn btn-primary" style="background-color: #834655;border-color: #834655">Save</button>
                                         </div>
                                     </form>
                                 </div>
