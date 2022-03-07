@@ -47,4 +47,6 @@ urlpatterns = [
     path('admin-organization/<str:pk>', views.view_admin_organzation, name="admin_organization"),
     path('admin-user-creation', views.view_admin_user_creation, name="admin_user_creation"),
     path('organization-settings', views.view_organization_settings, name="organization_settings"),
+    path('send-email-notifications/', views.send_email_notifications, name="send_email_notifications"),
+
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
