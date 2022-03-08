@@ -373,8 +373,8 @@ class view_calendar(generic.View):
         return render(request, 'ProjectSite/calendar-template.html', context)
 
 def calendar_event(request):
-    if request.method == "POST":
-        eventID = request.POST.get('event_id')
+    if request.method == "GET":
+        eventID = request.GET.get('event_id')
         event = Event.objects.get(id=eventID)
 
         data = {
@@ -386,12 +386,12 @@ def calendar_event(request):
         return JsonResponse(data)
 
 def register_event(request):
-    if request.method == "POST":
+    if request.method == "GET":
         # if user is not logged in, redirect to login
         if request.user.is_anonymous:
             return HttpResponse("", status=401)
             
-        eventID = request.POST.get('event_id')
+        eventID = request.GET.get('event_id')
         event = Event.objects.get(id=eventID)
 
         if request.user in event.registered.all():

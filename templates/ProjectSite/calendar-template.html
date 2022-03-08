@@ -144,7 +144,7 @@
 
                     // ajax request for user event registeration data
                     $.ajax({
-                        type: "POST",
+                        type: "GET",
                         url: '{% url "calendar_event" %}',
                         data: {
                             event_id: arg.event._def.extendedProps.eventID,
@@ -207,7 +207,7 @@
             e.preventDefault();
 
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: '{% url "register_event" %}',
                 data: {
                     event_id: $('#event_id').val(),
