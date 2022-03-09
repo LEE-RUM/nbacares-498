@@ -31,14 +31,14 @@
                         <ul class="dropdown-menu">
                             <!-- Category -->
                             <li><strong class="dropdown-item fw-bold dropdown-heading">Category</strong></li>
-                                <li><hr class="dropdown-divider dropdown-heading"></li>
+                                <li class="dropdown-divider dropdown-heading"></li>
                                 <li><a class="dropdown-item" onclick="selectService('All')">All</a>
                                 {% for category in categories %}
                                 <li><a class="dropdown-item dropdown-heading" >{{ category }} &raquo; </a>
                                     <ul class="submenu dropdown-menu">
                                         <!-- Service -->
                                         <li><b class="dropdown-item fw-bold dropdown-heading">Service</b>
-                                        <li><hr class="dropdown-divider dropdown-heading"></li>
+                                        <li class="dropdown-divider dropdown-heading"></li>
                                         {% for service in services %}
                                             {% if service.category == category %}
                                                 <li><a class="dropdown-item" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>
@@ -112,9 +112,8 @@
 <!-- Filter contact -->
 <script type="text/javascript">
     // Select a different service
-    const selectedService = document.getElementById("selected-service");
     function selectService(service) {
-        selectedService.value = service;
+        $("#selected-service").val(service)
     }
     $(function () {
         //Auto complete for search bar
@@ -122,9 +121,29 @@
             source: "{% url 'autosuggest' %}",
             minlength : 2,
         });
-    console.log("loaded")
         // Prevent dropdown disappear when click on category
         $('.dropdown-heading').click((e) => e.stopPropagation());
+
+        // make dropdown as accordion for smaller screens
+		if (window.innerWidth < 992) {			
+            $("#dropdown-show").click(() => $(".submenu").css("display", "none"))
+			document.querySelectorAll('.dropdown-menu a').forEach(function(element){
+				element.addEventListener('click', function (e) {
+				  	let nextEl = this.nextElementSibling;
+				  	if(nextEl && nextEl.classList.contains('submenu')) {	
+				  		// prevent opening link if link needs to open dropdown
+				  		e.preventDefault();
+				  		if(nextEl.style.display != 'block') { 
+                            $(".submenu").hide()
+				  			nextEl.style.display = 'block';
+				  		} else {
+                            $(".submenu").hide()
+                        }
+				  	}
+				});
+			})
+		}
     });
+    $(window).resize(() => {location.reload();});
 </script>
 {% endblock scripts %}

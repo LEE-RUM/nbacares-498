@@ -15,11 +15,16 @@
 {% block body %}
 <div class="container">
     <div class="row bg-white" style="border-radius: 30px;">
-        <div class="col-12 col-md-6 col-lg-5 p-0">
+        <div class="col-12 col-lg-6 col-xl-6 col-xxl-5 p-0 order-lg-1 order-2">
             <img src="{% static 'images/IMG_0078.jpg' %}" class="img-fluid mx-auto" style="border-radius: 30px;" alt="">
         </div>
-        {% block auth_content %}
-        {% endblock %}
+        <div class="col-12 col-lg-6 col-xl-6 col-xxl-7 px-5 pb-5 my-auto order-lg-2 order-1">
+            <div class="d-flex justify-content-center">
+                <img src="{% static 'images/NB Cares logo.jpg' %}" class="img-fluid mt-5" style="height: 8rem;" alt="">
+            </div>
+            {% block auth_content %}
+            {% endblock %}
+        </div>
         
     </div>
 </div>

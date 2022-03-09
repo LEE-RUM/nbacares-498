@@ -6,14 +6,9 @@
 {% endblock %}
 
 {% block auth_content %}
-        
-<div class="col-12 col-md-6 col-lg-7 px-5 pb-5 my-auto">
-    <div class="d-flex justify-content-center">
-        <img src="{% static 'images/NB Cares logo.jpg' %}" class="img-fluid mt-5" style="height: 10rem;" alt="">
-    </div>
-    <div class="d-flex justify-content-center">
-        <h4 class="text-dark h2 mt-5">Sign-In</h4>
-    </div>
+    <!-- Header -->
+    <div class="text-dark display-5 text-center fw-bold m-5">Sign-In</div>
+    <!-- Content -->
     {% if login_form.errors %}
         {% for field, errors in login_form.errors.items %}
             {% for error in errors %} 
@@ -53,6 +48,4 @@
             <div class="h5">Forgot password? <a href="{% url 'reset_password' %}" class="ml-2 text-primary"> Reset password</a></div>
         </div>
     </div>
-</div>
-
 {% endblock %}
