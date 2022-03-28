@@ -82,7 +82,7 @@
             <h5>Pending Events</h5>
             <hr>
             <div class="card card-body">
-                <table class="table table-sm">
+                <table class="table table-sm" style="table-layout: fixed">
                     <tr>
                         <th>By Organization</th>
                         <th>Event Name</th>
@@ -116,7 +116,7 @@
             <h5>Accepted Events</h5>
             <hr>
             <div class="card card-body">
-                <table class="table table-sm">
+                <table class="table table-sm" style="table-layout: fixed">
                     <tr>
                         <th>By Organization</th>
                         <th>Event Name</th>
@@ -132,7 +132,7 @@
                         <tr>
                             <td>{{ event.user }}</td>
                             <td>{{ event.event_name }}</td>
-                            <td>{{ event.event_description }}</td>
+                            <td style="word-wrap: break-word">{{ event.event_description }}</td>
                             <td>{{ event.event_sTime }}</td>
                             <td>{{ event.event_eTime }}</td>
                             <td>{{ event.event_tag }}</td>

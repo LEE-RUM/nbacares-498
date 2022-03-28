@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fcae043f-4e1c-4a3c-b9b5-c5b6df079e25.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fcae043f-4e1c-4a3c-b9b5-c5b6df079e25.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/calendar-template.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ProjectSite/admin-panel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/admin-panel.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +96,7 @@
       <workItem from="1645912743475" duration="926000" />
       <workItem from="1645915652953" duration="167000" />
       <workItem from="1646548496245" duration="3789000" />
+      <workItem from="1648444734981" duration="1260000" />
     </task>
     <servers />
   </component>
