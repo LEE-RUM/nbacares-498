@@ -56,7 +56,7 @@ class view_post(DetailView):
     #query_pk_and_slug = False
 
 def view_blog(request):
-    post = Blog.objects.all().order_by('-created_at')
+    post = Blog.objects.all().order_by('created_at')
     context = {'post': post}
     return render(request, 'ProjectSite/blog.html', context)
 

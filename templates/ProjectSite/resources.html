@@ -23,25 +23,25 @@
             <div class="card card-body">
                 <form method="GET" autocomplete="off">
                     {% csrf_token %}
-                    <div class="dropdown input-group mb-3">
+                    <div class="dropdown input-group" style="height: 40px;">
                         <button class="btn btn-secondary dropdown-toggle" id="dropdown-show" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                        <input class="form-control" type="text" id="selected-service" name="service" value="{{ selectedService }}" />
-                        <button class="btn btn-primary" type="submit" ><span> <i class="bi bi-search"></i></span></button>
+                        <input onfocus="this.value=''" style="font-size: 16px;" class="form-control" type="text" id="selected-service" name="service" value="{{ selectedService }}" />
+                        <button id="search-btn"  class="btn btn-primary" type="submit" ><span> <i class="bi bi-search"></i></span></button>
                         
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" style="font-size: 16px;">
                             <!-- Category -->
-                            <li><strong class="dropdown-item fw-bold dropdown-heading">Category</strong></li>
-                                <li class="dropdown-divider dropdown-heading"></li>
-                                <li><a class="dropdown-item" onclick="selectService('All')">All</a>
+                            <li><strong style="font-size: 16px;" class="dropdown-item fw-bold dropdown-heading">Category</strong></li>
+                                <li style="font-size: 16px;" class="dropdown-divider dropdown-heading"></li>
+                                <li><a style="font-size: 16px;" class="dropdown-item" onclick="selectService('All')">All</a>
                                 {% for category in categories %}
-                                <li><a class="dropdown-item dropdown-heading" >{{ category }} &raquo; </a>
-                                    <ul class="submenu dropdown-menu">
+                                <li><a style="font-size: 16px;" class="dropdown-item dropdown-heading" >{{ category }} &raquo; </a>
+                                    <ul style="font-size: 16px;" class="submenu dropdown-menu">
                                         <!-- Service -->
-                                        <li><b class="dropdown-item fw-bold dropdown-heading">Service</b>
-                                        <li class="dropdown-divider dropdown-heading"></li>
+                                        <li><b style="font-size: 16px;" class="dropdown-item fw-bold dropdown-heading">Service</b>
+                                        <li style="font-size: 16px;" class="dropdown-divider dropdown-heading"></li>
                                         {% for service in services %}
                                             {% if service.category == category %}
-                                                <li><a class="dropdown-item" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>
+                                                <li><a style="font-size: 16px;" class="dropdown-item" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -145,5 +145,13 @@
 		}
     });
     $(window).resize(() => {location.reload();});
+
+// when user presses enter key, submit form
+document.body.onkeydown = function(e) {
+    if (e.keyCode == 13)
+    document.getElementById("search-btn").click();
+};
+
+
 </script>
 {% endblock scripts %}

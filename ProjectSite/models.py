@@ -131,7 +131,7 @@ class Blog(models.Model):
 
     #test2 = RichTextUploadingField(null=True, default=True,external_plugin_resources=[('youtube', 'static/ckeditor/plugins/youtube/youtube/', 'plugin.js')])
 
-    main_image = models.ImageField(upload_to="images/", null=True)
+    main_image = models.ImageField(upload_to="images/", null=True, blank=True)
 
     def __str__(self):
         return self.post_title

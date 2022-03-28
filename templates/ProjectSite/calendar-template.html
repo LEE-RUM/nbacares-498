@@ -12,7 +12,7 @@
 
 
 {% block content %}
-    <main class="app-content">
+    <main class="app-content" style="font-size: 16px;">
         <div class="row">
             <div class="col-md-12">
                 <div class="tile row">
@@ -21,7 +21,7 @@
                             <button id="addEvent" type="button" class="btn btn-primary" style="background-color: #834655;border-color: #834655">ADD EVENT</button>
                         {% endif %}
                         <div id="external-events">
-                            <h4 class="mb-4">Filter Event</h4>
+                            <h4 style="font-size: 20px;" class="mb-4">Filter Event</h4>
                             <form method="get">
                                 {{ calendarFilter.form|crispy }}
                                 <button class="btn btn-primary" style="background-color: #834655;border-color: #834655" type="submit">SEARCH</button>

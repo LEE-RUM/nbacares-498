@@ -17,14 +17,16 @@
             <div class="card border rounded">
                 <div class="card-body">
                     <container>
+                        {% if post.main_image %}
                         <img class="blog-image-main"  src="{{ post.main_image.url }}"><br>
+                        {% endif %}
                         <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 class="blog-title mt-2">{{post.post_title }}</h1></a>
                         <p style="margin-bottom: 10px; font-size: small;" class="text-muted">{{ post.created_at}}</p>
                     </container>
                 </div>
                 <div class="text-center" style="font-size: 20px">
                     <container class="text-center">
-                        <p style="color: black;" class="img-fluid">{{ post.post_content|safe|slice:"500" }}...</p>
+                        <p style="color: black;" class="img-fluid">{{ post.post_content|safe|slice:"300" }}...</p>
                     </container>
                 </div>
                 {% if user.is_staff %}

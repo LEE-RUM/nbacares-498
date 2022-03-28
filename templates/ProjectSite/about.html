@@ -11,6 +11,12 @@
             margin-right: 0px;
             margin-left: 0px;
         }
+
+    @media only screen and (max-width: 650px) {
+        .mobile-img {
+            display: none;
+        }
+}
 </style>
 
 <div class="row text-center">
@@ -47,7 +53,7 @@
             <div class="align-items-center">
                 <div class="">
                     <div class="">
-                        <div class=""><img class="img-fluid"
+                        <div class=""><img class="img-fluid mobile-img"
                                               src=" {% static 'images/NewAboutUsSlide.png' %}"
                                               alt="Our Network Diagram"/></div>
                     </div>
@@ -63,7 +69,7 @@
                         <h2 class="display-4 text-center">Our Vision</h2>
                         <p>New Britain residents will achieve positive life outcomes by increasing social and personal
                             capital</p>
-                        <div class=""><img class="img-fluid"
+                        <div class=""><img class="img-fluid mobile-img"
                                               src=" {% static 'images/CARES-NB-Design-OUR-VISON-CROPPED.png' %}"
                                               alt="Our Network Diagram"/></div>
                     </div>
@@ -79,13 +85,13 @@
                         <h2 class="display-4 text-center">Our Mission</h2>
                         <p>A network of agencies delivering coordinated services to New Britain residents working
                             towards increased self-sufficiency</p>
-                        <hr>
-                        <p>Increasing Self-Sufficiency – Long Track</p>
-                        <div class=""><img class="img-fluid"
+                        <hr class="mobile-img">
+                        <p class="mobile-img">Increasing Self-Sufficiency – Long Track</p>
+                        <div class=""><img class="img-fluid mobile-img"
                                               src=" {% static 'images/CARES-NB-Design-OUR-SELF-SUFF-LONG-CROPPED.png' %}"
                                               alt=""/></div>
-                        <p>Increasing Self-Sufficiency – Short Track</p>
-                        <div class=""><img class="img-fluid"
+                        <p class="mobile-img">Increasing Self-Sufficiency – Short Track</p>
+                        <div class=""><img class="img-fluid mobile-img"
                                               src=" {% static 'images/CARES-NB-Design-OUR-SELF-SUFF-SHORT-CROPPED.png' %}"
                                               alt=""/></div>
                     </div>
