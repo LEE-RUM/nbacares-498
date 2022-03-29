@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'ProjectSite.apps.ProjectsiteConfig',
     'django_filters',
     'crispy_forms',
+    'django_crontab',
     'embed_video',
     'ckeditor',
     'ckeditor_uploader',
@@ -75,6 +76,11 @@ EMAIL_HOST_USER = 'nbcares498@gmail.com'
 EMAIL_HOST_PASSWORD = 'Djangonbcares498'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+CRONJOBS = [
+    #  job schedule at 5:00am of every day
+    ('0 5 * * *', 'ProjectSite.cron.send_daily_email_notifications')
+]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
