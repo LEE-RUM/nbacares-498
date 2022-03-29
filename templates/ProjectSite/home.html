@@ -26,6 +26,24 @@
         .myimg{
             display: block; margin: auto; height: 150px; width: auto;
         }
+        br{
+            display: none;
+        }
+        .mobile-show{
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .myimg2{
+            display: block; margin: auto; height: 150px; width: auto;
+        }
+        br{
+            display: block;
+        }
+        .mobile-hide{
+            display: none;
+        }
     }
 
     .row{
@@ -88,12 +106,14 @@
         <div class="container">
             <div class="row text-center">
                 <h1 class="mt-5 mb-5 display-3">Access Services</h1>
-            
                 <h1 class="mt-5 mb-5 display-4">Health</h1>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-healthcenter.png' %}" data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.chc1.com/' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
-                <div class ="col"> <img class="img-fluid myimg mb-5" src=" {% static 'images/logo-hospitalcentral.png' %}"data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://thocc.org/' target='_blank' rel='noopener noreferrer'class= 'links'>  Click here for more information</a>"></div>
                 <div class="col"><img class="img-fluid mb-5" src=" {% static 'images/logo-libertyintegrated.png' %}"data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.libertyibh.com/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-ctdental.png' %}" data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.ctdhp.com/default.asp' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
+                <div class ="col mobile-hide"> <img class="img-fluid myimg2 mb-5 mobile-hide" style="margin-top: 30px;" src=" {% static 'images/logo-hospitalcentral.png' %}"data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://thocc.org/' target='_blank' rel='noopener noreferrer'class= 'links'>  Click here for more information</a>"></div>
+                <div class="row text-center mobile-show">
+                    <div class ="col mobile-show"> <img class="img-fluid myimg2 mb-5 mobile-show" src=" {% static 'images/logo-hospitalcentral.png' %}"data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://thocc.org/' target='_blank' rel='noopener noreferrer'class= 'links'>  Click here for more information</a>"></div>
+                </div>
                 <div class="w-100"></div>
                 <h1 class="mt-5 mb-5 display-4">Housing</h1>
                 <div class="col"><img class="img-fluid mb-5" src=" {% static 'images/logo-housingauthority.png' %}"data-bs-toggle="popover"  title="<h4> Housing </h4>" data-bs-html="true" data-bs-content="<a href ='https://nbhact.org/ target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
