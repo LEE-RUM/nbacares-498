@@ -406,7 +406,7 @@ def register_event(request):
         }
         return JsonResponse(data)
 
-def send_email_notifications():
+def send_email_notifications(request):
     events = Event.objects.filter(
         event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0), 
         event_sTime__lte=datetime.now().replace(hour=23, minute=59, second=59)
