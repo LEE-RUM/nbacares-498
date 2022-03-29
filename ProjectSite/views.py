@@ -406,9 +406,7 @@ def register_event(request):
         }
         return JsonResponse(data)
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles='admin')
-def send_email_notifications(request):
+def send_email_notifications():
     events = Event.objects.filter(
         event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0), 
         event_sTime__lte=datetime.now().replace(hour=23, minute=59, second=59)
@@ -416,10 +414,10 @@ def send_email_notifications(request):
     for event in events:
         users = event.registered.all()
         for user in users:
-            sendNotificationEmail(request, event, user)
+            sendNotificationEmail(event, user)
     return redirect('admin_panel')
 
-def sendNotificationEmail(request, event, user):
+def sendNotificationEmail(event, user):
     emailBodyTXT = render_to_string('ProjectSite/notification-email.txt', { 'event': event, 'user': user })
     emailBodyHTML = render_to_string('ProjectSite/notification-email.html', { 'event': event, 'user': user })
             
