@@ -79,7 +79,8 @@ EMAIL_USE_TLS = True
 
 CRONJOBS = [
     #  job schedule at 5:00am of every day
-    ('0 5 * * *', 'ProjectSite.cron.send_daily_email_notifications')
+    # ('0 5 * * *', 'ProjectSite.cron.send_daily_email_notifications')
+    ('*/5 * * * *', 'ProjectSite.cron.send_daily_email_notifications')
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
