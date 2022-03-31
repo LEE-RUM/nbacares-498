@@ -217,7 +217,10 @@ def view_logout(request):
 def resident_profile(request):
     user = request.user
 
-    context = { 'user':user }
+    upcomingEvents = Event.objects.filter(registered=user, event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('event_sTime')
+    pastEvents = Event.objects.filter(registered=user, event_sTime__lte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('-event_sTime')
+
+    context = { 'user':user, 'upcomingEvents':upcomingEvents, 'pastEvents':pastEvents }
     return render(request, 'ProjectSite/resident/profile.html', context)
 
 def resident_profile_edit(request):

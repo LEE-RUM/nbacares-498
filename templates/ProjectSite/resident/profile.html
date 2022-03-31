@@ -15,6 +15,120 @@
         <h1 class="m-3">Phone: <span class="text-dark">{{ user.resident.formatted_phone }}</span></h1>
         <span><a class="btn btn-dark m-3 p-3" href="{% url 'resident_profile_edit' %}">Edit Profile</a></span>
     </div>
+    <hr class="my-5">
+    <div class="row my-5">
+        <h1 class="text-dark">All Registered Events:</h1>
+        <!-- toggle buttons -->
+        <div class="text-center">
+            <div class="btn-group">
+                <div id="toggle-past-events" class="btn btn-lg btn-outline-primary border-primary">Past Events</div>
+                <div id="toggle-upcoming-events" class="btn btn-lg btn-primary border-primary active">Upcoming Events</div>
+            </div>
+        </div>
+        <!-- Events -->
+    `   <div class="container my-3">
+            <!-- Event Cards for upcoming events -->
+            <div id="upcoming-events-section" class="row g-5">
+                {% for event in upcomingEvents %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="p-3 card">
+                        <div class="d-flex align-items-center justify-content-center" style="height:200px;">
+                            <img src="{{ event.event_popper.url }}" class="img-fluid">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title text-center h1">{{event.event_name}}</div>
+                            <hr class="mt-auto">
+                            <div class="h6" style="height:50px;">{{event.event_description}}</div>
+                            <form class="registerBtnForm text-center m-3">
+                                <input type='hidden' name='event_id' value="{{event.id}}">
+                                <button type="submit" class="btn btn-danger">Unregister</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <h3 class="h3 text-secondary text-center fst-italic fw-bold" style="margin-bottom: 400px;">There is no upcoming events</h3>
+                {% endfor %}
+            </div>
+            <!-- End Event Card for upcoming events -->
+
+            <!-- Event Cards for past events -->
+            <div id="past-events-section" class="row g-5" style="display: none;">
+                {% for event in pastEvents %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="p-3 card">
+                        <div class="d-flex align-items-center justify-content-center" style="height:200px;">
+                            <img src="{{ event.event_popper.url }}" class="img-fluid">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title text-center h1">{{event.event_name}}</div>
+                            <hr class="mt-auto">
+                            <div class="h6" style="height:50px;">{{event.event_description}}</div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <h3 class="h3 text-secondary text-center fst-italic fw-bold" style="margin-bottom: 400px;">There is no past events</h3>
+                {% endfor %}
+            </div>
+            <!-- End Event Card for past events -->
+        
+        </div>
+    </div>
 </div>
 
 {% endblock %}
+
+<!-- Scripts start here -->
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(() => {
+        // toggle events: past events or upcoming events
+        $('#toggle-past-events').click(() => {
+            $('#toggle-past-events').removeClass("btn-outline-primary").addClass("btn-primary active");
+            $('#toggle-upcoming-events').removeClass("btn-primary active").addClass("btn-outline-primary");
+            $('#upcoming-events-section').fadeOut(300, () => {
+                $('#past-events-section').fadeIn(300);
+            });
+        });
+        $('#toggle-upcoming-events').click(() => {
+            $('#toggle-upcoming-events').removeClass("btn-outline-primary").addClass("btn-primary active");
+            $('#toggle-past-events').removeClass("btn-primary active").addClass("btn-outline-primary");
+            $('#past-events-section').fadeOut(300, () => {
+                $('#upcoming-events-section').fadeIn(300);
+            });
+        });
+
+        // Ajax request for unregister an event
+        $(".registerBtnForm").on('submit', (e) => {
+            e.preventDefault();
+
+            let event_id = $(e.target).children("input").val();
+            let delete_div = $(e.target).parent().parent().parent()            
+
+            $.ajax({
+                type: "GET",
+                url: '{% url "register_event" %}',
+                data: {
+                    event_id: event_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                dataType: 'json',
+                success: function (data, status) {
+                    delete_div.fadeOut("normal")
+                },
+                statusCode: {
+                    401: function() {
+                        // Unauthorized, redirect to login
+                        window.location.href = '{% url "login" %}';
+                    },
+                },
+                error: function (res) {
+                    // alert(res.status);                                                                                                                          
+                },
+            });
+            
+        });
+    })
+</script>
+{% endblock scripts %}

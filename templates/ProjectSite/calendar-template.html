@@ -192,11 +192,11 @@
 
         // create a button => allow users to register for current event
         const renderRegisterBtn = (data) => {
-            likeBtn = (data.registered == true) ? `<button type="submit" class="btn btn-secondary"><i class="bi bi-bookmark-star-fill"></i> Registered</button>` : `<button type="submit" class="btn btn-success"><i class="bi bi-bookmark-star"></i> Register</button>`
+            registerBtn = (data.registered == true) ? `<button type="submit" class="btn btn-secondary"><i class="bi bi-bookmark-star-fill"></i> Registered</button>` : `<button type="submit" class="btn btn-success"><i class="bi bi-bookmark-star"></i> Register</button>`
 
             let html = `
                 <input type='hidden' id="event_id" name='event_id' value="${data.eventID}">
-                ${likeBtn}
+                ${registerBtn}
                 <strong>${data.registeredCount} people registered</strong>
             `
             $('#registerBtnForm').html(html)
