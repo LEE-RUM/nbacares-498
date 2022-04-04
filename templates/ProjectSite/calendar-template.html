@@ -11,8 +11,22 @@
 {% endblock extracss %}
 
 
+
 {% block content %}
-    <main class="app-content" style="font-size: 14px;">
+
+<style>
+    @media screen and (min-width: 768px) {
+        .calendar-mobile{
+            font-size: 14px;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .calendar-mobile{
+            font-size: 10px;
+        }
+    }
+</style>
+    <main class="app-content calendar-mobile" >
         <div class="row">
             <div class="col-md-12">
                 <div class="tile row">
