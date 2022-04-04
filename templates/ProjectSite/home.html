@@ -50,13 +50,16 @@
             margin-right: 0px;
             margin-left: 0px;
         }
+
+    span { display: block }
+
 </style>
 
     <section>
         <header class="masthead text-center text-white" style="padding-bottom: 0px;">
             <div class="masthead">
                 <div class="container px-5">
-                    <h2 class="mb-5 text-white display-4 font-weight-bold">Self-sufficiency for you plus services and
+                    <h2 class="mb-5 text-white display-4 font-weight-bold">Self-sufficiency for you <span id="break-plus">plus services</span> and
                         information for your family</h2>
                     <p></p>
                     <form action="{% url 'about' %}">
@@ -105,7 +108,7 @@
     <section>
         <div class="container">
             <div class="row text-center">
-                <h1 class="mt-5 mb-5 display-3">Access Services</h1>
+                <h1 class="mt-5 mb-5 display-3">Accessing Services</h1>
                 <h1 class="mt-5 mb-5 display-4">Health</h1>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-healthcenter.png' %}" data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.chc1.com/' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
                 <div class="col"><img class="img-fluid mb-5" src=" {% static 'images/logo-libertyintegrated.png' %}"data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.libertyibh.com/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
@@ -114,6 +117,7 @@
                 <div class="row text-center mobile-show">
                     <div class ="col mobile-show"> <img class="img-fluid myimg2 mb-5 mobile-show" src=" {% static 'images/logo-hospitalcentral.png' %}"data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://thocc.org/' target='_blank' rel='noopener noreferrer'class= 'links'>  Click here for more information</a>"></div>
                 </div>
+                <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-coramdeo.png' %}"data-bs-toggle="popover"  title="<h4> General </h4>" data-bs-html="true" data-bs-content="<a href ='https://coramdeorecovery.org/' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>" ></div>
                 <div class="w-100"></div>
                 <h1 class="mt-5 mb-5 display-4">Housing</h1>
                 <div class="col"><img class="img-fluid mb-5" src=" {% static 'images/logo-housingauthority.png' %}"data-bs-toggle="popover"  title="<h4> Housing </h4>" data-bs-html="true" data-bs-content="<a href ='https://nbhact.org/ target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
@@ -121,22 +125,20 @@
                     data-bs-content="  <a href ='https://familypromisecct.org/' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
             </div>
             <div class="row text-center">
-                <h1 class="mt-5 mb-5 display-4">Employment</h1>
+                <h1 class="mt-5 mb-5 display-4">Financial Wellness</h1>
+                <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-cahs.png' %}" data-bs-toggle="popover"  title="<h4> Financial Literacy </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.cahs.org/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
                 <div class="col"><img class="img-fluid mb-5 mt-4" src=" {% static 'images/logo-hra.png' %}" data-bs-toggle="popover"  title="<h4> Employment</h4>" data-bs-html="true" data-bs-content="<a href ='https://www.hranbct.org/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>" ></div>
-                <div class="col"><img class="img-fluid mb-5 mt-3" src=" {% static 'images/logo-wioa.png' %}"data-bs-toggle="popover"  title="<h4> Employment </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.dol.gov/agencies/eta/wioa' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>" ></div>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-jobcenter.png' %}"data-bs-toggle="popover"  title="<h4> Employment </h4>" data-bs-html="true" data-bs-content="<a href ='https://portal.ct.gov/ajc' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
+                <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-ctmoneyschool.png' %}" data-bs-toggle="popover"  title="<h4> Financial Literacy </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.cahs.org/cms.html' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
                 <div class="w-100"></div>
                 <h1 class="mt-5 mb-5 display-4">Education</h1>
                 <div class="col"><img class="img-fluid mb-5" src=" {% static 'images/logo-tunxis.png' %}"data-bs-toggle="popover"  title="<h4> Education </h4>" data-bs-html="true" data-bs-content="<a href ='https://tunxis.edu/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-adulteducation.png' %}" data-bs-toggle="popover"  title="<h4> Education </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.nbadulteducation.org/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-ccsu.png' %}" data-bs-toggle="popover"  title="<h4> Education </h4>" data-bs-html="true" data-bs-content="<a href ='https://www2.ccsu.edu/' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
-                <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-ctmoneyschool.png' %}" data-bs-toggle="popover"  title="<h4> Financial Literacy </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.cahs.org/cms.html' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
             </div>
             <div class="row text-center ">
                 <h1 class="mt-5 mb-5 display-4">General</h1>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-seal.png' %}" data-bs-toggle="popover"  title="<h4> General </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.newbritainct.gov/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
-                <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-coramdeo.png' %}"data-bs-toggle="popover"  title="<h4> General </h4>" data-bs-html="true" data-bs-content="<a href ='https://coramdeorecovery.org/' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>" ></div>
-                <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-cahs.png' %}" data-bs-toggle="popover"  title="<h4> Financial Literacy </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.cahs.org/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
                 <div class="w-100"></div>
             </div>
         </div>
