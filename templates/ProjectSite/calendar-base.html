@@ -75,16 +75,28 @@
 {% block extrascripts %}
 {% endblock extrascripts %}
 <section class="custom-footer">
-    <footer class="pt-4 my-md-1 pt-md-5" tabindex="-1">
-    <div class="container px-5">
-        <div class="row">
-            <div class="col-12 col-md">
-                <a class="navbar-brand" href="{% url 'home' %}"><img src="https://static.wixstatic.com/media/aa6dd5_c2c807f592a344edaa25e7fea06f6b3b~mv2.png/v1/fill/w_278,h_144,al_c,q_85,usm_0.66_1.00_0.01/aa6dd5_c2c807f592a344edaa25e7fea06f6b3b~mv2.webp" alt="logo"></a>
-                <p style="color: #D7B030">Powered by ParaDYM Academy &copy;2020-2021</p>
+    <footer tabindex="-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <a class="navbar-brand" href="https://www.paradymacademy.org/"><img
+                            src="https://static.wixstatic.com/media/aa6dd5_c2c807f592a344edaa25e7fea06f6b3b~mv2.png/v1/fill/w_278,h_144,al_c,q_85,usm_0.66_1.00_0.01/aa6dd5_c2c807f592a344edaa25e7fea06f6b3b~mv2.webp"
+                            alt="logo"></a>
+                    <p class="footer-text">Powered by ParaDYM Academy</p>
+                    <p class="footer-text">&copy;2020-2021</p>
+                </div>
+                <div class="col-12 col-md" style="margin: auto;"><a href="{% url 'about' %}#about_mission">
+                    <h4 class="footer-text">Our Mission</h4>
+                </a></div>
+                <div class="col-12 col-md" style="margin: auto;"><a href="{% url 'resources' %}">
+                    <h4 class="footer-text">Our Resources</h4>
+                </a></div>
+                <div class="col-12 col-md" style="margin: auto;"><a href="{% url 'about' %}#about_mission">
+                    <li><a href="mailto:newbritaincares@gmail.com"><h4 class="footer-text">Contact Us</h4></a></li>
+                </a></div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 </section>
 </body>
 </html>
