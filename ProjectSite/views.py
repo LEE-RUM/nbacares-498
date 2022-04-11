@@ -45,20 +45,27 @@ class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def test_func(self):
         return self.request.user.groups.filter(name='admin')
 
+
 def view_about(request):
     return render(request, 'ProjectSite/about.html')
+
 
 class view_post(DetailView):
     model = Blog
     template_name = 'ProjectSite/post.html'
     slug_url_kwarg = 'title'
     slug_field = 'slug'
-    #query_pk_and_slug = False
+    # query_pk_and_slug = False
+
 
 def view_blog(request):
     post = Blog.objects.all().order_by('created_at')
-    context = {'post': post}
+    bp = Paginator(post, 2)
+    page_number = request.GET.get('page')
+    page_obj = bp.get_page(page_number)
+    context = {'post': post, 'page_obj': page_obj}
     return render(request, 'ProjectSite/blog.html', context)
+
 
 class create_blog(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Blog
@@ -71,6 +78,7 @@ class create_blog(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def test_func(self):
         return self.request.user.groups.filter(name='admin')
 
+
 class edit_blog(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Blog
     form_class = BlogForm
@@ -81,6 +89,7 @@ class edit_blog(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         return self.request.user.groups.filter(name='admin')
+
 
 class delete_blog(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Blog
@@ -102,25 +111,27 @@ def view_resources(request):
 
     allcontacts = Contact.objects.all()
     conFilters = ContactFilter({'service': selectedService}, queryset=allcontacts)
-    filterdContacts = conFilters.qs # filter contacts
-    p = Paginator(filterdContacts, 30) # paginator based on filterd contacts
+    filterdContacts = conFilters.qs  # filter contacts
+    p = Paginator(filterdContacts, 30)  # paginator based on filterd contacts
     page = request.GET.get('page')
     pagContacts = p.get_page(page)
     categories = Category.objects.all().order_by('orderingID')
     services = Service.objects.all().order_by('orderingID')
-    
-    
-    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services, 'selectedService': selectedService , 'pagContacts': pagContacts}
+
+    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services,
+               'selectedService': selectedService, 'pagContacts': pagContacts}
     return render(request, 'ProjectSite/resources.html', context)
 
-#Auto suggest function
+
+# Auto suggest function
 def autosuggest(request):
     print(request.GET)
     query = request.GET.get('term')
-    qs = Service.objects.filter(service__startswith = query)
+    qs = Service.objects.filter(service__startswith=query)
     mylist = []
     mylist += [x.service for x in qs]
-    return JsonResponse(mylist,safe=False)
+    return JsonResponse(mylist, safe=False)
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles='admin')
@@ -153,31 +164,34 @@ def resident_signup(request):
             token = str(uuid.uuid4())
 
             group = Group.objects.get(name='resident')
-            user.groups.add(group) 
+            user.groups.add(group)
 
             resident = Resident.objects.create(user=user, phone=phone, token=token)
             sendConfirmationEmail(request, user)
 
             msg = 'A confirmation email has been sent to {}! please verify your account.'.format(email)
-            return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+            return render(request, 'ProjectSite/authentication/info.html', {'msg': msg})
 
     context = {'form': form}
     return render(request, 'ProjectSite/authentication/signup.html', context)
 
+
 def sendConfirmationEmail(request, user):
     domain_name = get_current_site(request).domain
     verifyURL = f'http://{domain_name}/verify/{user.resident.token}'
-    emailBodyTXT = render_to_string('ProjectSite/authentication/email-body.txt', { 'verifyURL': verifyURL })
-    emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html', { 'verifyURL': verifyURL, 'user': user })
-            
+    emailBodyTXT = render_to_string('ProjectSite/authentication/email-body.txt', {'verifyURL': verifyURL})
+    emailBodyHTML = render_to_string('ProjectSite/authentication/email-body.html',
+                                     {'verifyURL': verifyURL, 'user': user})
+
     send_mail(
         'NBCARES Email Verfication',
-        emailBodyTXT, 
+        emailBodyTXT,
         settings.EMAIL_HOST_USER,
         [user.email],
         fail_silently=False,
         html_message=emailBodyHTML,
     )
+
 
 def verify(request, token):
     try:
@@ -186,10 +200,11 @@ def verify(request, token):
             resident.is_verified = True
             resident.save()
             msg = 'Your email has been verified'
-            return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+            return render(request, 'ProjectSite/authentication/info.html', {'msg': msg})
     except Exception as e:
         msg = e
-        return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg }) 
+        return render(request, 'ProjectSite/authentication/info.html', {'msg': msg})
+
 
 def view_login(request):
     if request.method == 'POST':
@@ -200,7 +215,7 @@ def view_login(request):
             if user.groups.filter(name="resident") and not user.resident.is_verified:
                 sendConfirmationEmail(request, user)
                 msg = "Account is not verified, please check your email inbox. {}".format(user.email)
-                return render(request, 'ProjectSite/authentication/info.html', { 'msg': msg })
+                return render(request, 'ProjectSite/authentication/info.html', {'msg': msg})
 
             login(request, user)
             return redirect('home')
@@ -214,14 +229,20 @@ def view_logout(request):
     logout(request)
     return redirect('home')
 
+
 def resident_profile(request):
     user = request.user
 
-    upcomingEvents = Event.objects.filter(registered=user, event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('event_sTime')
-    pastEvents = Event.objects.filter(registered=user, event_sTime__lte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('-event_sTime')
+    upcomingEvents = Event.objects.filter(registered=user,
+                                          event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0)).order_by(
+        'event_sTime')
+    pastEvents = Event.objects.filter(registered=user,
+                                      event_sTime__lte=datetime.now().replace(hour=0, minute=0, second=0)).order_by(
+        '-event_sTime')
 
-    context = { 'user':user, 'upcomingEvents':upcomingEvents, 'pastEvents':pastEvents }
+    context = {'user': user, 'upcomingEvents': upcomingEvents, 'pastEvents': pastEvents}
     return render(request, 'ProjectSite/resident/profile.html', context)
+
 
 def resident_profile_edit(request):
     context = {}
@@ -310,7 +331,7 @@ def view_admin_user_creation(request, *args, **kwargs):
         if user_form.is_valid():
             user = user_form.save()
             group = Group.objects.get(name='organizer')
-            user.groups.add(group) 
+            user.groups.add(group)
 
             organization = Organization.objects.create(user=user)
 
@@ -375,6 +396,7 @@ class view_calendar(generic.View):
         context = {"form": forms}
         return render(request, 'ProjectSite/calendar-template.html', context)
 
+
 def calendar_event(request):
     if request.method == "GET":
         eventID = request.GET.get('event_id')
@@ -382,18 +404,20 @@ def calendar_event(request):
 
         data = {
             # not registered - if current user is not signed in or this user hasn't register that event yet
-            "registered": True if not request.user.is_anonymous and event.registered.filter(username=request.user).exists() else False,
+            "registered": True if not request.user.is_anonymous and event.registered.filter(
+                username=request.user).exists() else False,
             "registeredCount": event.registered.all().count(),
             "eventID": eventID,
         }
         return JsonResponse(data)
+
 
 def register_event(request):
     if request.method == "GET":
         # if user is not logged in, redirect to login
         if request.user.is_anonymous:
             return HttpResponse("", status=401)
-            
+
         eventID = request.GET.get('event_id')
         event = Event.objects.get(id=eventID)
 
@@ -409,24 +433,26 @@ def register_event(request):
         }
         return JsonResponse(data)
 
+
 def send_email_notifications(request=None):
     events = Event.objects.filter(
-        event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0), 
+        event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0),
         event_sTime__lte=datetime.now().replace(hour=23, minute=59, second=59)
-        )
+    )
     for event in events:
         users = event.registered.all()
         for user in users:
             sendNotificationEmail(event, user)
     return redirect('admin_panel')
 
+
 def sendNotificationEmail(event, user):
-    emailBodyTXT = render_to_string('ProjectSite/notification-email.txt', { 'event': event, 'user': user })
-    emailBodyHTML = render_to_string('ProjectSite/notification-email.html', { 'event': event, 'user': user })
-            
+    emailBodyTXT = render_to_string('ProjectSite/notification-email.txt', {'event': event, 'user': user})
+    emailBodyHTML = render_to_string('ProjectSite/notification-email.html', {'event': event, 'user': user})
+
     send_mail(
         'NBCARES Event Notification',
-        emailBodyTXT, 
+        emailBodyTXT,
         settings.EMAIL_HOST_USER,
         [user.email],
         fail_silently=False,

@@ -6,39 +6,53 @@
 {% endblock %}
 
 {% block body %}
-{% if user.is_staff %}
-    <div class="text-center mt-3 mb-3">
-        <a href="{% url 'create_blog' %}" class="btn blog-button">Add Post</a>
-    </div>
-{% endif %}
-    <div class="container">
-        {% for post in post %}
-        <div class="row text-center mb-5">
-            <div class="card border rounded">
-                <div class="card-body">
-                    <container>
-                        {% if post.main_image %}
-                        <img class="blog-image-main"  src="{{ post.main_image.url }}"><br>
-                        {% endif %}
-                        <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 class="blog-title mt-2">{{post.post_title }}</h1></a>
-                        <p style="margin-bottom: 10px; font-size: small;" class="text-muted">{{ post.created_at}}</p>
-                    </container>
-                </div>
-                <div class="text-center" style="font-size: 20px">
-                    <container class="text-center">
-                        <p style="color: black;" class="img-fluid">{{ post.post_content|safe|slice:"300" }}...</p>
-                    </container>
-                </div>
-                {% if user.is_staff %}
-                <div>
-                    <a href="{% url 'edit_blog' post.slug %}" class="btn blog-button">Edit</a>
-                    <a href="{% url 'delete_blog' post.slug %}" class="btn blog-button">Delete</a>
-                </div>
-                {% endif %}
-            </div>
+    {% if user.is_staff %}
+        <div class="text-center mt-3 mb-3">
+            <a href="{% url 'create_blog' %}" class="btn blog-button">Add Post</a>
         </div>
+    {% endif %}
+    <div class="container">
+        {% for post in page_obj %}
+            <div class="row text-center mb-5">
+                <div class="card border rounded">
+                    <div class="card-body">
+                        <container>
+                            {% if post.main_image %}
+                                <img class="blog-image-main"  src="{{ post.main_image.url }}"><br>
+                            {% endif %}
+                            <a style="color: black;" href="{% url 'view_post' post.slug %}"><h1 class="blog-title mt-2">{{post.post_title }}</h1></a>
+                            <p style="margin-bottom: 10px; font-size: small;" class="text-muted">{{ post.created_at}}</p>
+                        </container>
+                    </div>
+                    <div class="text-center" style="font-size: 20px">
+                        <container class="text-center">
+                            <p style="color: black;" class="img-fluid">{{ post.post_content|safe|slice:"300" }}...</p>
+                        </container>
+                    </div>
+                    {% if user.is_staff %}
+                        <div>
+                            <a href="{% url 'edit_blog' post.slug %}" class="btn blog-button">Edit</a>
+                            <a href="{% url 'delete_blog' post.slug %}" class="btn blog-button">Delete</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         {% endfor %}
-        
+        <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          {{ page_obj.number }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+        </div>
     </div>
 {% endblock %}
 
