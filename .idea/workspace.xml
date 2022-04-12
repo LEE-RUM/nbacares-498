@@ -4,7 +4,6 @@
     <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ProjectSite/blog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/blog.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/ProjectSite/resources.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/resources.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +99,7 @@
       <workItem from="1649052556530" duration="3039000" />
       <workItem from="1649055865257" duration="647000" />
       <workItem from="1649653474500" duration="5031000" />
-      <workItem from="1649744424192" duration="2350000" />
+      <workItem from="1649744424192" duration="3667000" />
     </task>
     <servers />
   </component>

@@ -16,10 +16,10 @@
     <div class="container pt-2 mb-3">
         <div class="row mt-3 text-center">
             <h1> Resource Directory</h1>
-             <div class="row">
+            <div class="row">
                 <div class="class col">
-                <button id="addResource" type="button" class="btn btn-primary" style="background-color: #834655;border-color: #834655">ADD RESOURCE</button>
-            </div>
+                    <button id="addResource" type="button" class="btn btn-primary" style="background-color: #834655;border-color: #834655">ADD RESOURCE</button>
+                </div>
             </div>
             <p class="h2">Filter services by opening dropdown menu and selecting a category, or type a service in the search bar.</p>
         </div>
@@ -32,79 +32,99 @@
                         <button class="btn btn-secondary dropdown-toggle" id="dropdown-show" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <input onfocus="this.value=''" style="font-size: 16px;" class="form-control" type="text" id="selected-service" name="service" value="{{ selectedService }}" />
                         <button id="search-btn"  class="btn btn-primary" type="submit" ><span> <i class="bi bi-search"></i></span></button>
-                        
+
                         <ul class="dropdown-menu" style="font-size: 16px;">
                             <!-- Category -->
                             <li><strong style="font-size: 16px;" class="dropdown-item fw-bold dropdown-heading">Category</strong></li>
-                                <li style="font-size: 16px;" class="dropdown-divider dropdown-heading"></li>
-                                <li><a style="font-size: 16px;" class="dropdown-item" onclick="selectService('All')">All</a>
+                            <li style="font-size: 16px;" class="dropdown-divider dropdown-heading"></li>
+                            <li><a style="font-size: 16px;" class="dropdown-item" onclick="selectService('All')">All</a>
                                 {% for category in categories %}
-                                <li><a style="font-size: 16px;" class="dropdown-item dropdown-heading" >{{ category }} &raquo; </a>
-                                    <ul style="font-size: 16px;" class="submenu dropdown-menu">
-                                        <!-- Service -->
-                                        <li><b style="font-size: 16px;" class="dropdown-item fw-bold dropdown-heading">Service</b>
-                                        <li style="font-size: 16px;" class="dropdown-divider dropdown-heading"></li>
-                                        {% for service in services %}
-                                            {% if service.category == category %}
-                                                <li><a style="font-size: 16px;" class="dropdown-item" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endfor %}
+                                    <li><a style="font-size: 16px;" class="dropdown-item dropdown-heading" >{{ category }} &raquo; </a>
+                                        <ul style="font-size: 16px;" class="submenu dropdown-menu">
+                                            <!-- Service -->
+                                            <li><b style="font-size: 16px;" class="dropdown-item fw-bold dropdown-heading">Service</b>
+                                            <li style="font-size: 16px;" class="dropdown-divider dropdown-heading"></li>
+                                            {% for service in services %}
+                                                {% if service.category == category %}
+                                                    <li><a style="font-size: 16px;" class="dropdown-item" onclick="selectService( '{{ service }}' )">{{ service }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
                         </ul>
-                    </div> 
+                    </div>
                     <!-- End Dropdown & input-group -->
                     <br>
                 </form>
                 <!-- End Dropdown -->
-            </div> 
+            </div>
         </div>
         <div class="row">
             <div class="col-12 col-sm-12 col-xxl-12">
                 <div class="card card-body table-responsive">
-                      <table class="table table-lg" >
+                    <table class="table table-lg" >
                         <colgroup>
                             <col style="width: 15%;">
-                           <!---- <col style="width: 35%;"> -->
+                            <!---- <col style="width: 35%;"> -->
                             <col style="width: 33%;">
                             <col style="width: 17%;">
                         </colgroup>
                         <tr class="">
                             <th>Services</th>
                             <th>Resource Provider</th>
-                           <!---- <th>Website</th> -->
+                            <!---- <th>Website</th> -->
                             <th>Phone Number</th>
                         </tr>
                         {% for pagcontact in pagContacts %}
                             <tr>
                                 <td>{{ pagcontact.service }}</td>
                                 <td><a class="fs-5" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_resource_provider }}</a></td>
-                              <!---- <td><a class="fs-6" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>   -->                                                             <!--<td>{{ allcontact.contact_location }}</td>-->
+                                <!---- <td><a class="fs-6" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>   -->                                                             <!--<td>{{ allcontact.contact_location }}</td>-->
                                 <td><a style="color: darkblue;" href="tel:{{pagcontact.contact_number}}">{{ pagcontact.contact_number }}</a></td>
                             </tr>
                         {% endfor %}
                     </table>
                     <h5>{{pagContacts}}</h5>
                     {% if pagContacts.has_other_pages %}
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                            
-                        {% if pagContacts.has_previous %}
-                              <li class="page-item"><a class="page-link" href="?page={{ pagContacts.previous_page_number }}&service={{ selectedService }}">Previous</a></li>
-                        {% endif %}
-                        {% if pagContacts.has_next %}
-                        
-                             <li class="page-item"><a class="page-link" href="?page={{ pagContacts.next_page_number }}&service={{ selectedService }}">Next</a></li>
-                        {% endif %}
-                    </ul>
-                    </nav>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+
+                                {% if pagContacts.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ pagContacts.previous_page_number }}&service={{ selectedService }}">Previous</a></li>
+                                {% endif %}
+                                {% if pagContacts.has_next %}
+
+                                    <li class="page-item"><a class="page-link" href="?page={{ pagContacts.next_page_number }}&service={{ selectedService }}">Next</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
                     {% endif %}
                 </div>
             </div>
-            
+        </div>
+    </div>
 
-        
+    <div>
+        <div class="modal fade show" id="resourceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary" style="background-color: #834655 !important;">
+                        <h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Resource</h5>
+                        <button id="modalClose1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="modal-body" style="height: 65vh;overflow-y: auto;">
+                            <div class="modal-footer">
+                                <button id="modalClose2" type="button" class="btn btn-danger">Close</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: #834655;border-color: #834655">Save</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -114,49 +134,54 @@
 {% endblock extrascripts %}
 
 {% block scripts %}
-<!-- Filter contact -->
-<script type="text/javascript">
-    // Select a different service
-    function selectService(service) {
-        $("#selected-service").val(service)
-    }
-    $(function () {
-        //Auto complete for search bar
-        $("#selected-service").autocomplete({
-            source: "{% url 'autosuggest' %}",
-            minlength : 2,
-        });
-        // Prevent dropdown disappear when click on category
-        $('.dropdown-heading').click((e) => e.stopPropagation());
+    <!-- Filter contact -->
+    <script type="text/javascript">
+        // Select a different service
+        function selectService(service) {
+            $("#selected-service").val(service)
+        }
+        $(function () {
+            //Auto complete for search bar
+            $("#selected-service").autocomplete({
+                source: "{% url 'autosuggest' %}",
+                minlength : 2,
+            });
+            // Prevent dropdown disappear when click on category
+            $('.dropdown-heading').click((e) => e.stopPropagation());
 
-        // make dropdown as accordion for smaller screens
-		if (window.innerWidth < 992) {			
-            $("#dropdown-show").click(() => $(".submenu").css("display", "none"))
-			document.querySelectorAll('.dropdown-menu a').forEach(function(element){
-				element.addEventListener('click', function (e) {
-				  	let nextEl = this.nextElementSibling;
-				  	if(nextEl && nextEl.classList.contains('submenu')) {	
-				  		// prevent opening link if link needs to open dropdown
-				  		e.preventDefault();
-				  		if(nextEl.style.display != 'block') { 
-                            $(".submenu").hide()
-				  			nextEl.style.display = 'block';
-				  		} else {
-                            $(".submenu").hide()
+            // make dropdown as accordion for smaller screens
+            if (window.innerWidth < 992) {
+                $("#dropdown-show").click(() => $(".submenu").css("display", "none"))
+                document.querySelectorAll('.dropdown-menu a').forEach(function(element){
+                    element.addEventListener('click', function (e) {
+                        let nextEl = this.nextElementSibling;
+                        if(nextEl && nextEl.classList.contains('submenu')) {
+                            // prevent opening link if link needs to open dropdown
+                            e.preventDefault();
+                            if(nextEl.style.display != 'block') {
+                                $(".submenu").hide()
+                                nextEl.style.display = 'block';
+                            } else {
+                                $(".submenu").hide()
+                            }
                         }
-				  	}
-				});
-			})
-		}
-    });
-    $(window).resize(() => {location.reload();});
+                    });
+                })
+            }
+        });
+        $(window).resize(() => {location.reload();});
 
-// when user presses enter key, submit form
-document.body.onkeydown = function(e) {
-    if (e.keyCode == 13)
-    document.getElementById("search-btn").click();
-};
+        // when user presses enter key, submit form
+        document.body.onkeydown = function(e) {
+            if (e.keyCode == 13)
+                document.getElementById("search-btn").click();
+        };
 
+        // close btns for create event form
+        $('#modalClose1').click(() => $("#resourceModal").css("display", "none"))
+        $('#modalClose2').click(() => $("#resourceModal").css("display", "none"))
+        // add event btn => open event form
+        $('#addResource').click(() => $("#resourceModal").css("display", "block"))
 
-</script>
+    </script>
 {% endblock scripts %}
