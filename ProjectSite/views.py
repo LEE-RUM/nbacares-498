@@ -35,6 +35,9 @@ def view_home(request):
     }
     return render(request, 'ProjectSite/home.html', context)
 
+def view_tutorials(request):
+    return render(request, 'ProjectSite/tutorials.html')
+
 
 class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = GalleryImages
