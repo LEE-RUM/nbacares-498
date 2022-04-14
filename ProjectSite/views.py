@@ -233,20 +233,67 @@ def view_logout(request):
     return redirect('home')
 
 
+@login_required(login_url='login')
 def resident_profile(request):
     user = request.user
 
-    upcomingEvents = Event.objects.filter(registered=user,
-                                          event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0)).order_by(
-        'event_sTime')
-    pastEvents = Event.objects.filter(registered=user,
-                                      event_sTime__lte=datetime.now().replace(hour=0, minute=0, second=0)).order_by(
-        '-event_sTime')
+    # get upoming events for this resident user
+    upcomingEvents = Event.objects.filter(registered=user, event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('event_sTime')
+    upcomingEventsPaginator = Paginator(upcomingEvents, 6)  # paginator based on filterd contacts
+    pagUpcomingEvents = upcomingEventsPaginator.get_page(1)
 
-    context = {'user': user, 'upcomingEvents': upcomingEvents, 'pastEvents': pastEvents}
+    # get past events for this resident user
+    pastEvents = Event.objects.filter(registered=user, event_sTime__lte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('-event_sTime')
+    pastEventsPaginator = Paginator(pastEvents, 6)  # paginator based on filterd contacts
+    pagPastEvents = pastEventsPaginator.get_page(1)
+
+
+    context = {'user': user, 'upcomingEvents': upcomingEvents, 'pastEvents': pastEvents, 'pagUpcomingEvents': pagUpcomingEvents, 'pagPastEvents': pagPastEvents }
     return render(request, 'ProjectSite/resident/profile.html', context)
 
+@login_required(login_url='login')
+def resident_profile_page(request):
+    user = request.user
 
+    page = request.GET.get('page')
+    type = request.GET.get('type')
+    print(type)
+
+    if type == "past":
+        # get all past events for this resident user
+        filterdEvents = Event.objects.filter(registered=user, event_sTime__lte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('-event_sTime')
+    else:
+        # get all upcoming events for this resident user
+        filterdEvents = Event.objects.filter(registered=user, event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('event_sTime')
+
+    p = Paginator(filterdEvents, 6)  # paginator based on filterd contacts
+    pagEvents = p.get_page(page)
+
+    events = []
+    for event in pagEvents:
+        events.append(
+            {
+                "eventID": event.id,
+                # "start": event.event_sTime.strftime("%Y-%m-%dT%H:%M:%S"),
+                # "end": event.event_eTime.strftime("%Y-%m-%dT%H:%M:%S"),
+                "title": event.event_name or "",
+                "event_name": event.event_name or "",
+                "eventURL": str(event.event_popper.url) if event.event_popper else "",
+                "eventDescription": event.event_description or "",
+            }
+        )
+
+    data = {
+        'events': events,
+        'has_previous': pagEvents.has_previous(),
+        'has_next': pagEvents.has_next(),
+        'previous_page_number': pagEvents.previous_page_number() if pagEvents.has_previous() else 0,
+        'next_page_number': pagEvents.next_page_number() if pagEvents.has_next() else 0,
+        'current': str(pagEvents).replace("<", "").replace(">", ""),
+    }
+    return JsonResponse(data)
+
+@login_required(login_url='login')
 def resident_profile_edit(request):
     context = {}
     return render(request, 'ProjectSite/resident/profile-edit.html', context)

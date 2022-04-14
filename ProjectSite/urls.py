@@ -32,6 +32,7 @@ urlpatterns = [
 
     # Resident
     path('resident/profile/', views.resident_profile, name="resident_profile"),
+    path('resident/profile/page', views.resident_profile_page, name="resident_profile_page"), 
     path('resident/profile/edit', views.resident_profile_edit, name="resident_profile_edit"),
 
     path('events', views.view_events, name="events"),
