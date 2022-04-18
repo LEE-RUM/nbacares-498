@@ -2,7 +2,7 @@ from django.forms import ModelForm, models, DateInput
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import OrgEvent, Organization, Event, Blog, GalleryImages
+from .models import OrgEvent, Organization, Event, Blog, GalleryImages, Contact
 from phonenumber_field.formfields import PhoneNumberField
 from django.core.exceptions import ValidationError
 
@@ -103,4 +103,9 @@ class BlogForm(forms.ModelForm):
 class GalleryImagesForm(forms.ModelForm):
     class Meta:
         model = GalleryImages
+        fields = '__all__'
+
+class ResourceForm(forms.ModelForm):
+    class Meta:
+        model = Contact
         fields = '__all__'

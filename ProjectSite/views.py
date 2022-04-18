@@ -107,6 +107,8 @@ class delete_blog(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 def view_resources(request):
+    form = ResourceForm(request.POST or None)
+
     selectedService = "All"
 
     if request.GET.get("service"):
@@ -121,7 +123,7 @@ def view_resources(request):
     categories = Category.objects.all().order_by('orderingID')
     services = Service.objects.all().order_by('orderingID')
 
-    context = {'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services,
+    context = {'form': form,'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services,
                'selectedService': selectedService, 'pagContacts': pagContacts}
     return render(request, 'ProjectSite/resources.html', context)
 
