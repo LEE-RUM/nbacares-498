@@ -33,88 +33,88 @@
 
     <style>
         .ct-topbar {
-  text-align: left;
-  background: #eee;
-}
-.ct-topbar__list {
-  margin-bottom: 0px;
-}
-.ct-language__dropdown{
-	padding-top: 8px;
-	max-height: 0;
-	overflow: hidden;
-	position: absolute;
-	top: 110%;
-	left: -3px;
-	-webkit-transition: all 0.25s ease-in-out;
-	transition: all 0.25s ease-in-out;
-	width: 100px;
-	text-align: center;
-	padding-top: 0;
-  z-index:200;
-}
-.ct-language__dropdown li{
-	background: #222;
-	padding: 5px;
-}
-.ct-language__dropdown li a{
-	display: block;
-}
-.ct-language__dropdown li:first-child{
-	padding-top: 10px;
-	border-radius: 3px 3px 0 0;
-}
-.ct-language__dropdown li:last-child{
-	padding-bottom: 10px;
-	border-radius: 0 0 3px 3px;
-}
-.ct-language__dropdown li:hover{
-	background: #444;
-}
-.ct-language__dropdown:before{
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-	width: 8px;
-	height: 0;
-	border: 0 solid transparent;
-	border-right-width: 8px;
-	border-left-width: 8px;
-	border-bottom: 8px solid #222;
-}
-.ct-language{
-	position: relative;
-  color: #D7b030;
-  padding: 10px 0;
-}
-.ct-language:hover .ct-language__dropdown{
-	max-height: 200px;
-	padding-top: 8px;
-}
-.list-unstyled {
-    padding-left: 0;
-    list-style: none;
-}
+            text-align: left;
+            background: #eee;
+        }
+        .ct-topbar__list {
+            margin-bottom: 0px;
+        }
+        .ct-language__dropdown{
+            padding-top: 8px;
+            max-height: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 110%;
+            left: -3px;
+            -webkit-transition: all 0.25s ease-in-out;
+            transition: all 0.25s ease-in-out;
+            width: 100px;
+            text-align: center;
+            padding-top: 0;
+            z-index:200;
+        }
+        .ct-language__dropdown li{
+            background: #222;
+            padding: 5px;
+        }
+        .ct-language__dropdown li a{
+            display: block;
+        }
+        .ct-language__dropdown li:first-child{
+            padding-top: 10px;
+            border-radius: 3px 3px 0 0;
+        }
+        .ct-language__dropdown li:last-child{
+            padding-bottom: 10px;
+            border-radius: 0 0 3px 3px;
+        }
+        .ct-language__dropdown li:hover{
+            background: #444;
+        }
+        .ct-language__dropdown:before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 8px;
+            height: 0;
+            border: 0 solid transparent;
+            border-right-width: 8px;
+            border-left-width: 8px;
+            border-bottom: 8px solid #222;
+        }
+        .ct-language{
+            position: relative;
+            color: #D7b030;
+            padding: 10px 0;
+        }
+        .ct-language:hover .ct-language__dropdown{
+            max-height: 200px;
+            padding-top: 8px;
+        }
+        .list-unstyled {
+            padding-left: 0;
+            list-style: none;
+        }
 
 
-#page-container {
-  position: relative;
-  min-height: 100vh;
-}
+        #page-container {
+            position: relative;
+            min-height: 100vh;
+        }
 
-#content-wrap {
-  padding-bottom: 170px;    /* Footer height */
-}
+        #content-wrap {
+            padding-bottom: 170px;    /* Footer height */
+        }
 
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 170px;            /* Footer height */
-}
+        #footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 170px;            /* Footer height */
+        }
     </style>
 
 
@@ -122,63 +122,65 @@
 
 <body id="page-container">
 <div id="content-wrap">
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-    <div class="container px-4">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <img src="{% static 'images/KO-NB-Cares-logo.png' %}" alt="logo"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'calendar' %}">Calendar</a></li>
-                <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'resources' %}">Resources</a></li>
-                <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
-                <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'tutorials' %}">How-To</a></li>
-                {% if user.is_superuser %}
-                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'admin_panel' %}">Admin
-                        Panel</a></li>
-                {% endif %}
-                {% if request.user|has_group:"organizer" and user.is_authenticated and not user.is_superuser %}
-                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'organization_settings' %}">Settings</a>
-                    </li>
-                {% endif %}
-                {% if request.user|has_group:"resident" %} 
-                <li class="nav-item align-self-end">
-                    <a class="nav-link" href="{% url 'resident_profile' %}">Profile</a>
-                </li>
-                {% endif %}
-                <li class="nav-item align-self-end">
-                    {% if user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    {% else %}
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container px-4">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/KO-NB-Cares-logo.png' %}" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'calendar' %}">Calendar</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'resources' %}">Resources</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+                    <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'tutorials' %}">How-To</a></li>
+                    {% if user.is_superuser %}
+                        <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'admin_panel' %}">Admin
+                            Panel</a></li>
                     {% endif %}
-                </li>
+                    {% if request.user|has_group:"organizer" and user.is_authenticated and not user.is_superuser %}
+                        <li class="nav-item align-self-end"><a class="nav-link" href="{% url 'organization_settings' %}">Settings</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user|has_group:"resident" %}
+                        <li class="nav-item align-self-end">
+                            <a class="nav-link" href="{% url 'resident_profile' %}">Profile</a>
+                        </li>
+                    {% endif %}
 
-                <ul class="list-unstyled list-inline ct-topbar__list align-self-end">
-                    <li class="ct-language nav-item" style="text-transform: uppercase;
+
+                    <ul class="list-unstyled list-inline ct-topbar__list align-self-end">
+                        <li class="ct-language nav-item" style="text-transform: uppercase;
                     font-size: 2rem;
                     font-weight: 700;
                     letter-spacing: 0.1rem;
                     color: var(--primary-color);
                     font-family: 'Avenir', monospace;    display: block;
                     padding: 0.5rem 0rem">Language
-                    <ul class="list-unstyled ct-language__dropdown">
-                    <li class="nav-item align-self-end"><a href="#googtrans(en|en)" class="lang-en lang-select nav-link" data-lang="en">English</a></li>
-                    <li class="nav-item align-self-end"><a href="#googtrans(en|es)" class="lang-es lang-select nav-link" data-lang="es">Spanish</a></li>
+                            <ul class="list-unstyled ct-language__dropdown">
+                                <li class="nav-item align-self-end"><a href="#googtrans(en|en)" class="lang-en lang-select nav-link" data-lang="en">English</a></li>
+                                <li class="nav-item align-self-end"><a href="#googtrans(en|es)" class="lang-es lang-select nav-link" data-lang="es">Spanish</a></li>
+                            </ul>
+                        </li>
                     </ul>
+
+                    <li class="nav-item align-self-end">
+                        {% if user.is_authenticated %}
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        {% endif %}
                     </li>
                 </ul>
-            </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-{% block body %}
-{% endblock %}
+    {% block body %}
+    {% endblock %}
 </div>
 
 <!--<footer class="pt-4 my-md-1 pt-md-5" tabindex="-1">-->
@@ -223,28 +225,28 @@
 <!---->
 <script type="text/javascript">
     function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT}, 'google_translate_element');
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT}, 'google_translate_element');
     }
 
     function triggerHtmlEvent(element, eventName) {
-      var event;
-      if (document.createEvent) {
-        event = document.createEvent('HTMLEvents');
-        event.initEvent(eventName, true, true);
-        element.dispatchEvent(event);
-      } else {
-        event = document.createEventObject();
-        event.eventType = eventName;
-        element.fireEvent('on' + event.eventType, event);
-      }
+        var event;
+        if (document.createEvent) {
+            event = document.createEvent('HTMLEvents');
+            event.initEvent(eventName, true, true);
+            element.dispatchEvent(event);
+        } else {
+            event = document.createEventObject();
+            event.eventType = eventName;
+            element.fireEvent('on' + event.eventType, event);
+        }
     }
 
     jQuery('.lang-select').click(function() {
-      var theLang = jQuery(this).attr('data-lang');
-      jQuery('.goog-te-combo').val(theLang);
+        var theLang = jQuery(this).attr('data-lang');
+        jQuery('.goog-te-combo').val(theLang);
 
-      window.location = jQuery(this).attr('href');
-      location.reload();
+        window.location = jQuery(this).attr('href');
+        location.reload();
     });
 </script>
 
@@ -252,7 +254,7 @@
 <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate">
 </script>
 <script>
-function loadGoogleTranslate(){
+    function loadGoogleTranslate(){
         new google.translate.TranslateElement(
             "google_element");
     }
