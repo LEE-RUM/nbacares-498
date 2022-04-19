@@ -38,6 +38,9 @@ def view_home(request):
 def view_tutorials(request):
     return render(request, 'ProjectSite/tutorials.html')
 
+def view_services(request):
+    return render(request, 'ProjectSite/access-service.html')
+
 
 class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = GalleryImages

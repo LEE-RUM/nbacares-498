@@ -116,6 +116,11 @@
         <div class="container">
             <div class="row text-center">
                 <h1 class="mt-5 mb-5 display-3 bold-title">Accessing Services</h1>
+
+                <div>
+                    <button data-toggle="modal" data-target="#serviceModal" type="button" class="btn btn-primary btn-lg" style="background-color: #b42929;">CLICK HERE</button>
+                </div>
+
                 <h1 class="mt-5 mb-5 display-4 bold-title">Health</h1>
                 <div class="col"><img class="img-fluid myimg mb-5" src=" {% static 'images/logo-healthcenter.png' %}" data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.chc1.com/' target='_blank' rel='noopener noreferrer' class= 'links'> Click here for more information</a>"></div>
                 <div class="col"><img class="img-fluid mb-5" src=" {% static 'images/logo-libertyintegrated.png' %}"data-bs-toggle="popover"  title="<h4> Health </h4>" data-bs-html="true" data-bs-content="<a href ='https://www.libertyibh.com/' target='_blank' rel='noopener noreferrer' class= 'links'>  Click here for more information</a>"></div>
@@ -155,7 +160,28 @@
 {#                <div class="w-100"></div>#}
 {#            </div>#}
         </div>
+        
     </section>
+    <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Participation Agreement</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <img class= "img-fluid" src=" {% static 'images/Service-Form.jpg' %}">
+            </div>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-primary">
+                  <a href= "{% url 'access_services' %}" style="text-decoration: none; color:white;"> Accept</a>
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
     <!--
     <section id="home_vision">
         <div class="container px-5">
