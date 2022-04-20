@@ -38,8 +38,14 @@ def view_home(request):
 def view_tutorials(request):
     return render(request, 'ProjectSite/tutorials.html')
 
+
+
+@login_required(login_url='login')
 def view_services(request):
-    return render(request, 'ProjectSite/access-service.html')
+    user = request.user
+    context = {'user': user}
+    return render(request, 'ProjectSite/access-service.html',context)
+
 
 
 class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):

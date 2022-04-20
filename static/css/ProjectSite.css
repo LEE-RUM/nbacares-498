@@ -363,3 +363,7 @@ color: #495057;
 .spaced-nav-item{
   padding-right: 2rem;
 }
+
+label{
+  margin-left: 10px;
+}

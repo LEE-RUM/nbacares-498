@@ -1,6 +1,6 @@
 {% extends 'ProjectSite/base.html' %}
 {% load static %}
-
+{% load user_tags %}
 {% block title %}
     <title>Home</title>
 {% endblock %}
@@ -162,6 +162,8 @@
         </div>
         
     </section>
+    <!-- Modal only shows up if user is a signed up as a resident-->
+    {% if request.user|has_group:"resident" %}
     <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -179,6 +181,15 @@
                   <a href= "{% url 'access_services' %}" style="text-decoration: none; color:white;"> Accept</a>
                 </button>
             </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <!-- Alert to sign up or login  -->
+      <div class='modal' id='serviceModal'> 
+        <div class='modal-dialog'>
+          <div class='alert alert-warning alert-dismissible'>     
+            <strong>You must sign up or login!</strong>
           </div>
         </div>
       </div>
