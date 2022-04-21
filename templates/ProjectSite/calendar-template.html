@@ -27,17 +27,34 @@
     }
 
     .fc-list-event-time, .fc-list-event-graphic, .fc-list-event-title{
-        color: black;
-        background-color: #009688;
+        color: white;
+        background-color: #B67786;
+        border: none;
         /*color: white;
         background-color: #834655;*/
     }
+
     .fc-list-event{
         background-color: none;
         background: none;
         border: none;
     }
-    
+
+    .fc-daygrid-event{
+        border: none;
+        background-color: #B67786;
+    }
+
+    .fc-event-time, .fc-event-title{
+        color: white;
+    }
+
+    .fc .fc-list-event-dot{
+        border: calc(var(--fc-list-event-dot-width, 10px) / 2) solid #ffffff;
+    }
+    .fc-daygrid-event-dot{
+        border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--fc-event-border-color, #ffffff);
+    }
 </style>
     <main class="app-content calendar-mobile" >
         <div class="row">
