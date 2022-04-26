@@ -9,7 +9,6 @@ from django.utils.text import slugify
 from phonenumber_field.modelfields import PhoneNumberField
 import phonenumbers
 import itertools
-from multiselectfield import MultiSelectField
 
 from ckeditor_uploader.fields import RichTextUploadingField
 

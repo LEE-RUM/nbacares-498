@@ -44,11 +44,12 @@ def view_tutorials(request):
 def view_services(request):
     user = request.user
     if request.method == 'POST':
-        form = RequestForm(request.POST)
-        if form.is_valid():
-            form.instance.user = request.user
-            form.save()
-            return redirect('home')
+        # form = RequestForm(request.POST)
+        # if form.is_valid():
+        #     form.instance.user = request.user
+        #     form.save()
+        #     return redirect('home')
+        return redirect('home')
     else:
         form = RequestForm()
     context = {'user': user, 'form': form}

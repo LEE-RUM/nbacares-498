@@ -10,7 +10,7 @@
        <h1>Request Services</h1>
        <p>Fill out needs assesment form to send to our providers.</p>
             <div class="col-12 col-sm-12 col-xxl-12">
-                <form method="post"url="% url 'access_service' %}" >
+            <form id="form" method="post"url="% url 'access_service' %}" >
                     {% csrf_token %}
                 <table class="table table-bordered">
                     <thead>
@@ -75,9 +75,18 @@
             </div>
     </div>
 </div>
-
-
-    
-
-
 {% endblock %}
+
+<!-- Scripts -->
+{% block scripts %}
+<script type="text/javascript">
+    $(function () {
+        $("#form").on("submit", (e) => {
+            e.preventDefault();
+            const email = "{{ user.email }}" // change it to ken's email
+            const mailBody = $("#form").innerHTML;
+            window.location.href = `mailto:${email}?subject=RequestServices&body=${mailBody}`;
+        })
+    })
+</script>
+{% endblock scripts %}
