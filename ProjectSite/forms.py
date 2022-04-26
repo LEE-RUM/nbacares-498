@@ -1,8 +1,10 @@
+from pickle import FALSE
+from random import choices
 from django.forms import ModelForm, models, DateInput
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import OrgEvent, Organization, Event, Blog, GalleryImages, Contact
+from .models import OrgEvent, Organization, Event, Blog, GalleryImages, Contact , RequestService
 from phonenumber_field.formfields import PhoneNumberField
 from django.core.exceptions import ValidationError
 
@@ -109,3 +111,25 @@ class ResourceForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'
+ 
+
+
+
+
+class RequestForm(forms.ModelForm):
+    education_shortTerm = forms.BooleanField(required=False)
+    education_longTerm = forms.BooleanField(required=False)
+    employment_shortTerm = forms.BooleanField(required=False)
+    employment_longTerm = forms.BooleanField(required=False)
+    financial_shortTerm = forms.BooleanField(required=False)
+    financial_longTerm = forms.BooleanField(required=False)
+    healthcare_shortTerm = forms.BooleanField(required=False)   
+    healthcare_longTerm = forms.BooleanField(required=False)
+    housing_shortTerm = forms.BooleanField(required= False)
+    housing_longTerm = forms.BooleanField(required= False)
+    class Meta:
+        model = RequestService
+        fields = ['education_shortTerm','education_longTerm','employment_shortTerm','employment_longTerm','financial_shortTerm','financial_longTerm','healthcare_shortTerm',
+                  'healthcare_longTerm','housing_shortTerm','housing_longTerm'
+                  ]
+        

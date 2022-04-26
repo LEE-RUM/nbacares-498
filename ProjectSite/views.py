@@ -43,7 +43,15 @@ def view_tutorials(request):
 @login_required(login_url='login')
 def view_services(request):
     user = request.user
-    context = {'user': user}
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('home')
+    else:
+        form = RequestForm()
+    context = {'user': user, 'form': form}
     return render(request, 'ProjectSite/access-service.html',context)
 
 
