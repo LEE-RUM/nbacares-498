@@ -550,7 +550,7 @@ def sendReqestFormEmail(emailBodyHTML):
         'Request Form',
         emailBodyTXT,
         settings.EMAIL_HOST_USER,
-        ["chenyanglinq@gmail.com"], # Ken's email
+        ["mikenasz123@gmail.com"], # Ken's email
         fail_silently=False,
         html_message=emailBodyHTML,
     )
