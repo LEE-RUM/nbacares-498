@@ -83,14 +83,17 @@
 <script type="text/javascript">
     $(function () {
         $("#form").on("submit", (e) => {
-            // e.preventDefault();
-            console.log("ajax")
-            console.log($('#table').html())
+            e.preventDefault();
+
+            // prevent user change the checkbox on email 
+            $('input[type=checkbox]').attr('disabled', true);
+            const table = $("#table").html()
+
              $.ajax({
                 type: "POST",
                 url: '{% url "access_services_email" %}',
                 data: {
-                    content: $('#table').html(),
+                    table: table,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 dataType: 'json',
@@ -103,6 +106,11 @@
                 },
             });
         })
+        // add checked attribute to checkboxes for email html body
+        $('input[type=checkbox]').change(function() {
+            (this.checked) ? $(this).attr('checked', true) : $(this).removeAttr('checked');
+        });
     })
+
 </script>
 {% endblock scripts %}

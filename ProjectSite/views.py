@@ -59,10 +59,10 @@ def view_services(request):
 @login_required(login_url='login')
 def view_services_email(request):
     try:
-        content = str(request.POST.get('content'))
+        table = str(request.POST.get('table'))
         userEmail = request.user.email
-        content = "<h3>Email sent from: <b>" + userEmail + "</b> <br><br>" + content
-        sendReqestFormEmail(content)
+        emailBodyHTML = "<h3>This email is sent from user: <b>" + userEmail + "</b> <br><br>" + table
+        sendReqestFormEmail(emailBodyHTML)
 
         data = { "message": "email sent successfully" }
         return JsonResponse(data)
@@ -543,9 +543,8 @@ def sendNotificationEmail(event, user):
         html_message=emailBodyHTML,
     )
 
-def sendReqestFormEmail(content):
+def sendReqestFormEmail(emailBodyHTML):
     print("sending email")
-    emailBodyHTML = content
     emailBodyTXT = "Request Form Txt"
     send_mail(
         'Request Form',
