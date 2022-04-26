@@ -3,6 +3,7 @@
 
 {% block title %}
     <title>Access Services</title>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 {% endblock %}
 {% block body %}
 <div class="container m-5">
@@ -10,7 +11,7 @@
        <h1>Request Services</h1>
        <p>Fill out needs assesment form to send to our providers.</p>
             <div class="col-12 col-sm-12 col-xxl-12">
-            <form id="form" method="post"url="% url 'access_service' %}" >
+            <form id="form" method="post"url="% url 'access_services' %}" >
                     {% csrf_token %}
                 <table id="table" class="table table-bordered">
                     <thead>
@@ -82,14 +83,25 @@
 <script type="text/javascript">
     $(function () {
         $("#form").on("submit", (e) => {
-            e.preventDefault();
-            const email = "{{ user.email }}" // change it to ken's email
-            const mailBody = $("#form").html();
-            console.log("mailBody")
-            console.log(mailBody)
-            console.log($("#table").html())
-            const testEmail = "<h1>hello</h1>"
-            window.location.href = `mailto:${email}?subject=RequestServices&body=Test`;
+            // e.preventDefault();
+            console.log("ajax")
+            console.log($('#table').html())
+             $.ajax({
+                type: "POST",
+                url: '{% url "access_services_email" %}',
+                data: {
+                    content: $('#table').html(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                dataType: 'json',
+                success: function (data) {
+                    alert(data.message);
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function (res) {  
+                    alert("email sent failed");                                                                                                               
+                },
+            });
         })
     })
 </script>

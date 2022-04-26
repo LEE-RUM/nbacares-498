@@ -1,4 +1,5 @@
 from ast import Del
+from copyreg import constructor
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -44,17 +45,30 @@ def view_tutorials(request):
 def view_services(request):
     user = request.user
     if request.method == 'POST':
-        # form = RequestForm(request.POST)
-        # if form.is_valid():
-        #     form.instance.user = request.user
-        #     form.save()
-        #     return redirect('home')
+        form = RequestForm(request.POST)
+        if form.is_valid():
+            # form.instance.user = request.user
+            # form.save()
+            return redirect('home')
         return redirect('home')
     else:
         form = RequestForm()
     context = {'user': user, 'form': form}
     return render(request, 'ProjectSite/access-service.html',context)
 
+@login_required(login_url='login')
+def view_services_email(request):
+    try:
+        content = str(request.POST.get('content'))
+        userEmail = request.user.email
+        content = "<h3>Email sent from: <b>" + userEmail + "</b> <br><br>" + content
+        sendReqestFormEmail(content)
+
+        data = { "message": "email sent successfully" }
+        return JsonResponse(data)
+    except:
+        data = { "message": "email sent failed" }
+        return JsonResponse(data)
 
 
 class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -525,6 +539,19 @@ def sendNotificationEmail(event, user):
         emailBodyTXT,
         settings.EMAIL_HOST_USER,
         [user.email],
+        fail_silently=False,
+        html_message=emailBodyHTML,
+    )
+
+def sendReqestFormEmail(content):
+    print("sending email")
+    emailBodyHTML = content
+    emailBodyTXT = "Request Form Txt"
+    send_mail(
+        'Request Form',
+        emailBodyTXT,
+        settings.EMAIL_HOST_USER,
+        ["chenyanglinq@gmail.com"], # Ken's email
         fail_silently=False,
         html_message=emailBodyHTML,
     )
