@@ -12,7 +12,7 @@
             <div class="col-12 col-sm-12 col-xxl-12">
             <form id="form" method="post"url="% url 'access_service' %}" >
                     {% csrf_token %}
-                <table class="table table-bordered">
+                <table id="table" class="table table-bordered">
                     <thead>
                         <tr>
                           <th scope="col">Category</th>
@@ -84,8 +84,12 @@
         $("#form").on("submit", (e) => {
             e.preventDefault();
             const email = "{{ user.email }}" // change it to ken's email
-            const mailBody = $("#form").innerHTML;
-            window.location.href = `mailto:${email}?subject=RequestServices&body=${mailBody}`;
+            const mailBody = $("#form").html();
+            console.log("mailBody")
+            console.log(mailBody)
+            console.log($("#table").html())
+            const testEmail = "<h1>hello</h1>"
+            window.location.href = `mailto:${email}?subject=RequestServices&body=Test`;
         })
     })
 </script>
