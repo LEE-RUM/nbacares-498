@@ -117,6 +117,11 @@ class delete_blog(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def view_resources(request):
     form = ResourceForm(request.POST or None)
+    if request.method == 'POST':
+        res_add = ResourceForm(request.POST)
+        if res_add.is_valid():
+            res_add.save()
+            return redirect('resources')
 
     selectedService = "All"
 

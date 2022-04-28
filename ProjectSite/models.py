@@ -107,7 +107,7 @@ class Service(models.Model):
         return self.service
 
 class Contact(models.Model):
-    
+
     service = models.ForeignKey(Service, null=True, on_delete=models.CASCADE)
     contact_resource_provider = models.CharField(max_length=50)
     # contact_ages = models.CharField(max_length=20)
