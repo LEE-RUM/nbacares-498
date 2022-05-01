@@ -1,4 +1,5 @@
 from ast import Del
+from copyreg import constructor
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -43,9 +44,31 @@ def view_tutorials(request):
 @login_required(login_url='login')
 def view_services(request):
     user = request.user
-    context = {'user': user}
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        if form.is_valid():
+            # form.instance.user = request.user
+            # form.save()
+            return redirect('home')
+        return redirect('home')
+    else:
+        form = RequestForm()
+    context = {'user': user, 'form': form}
     return render(request, 'ProjectSite/access-service.html',context)
 
+@login_required(login_url='login')
+def view_services_email(request):
+    try:
+        table = str(request.POST.get('table'))
+        userEmail = request.user.email
+        emailBodyHTML = "<h3>This email is sent from user: <b>" + userEmail + "</b> <br><br>" + table
+        sendReqestFormEmail(emailBodyHTML)
+
+        data = { "message": "email sent successfully" }
+        return JsonResponse(data)
+    except:
+        data = { "message": "email sent failed" }
+        return JsonResponse(data)
 
 
 class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -521,6 +544,18 @@ def sendNotificationEmail(event, user):
         emailBodyTXT,
         settings.EMAIL_HOST_USER,
         [user.email],
+        fail_silently=False,
+        html_message=emailBodyHTML,
+    )
+
+def sendReqestFormEmail(emailBodyHTML):
+    print("sending email")
+    emailBodyTXT = "Request Form Txt"
+    send_mail(
+        'Request Form',
+        emailBodyTXT,
+        settings.EMAIL_HOST_USER,
+        ["mikenasz123@gmail.com"], # Ken's email
         fail_silently=False,
         html_message=emailBodyHTML,
     )

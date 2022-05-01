@@ -3,6 +3,7 @@
 
 {% block title %}
     <title>Access Services</title>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 {% endblock %}
 {% block body %}
 <div class="container m-5">
@@ -10,8 +11,9 @@
        <h1>Request Services</h1>
        <p>Fill out needs assesment form to send to our providers.</p>
             <div class="col-12 col-sm-12 col-xxl-12">
-                <form>
-                <table class="table table-bordered">
+            <form id="form" method="post"url="% url 'access_services' %}" >
+                    {% csrf_token %}
+                <table id="table" class="table table-bordered">
                     <thead>
                         <tr>
                           <th scope="col">Category</th>
@@ -21,54 +23,94 @@
                       </thead>
                       <tr>
                             <td>Education</td>
-                            <td>
-                                <input id="HS-Diploma"  type="checkbox" /><label for="HS-Diploma">HS-Diploma</label>
-                            </td>
-                            <td>
-                                <input id="College"  type="checkbox" /><label for="College">Job training, College</label>
-                            </td>
+                            
+                               <td>
+                                   {{form.education_shortTerm}}<label>High School</label>
+                                 </td> 
+                               <td> 
+                                   {{form.education_longTerm}} <label>College</label>
+                                </td>
                       </tr>
                       <tr>
                         <td>Employment</td>
                         <td>
-                            <input id="Job-Training"  type="checkbox" /><label for="Job Training">Job Training</label>
+                            {{form.employment_shortTerm}}<label for="Job Training">Job Training</label>
                         </td>
                         <td>
-                            <input id="Career"  type="checkbox" /><label for="Career">Career</label>
+                            {{form.employment_longTerm}}<label for="Career">Career</label>
                         </td>
                     </tr>
                     <tr>
                         <td>Financial Literacy</td>
                         <td>
-                            <input id="Fin-lit"  type="checkbox" /><label for="Fin-lit">Financial Literacy</label>
+                            {{form.financial_shortTerm}}<label for="Fin-lit">Financial Literacy</label>
                         </td>
                         <td>
-                            <input id="Fin-Coaching"  type="checkbox" ><label for="Fin-Coaching"> Financial Coaching</label>
+                            {{form.financial_longTerm}}<label for="Fin-Coaching"> Financial Coaching</label>
                         </td>
                     </tr>
                     <tr>
                         <td>Healthcare</td>
                         <td>
-                            <input id="pysical"  type="checkbox" /><label for="pysical">Physical</label>
+                            {{form.healthcare_shortTerm}}<label for="pysical">Physical</label>
                         </td>
                         <td>
-                            <input id="full"  type="checkbox" /><label for="full">Full Healthcare</label>
+                            {{form.healthcare_longTerm}}<label for="full">Full Healthcare</label>
                         </td>
                     </tr>
                     <tr>
                         <td>Housing</td>
                         <td>
-                            <input id="rental"  type="checkbox" /><label for="rental">Rental Assistance</label>
+                        {{form.housing_shortTerm}}<label for="rental">Rental Assistance</label>
                         </td>
                         <td>
-                            <input id="ownership"  type="checkbox" /><label for="ownership">Homeownership</label>
+                            {{form.housing_longTerm}}<label for="ownership">Homeownership</label>
                         </td>
                     </tr>
                 </table>
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+                
             </form>
+            
             </div>
     </div>
 </div>
-
-
 {% endblock %}
+
+<!-- Scripts -->
+{% block scripts %}
+<script type="text/javascript">
+    $(function () {
+        $("#form").on("submit", (e) => {
+            e.preventDefault();
+
+            // prevent user change the checkbox on email 
+            $('input[type=checkbox]').attr('disabled', true);
+            const table = $("#table").html()
+
+             $.ajax({
+                type: "POST",
+                url: '{% url "access_services_email" %}',
+                data: {
+                    table: table,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                dataType: 'json',
+                success: function (data) {
+                    alert(data.message);
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function (res) {  
+                    alert("email sent failed");                                                                                                               
+                },
+            });
+        })
+        // add checked attribute to checkboxes for email html body
+        $('input[type=checkbox]').change(function() {
+            (this.checked) ? $(this).attr('checked', true) : $(this).removeAttr('checked');
+        });
+    })
+
+</script>
+{% endblock scripts %}

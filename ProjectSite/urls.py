@@ -51,6 +51,7 @@ urlpatterns = [
     path('send-email-notifications/', views.send_email_notifications, name="send_email_notifications"),
 
     path('tutorials/', views.view_tutorials, name='tutorials'),
-    path('services/', views.view_services, name ='access_services')
+    path('services/', views.view_services, name ='access_services'),
+    path('services/email', views.view_services_email, name ='access_services_email'),
 
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

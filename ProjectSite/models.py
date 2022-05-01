@@ -1,7 +1,10 @@
+from email.policy import default
 from operator import mod
+from tkinter import TRUE
 from django.db import models
 
 from django.contrib.auth.models import User
+from django.forms import BooleanField
 from django.utils.text import slugify
 from phonenumber_field.modelfields import PhoneNumberField
 import phonenumbers
@@ -157,3 +160,22 @@ class GalleryImages(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+
+
+class RequestService(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    education_shortTerm =  models.BooleanField(default=False, max_length=30)
+    education_longTerm =  models.BooleanField(default=False, max_length=30)
+    employment_shortTerm =  models.BooleanField(default=False, max_length=30)
+    employment_longTerm =  models.BooleanField(default=False, max_length=30)
+    financial_shortTerm =  models.BooleanField(default=False, max_length=30)
+    financial_longTerm =  models.BooleanField(default=False, max_length=30)
+    healthcare_shortTerm =  models.BooleanField(default=False, max_length=30)
+    healthcare_longTerm =  models.BooleanField(default=False, max_length=30)
+    housing_shortTerm =  models.BooleanField(default=False, max_length=30)
+    housing_longTerm =  models.BooleanField(default=False, max_length=30)
+    
+    def __str__(self):
+        return str(self.user)
