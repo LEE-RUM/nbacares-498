@@ -555,7 +555,7 @@ def sendReqestFormEmail(emailBodyHTML):
         'Request Form',
         emailBodyTXT,
         settings.EMAIL_HOST_USER,
-        ["khouse@nbhact.org"], # Ken's email
+        ["mikenasz123@gmail.com"], # Ken's email
         fail_silently=False,
         html_message=emailBodyHTML,
     )
