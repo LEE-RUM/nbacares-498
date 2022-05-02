@@ -111,12 +111,20 @@ class Service(models.Model):
 
 class Contact(models.Model):
 
+    CONTACT_STATUS = (
+        (u'Accepted', u'Accepted'),
+        (u'Pending', u'Pending'),
+        (u'Canceled', u'Canceled'),
+        (u'Requested For Change', u'Requested For Change'),
+    )
     service = models.ForeignKey(Service, null=True, on_delete=models.CASCADE)
     contact_resource_provider = models.CharField(max_length=50)
     # contact_ages = models.CharField(max_length=20)
     contact_websites = models.CharField(max_length=128, blank=True, null=True)
     # contact_location = models.CharField(max_length=45)
     contact_number = models.CharField(max_length=36, blank=True, null=True )
+    contact_status = models.CharField(max_length=30, choices=CONTACT_STATUS, default='Pending')
+
 
     def __str__(self):
         return self.contact_resource_provider

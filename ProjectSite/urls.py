@@ -45,6 +45,7 @@ urlpatterns = [
     path('calendar-template/register/', views.register_event, name="register_event"),
     
     path('admin-panel', views.view_admin_panel, name="admin_panel"),
+    path('resource-panel', views.view_resource_panel, name="resource_panel"),
     path('admin-organization/<str:pk>', views.view_admin_organzation, name="admin_organization"),
     path('admin-user-creation', views.view_admin_user_creation, name="admin_user_creation"),
     path('organization-settings', views.view_organization_settings, name="organization_settings"),

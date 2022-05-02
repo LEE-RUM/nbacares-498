@@ -56,7 +56,6 @@ class ProjectUpdateForm(ModelForm):
         model = Event
         fields = ['event_name', 'event_description', 'event_tag', 'event_status']
 
-
 class ProjectForms(ModelForm):
     class Meta:
         CHOICES = (('None', 'None'), ('Toddler', 'Toddler'),
@@ -111,10 +110,11 @@ class ResourceForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'
- 
 
-
-
+class ContactUpdateForm(ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['contact_resource_provider', 'contact_number', 'contact_websites', 'contact_status']
 
 class RequestForm(forms.ModelForm):
     education_shortTerm = forms.BooleanField(required=False)

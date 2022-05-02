@@ -177,6 +177,21 @@ def autosuggest(request):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles='admin')
+def view_resource_panel(request):
+    contacts = Contact.objects.all()
+    pending_contacts = contacts.filter(contact_status='Pending')
+    Accepted_contacts = contacts.filter(contact_status='Accepted')
+    canceled_contacts = contacts.filter(contact_status='Canceled')
+
+    context = {'contacts': contacts,'pending_contact': pending_contacts,
+               'Accepted_contacts': Accepted_contacts,
+               'canceled_contacts': canceled_contacts}
+
+    return render(request, 'ProjectSite/resource-panel.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles='admin')
 def view_events(request):
     orgevents = OrgEvent.objects.all()
     completed_events = orgevents.filter(org_event_status='Accepted')
@@ -395,7 +410,6 @@ def view_admin_panel(request):
                'Accepted_events_Count': Accepted_events_Count, 'orgs': orgs, 'canceled_events': canceled_events}
 
     return render(request, 'ProjectSite/admin-panel.html', context)
-
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles='admin')

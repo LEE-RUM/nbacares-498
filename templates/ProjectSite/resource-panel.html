@@ -1,0 +1,37 @@
+{% extends 'ProjectSite/log-base.html' %}
+{% load static %}
+{% block title %}
+    <title>Admin Panel</title>
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="row px-5">
+        <div class="col-md-7">
+            <h5>Pending Events</h5>
+            <hr>
+            <div class="card card-body">
+                <table class="table table-sm" style="table-layout: fixed">
+                    <tr>
+                        <th>Resource Provider</th>
+                        <th>Contact Number</th>
+                        <th>Website</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                    {% for contact in pending_contact %}
+                        <tr>
+                            <td>{{ contact.contact_resource_provider }}</td>
+                            <td>{{ contact.contact_number }}</td>
+                            <td>{{ contact.contact_websites }}</td>
+                            <td>{{ contact.contact_status }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
