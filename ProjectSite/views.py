@@ -164,6 +164,8 @@ def view_resources(request):
                'selectedService': selectedService, 'pagContacts': pagContacts}
     return render(request, 'ProjectSite/resources.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles='admin')
 def delete_resource(request, pk):
     form = Contact.objects.get(id=pk)
 
