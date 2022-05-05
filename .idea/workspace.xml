@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c96af854-2a30-4099-a7f3-a6187f5ea7be" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fcae043f-4e1c-4a3c-b9b5-c5b6df079e25.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fcae043f-4e1c-4a3c-b9b5-c5b6df079e25.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParaDYM/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ParaDYM/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSite/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSite/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/ProjectSite/resources.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ProjectSite/resources.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,6 +108,7 @@
       <workItem from="1650346973591" duration="428000" />
       <workItem from="1651112684120" duration="2831000" />
       <workItem from="1651115557475" duration="1881000" />
+      <workItem from="1651713576305" duration="3677000" />
     </task>
     <servers />
   </component>

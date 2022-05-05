@@ -164,6 +164,15 @@ def view_resources(request):
                'selectedService': selectedService, 'pagContacts': pagContacts}
     return render(request, 'ProjectSite/resources.html', context)
 
+def delete_resource(request, pk):
+    form = Contact.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form.delete()
+        return redirect('resources')
+    context = {'form': form}
+    return render(request, 'ProjectSite/delete-resource.html', context)
+
 
 # Auto suggest function
 def autosuggest(request):

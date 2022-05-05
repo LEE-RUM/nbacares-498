@@ -85,6 +85,7 @@
                                 <td><a class="fs-5" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_resource_provider }}</a></td>
                                 <!---- <td><a class="fs-6" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>   -->                                                             <!--<td>{{ allcontact.contact_location }}</td>-->
                                 <td><a style="color: darkblue;" href="tel:{{pagcontact.contact_number}}">{{ pagcontact.contact_number }}</a></td>
+                                <td ><a class="btn btn-danger text-center" href="{% url 'delete_resource' pagcontact.id %}" >DELETE</a></td>
                             </tr>
                         {% endfor %}
                     </table>

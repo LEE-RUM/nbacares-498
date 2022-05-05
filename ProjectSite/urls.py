@@ -10,6 +10,7 @@ urlpatterns = [
     path('about', views.view_about, name="about"),
 
     path('resources', views.view_resources, name="resources"),
+    path('delete-resource/<str:pk>', views.delete_resource, name="delete_resource"),
     path('autosuggest/', views.autosuggest, name="autosuggest"),
 
     path('upload/', upload_image.as_view(), name="upload_image"),
