@@ -86,7 +86,7 @@
                                 <!---- <td><a class="fs-6" style="color: darkblue;" href="//{{ pagcontact.contact_websites }}">{{ pagcontact.contact_websites }}</a></td>   -->                                                             <!--<td>{{ allcontact.contact_location }}</td>-->
                                 <td><a style="color: darkblue;" href="tel:{{pagcontact.contact_number}}">{{ pagcontact.contact_number }}</a></td>
                                 {% if request.user|has_group:"admin" %}
-                                <td><a class="btn btn-danger text-center" href="{% url 'delete_resource' pagcontact.id %}" >DELETE</a></td>
+                                <td class="text-center"><a class="btn btn-danger text-center" href="{% url 'delete_resource' pagcontact.id %}" >DELETE</a></td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
