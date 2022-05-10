@@ -5,7 +5,7 @@ The main functionality of this site for most users is a mobile-responsive calend
 <br />
 
 > Technologies Used
-- HTML, CSS, Javascript (JQuery), ~~Vue.js~~
+- HTML, CSS, Javascript (JQuery)
 - Python (Django)
 - Databases: SQL Lite, PostGreSQL (Easily migratable for personal use)
 - Hosting: PythonAnywhere, AWS LightSail (Networking for Static IPs, RDS-like Database storage, Ubuntu Env for managing of interpreter, packages, and deployment of files)
@@ -23,20 +23,12 @@ The main functionality of this site for most users is a mobile-responsive calend
 - Organizations can View Their Own Events
 - Unsigned users can View Events
 
-<br />
-
-> Links
-- [To site through AWS](https://github.com/sshJerry/NBCares-ParaDYM-Site) - Omitted for privacy
-- [To site through PythonAnywhere](https://github.com/sshJerry/NBCares-ParaDYM-Site) - Omitted for privacy
-
-<br />
-
 ## How to use it
 
 ```bash
 $ # Get the code
-$ git clone https://github.com/sshJerry/NBCares-ParaDYM-Site.git
-$ cd NBCares-ParaDYM-Site
+$ git clone https://github.com/LEE-RUM/nbcares-498.git
+$ cd nbcares-498
 $
 $ # Virtualenv modules installation (Unix based systems)
 $ virtualenv env
@@ -63,15 +55,18 @@ $ # Access the web app in browser: http://127.0.0.1:8000/
 
 $ # Deployment on PythonAnywhere
 $ pip3.7 install pythonanywhere --user
-$ pa_autoconfigure_django.py --python=3.7 https://github.com/sshJerry/NBCares-ParaDYM-Site --branch=main --nuke
+$ pa_autoconfigure_django.py --python=3.7 https://github.com/LEE-RUM/nbcares-498 --branch=master --nuke
 ```
 
 <br />
 
 ## Home Page
 Showcasing the look of the Home Page
-![Settings screenshot](https://i.imgur.com/PlZt5FN.jpeg)
+
+![Home](https://user-images.githubusercontent.com/79949410/167721144-d9301723-eb22-487e-8dad-f44deb6d1b7d.png)
 
 ## Login Page
 Showcasing the look of the Login Page
-![Settings screenshot](https://i.imgur.com/qB0nbgg.png)
+
+![Login](https://user-images.githubusercontent.com/79949410/167720932-84ea8752-6564-4b96-b089-d21fb4cdf6cc.png)
+
