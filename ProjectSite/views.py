@@ -130,7 +130,6 @@ class edit_blog(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class delete_blog(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Blog
-    form_class = BlogForm
     template_name = 'ProjectSite/delete-blog.html'
     slug_url_kwarg = 'title'
     slug_field = 'slug'
