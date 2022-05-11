@@ -18,6 +18,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth.decorators import user_passes_test
+
 
 # send email
 from django.contrib.sites.shortcuts import get_current_site
@@ -69,7 +71,6 @@ def view_services_email(request):
     except:
         data = { "message": "email sent failed" }
         return JsonResponse(data)
-
 
 class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = GalleryImages
