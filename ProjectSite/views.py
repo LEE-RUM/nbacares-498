@@ -81,11 +81,11 @@ class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def test_func(self):
         return self.request.user.groups.filter(name='admin')
 
-
+#renders about page
 def view_about(request):
     return render(request, 'ProjectSite/about.html')
 
-
+#detailed view of the post
 class view_post(DetailView):
     model = Blog
     template_name = 'ProjectSite/post.html'
@@ -94,9 +94,10 @@ class view_post(DetailView):
     # query_pk_and_slug = False
 
 
+#Blog view
 def view_blog(request):
-    post = Blog.objects.all().order_by('created_at')
-    bp = Paginator(post, 2)
+    post = Blog.objects.all().order_by('-id')
+    bp = Paginator(post, 3) #posts allowed per page are 3
     page_number = request.GET.get('page')
     page_obj = bp.get_page(page_number)
     context = {'post': post, 'page_obj': page_obj}
@@ -288,7 +289,7 @@ def view_logout(request):
 def resident_profile(request):
     user = request.user
 
-    # get upoming events for this resident user
+    # get upcoming events for this resident user
     upcomingEvents = Event.objects.filter(registered=user, event_sTime__gte=datetime.now().replace(hour=0, minute=0, second=0)).order_by('event_sTime')
     upcomingEventsPaginator = Paginator(upcomingEvents, 6)  # paginator based on filterd contacts
     pagUpcomingEvents = upcomingEventsPaginator.get_page(1)
