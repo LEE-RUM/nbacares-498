@@ -12,6 +12,7 @@ import itertools
 
 from ckeditor_uploader.fields import RichTextUploadingField
 
+
 class Organization(models.Model):
     ORGANIZATION_STATUS = (
         ('Active', 'Active'),
@@ -27,6 +28,7 @@ class Organization(models.Model):
 
     def __str__(self):
         return str(self.user)
+
 
 class Resident(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
@@ -50,18 +52,19 @@ class Resident(models.Model):
 
 
 class Event(models.Model):
-    EVENT_TAGS = (
+    EVENT_TAGS = ( # tags that can be seen when filterting
         ('Housing', 'Housing'), ('Employment', 'Employment'), ('Education', 'Education'),
         ('Financial Literacy', 'Financial Literacy'), ('Healthcare', 'Healthcare'), ('Mental Health', 'Mental Health'),
         ('Family Engagement', 'Family Engagement'), ('Children Activities', 'Children Activities'), ('Art', 'Art'),
         ('Community Event', 'Community Event'), ('Fundraising', 'Fundraising'), ('Other', 'Other'),
     )
-    EVENT_STATUS = (
+    EVENT_STATUS = (  # status choices for events that can be seen on admin panel
         (u'Accepted', u'Accepted'),
         (u'Pending', u'Pending'),
         (u'Canceled', u'Canceled'),
         (u'Requested For Change', u'Requested For Change'),
     )
+    # all event fields
     user = models.ForeignKey(Organization, on_delete=models.CASCADE)
     event_name = models.CharField(max_length=100, null=True, blank=False)
     event_description = models.TextField(max_length=400, null=True, blank=True)
@@ -94,12 +97,14 @@ class OrgEvent(models.Model):
     def __str__(self):
         return str(self.org_event_event.event_name)
 
+
 class Category(models.Model):
     category = models.CharField(max_length=30, primary_key=True)
     orderingID = models.IntegerField(default=1)
 
     def __str__(self):
         return self.category
+
 
 class Service(models.Model):
     service = models.CharField(max_length=30, primary_key=True)
@@ -109,20 +114,21 @@ class Service(models.Model):
     def __str__(self):
         return self.service
 
-class Contact(models.Model):
 
+#contact class
+class Contact(models.Model):
     service = models.ForeignKey(Service, null=True, on_delete=models.CASCADE)
-    contact_resource_provider = models.CharField(max_length=50)
+    contact_resource_provider = models.CharField(max_length=50)  # resource provider field
     # contact_ages = models.CharField(max_length=20)
-    contact_websites = models.CharField(max_length=128, blank=True, null=True)
+    contact_websites = models.CharField(max_length=128, blank=True, null=True)  # website field
     # contact_location = models.CharField(max_length=45)
-    contact_number = models.CharField(max_length=36, blank=True, null=True )
+    contact_number = models.CharField(max_length=36, blank=True, null=True)  # phone number field
 
     def __str__(self):
         return self.contact_resource_provider
 
-class Blog(models.Model):
 
+class Blog(models.Model):
     post_title = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     slug = models.SlugField(
@@ -132,7 +138,7 @@ class Blog(models.Model):
 
     post_content = RichTextUploadingField(null=True, default=True)
 
-    #test2 = RichTextUploadingField(null=True, default=True,external_plugin_resources=[('youtube', 'static/ckeditor/plugins/youtube/youtube/', 'plugin.js')])
+    # test2 = RichTextUploadingField(null=True, default=True,external_plugin_resources=[('youtube', 'static/ckeditor/plugins/youtube/youtube/', 'plugin.js')])
 
     main_image = models.ImageField(upload_to="images/", null=True, blank=True)
 
@@ -154,28 +160,27 @@ class Blog(models.Model):
             self._generate_slug()
         super().save(*args, **kwargs)
 
+
 class GalleryImages(models.Model):
     title = models.CharField(default='image', max_length=128)
     image = models.ImageField(upload_to="images/", null=True)
 
     def __str__(self):
         return self.title
-    
 
-
-
+# fields shown in request service form
 class RequestService(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    education_shortTerm =  models.BooleanField(default=False, max_length=30)
-    education_longTerm =  models.BooleanField(default=False, max_length=30)
-    employment_shortTerm =  models.BooleanField(default=False, max_length=30)
-    employment_longTerm =  models.BooleanField(default=False, max_length=30)
-    financial_shortTerm =  models.BooleanField(default=False, max_length=30)
-    financial_longTerm =  models.BooleanField(default=False, max_length=30)
-    healthcare_shortTerm =  models.BooleanField(default=False, max_length=30)
-    healthcare_longTerm =  models.BooleanField(default=False, max_length=30)
-    housing_shortTerm =  models.BooleanField(default=False, max_length=30)
-    housing_longTerm =  models.BooleanField(default=False, max_length=30)
-    
+    education_shortTerm = models.BooleanField(default=False, max_length=30)
+    education_longTerm = models.BooleanField(default=False, max_length=30)
+    employment_shortTerm = models.BooleanField(default=False, max_length=30)
+    employment_longTerm = models.BooleanField(default=False, max_length=30)
+    financial_shortTerm = models.BooleanField(default=False, max_length=30)
+    financial_longTerm = models.BooleanField(default=False, max_length=30)
+    healthcare_shortTerm = models.BooleanField(default=False, max_length=30)
+    healthcare_longTerm = models.BooleanField(default=False, max_length=30)
+    housing_shortTerm = models.BooleanField(default=False, max_length=30)
+    housing_longTerm = models.BooleanField(default=False, max_length=30)
+
     def __str__(self):
         return str(self.user)

@@ -102,20 +102,19 @@ class BlogForm(forms.ModelForm):
             #}),
         }
 
+#form for images
 class GalleryImagesForm(forms.ModelForm):
     class Meta:
         model = GalleryImages
         fields = '__all__'
 
+#resource form
 class ResourceForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'
- 
 
-
-
-
+#request form
 class RequestForm(forms.ModelForm):
     education_shortTerm = forms.BooleanField(required=False)
     education_longTerm = forms.BooleanField(required=False)
