@@ -114,7 +114,8 @@ class ResourceForm(forms.ModelForm):
         model = Contact
         fields = '__all__'
 
-#request form
+#Request form for services
+# Each variable represents one checkbox in the form
 class RequestForm(forms.ModelForm):
     education_shortTerm = forms.BooleanField(required=False)
     education_longTerm = forms.BooleanField(required=False)

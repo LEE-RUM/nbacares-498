@@ -6,6 +6,10 @@
     <script src="https://smtpjs.com/v3/smtp.js"></script>
 {% endblock %}
 {% block body %}
+<!--
+    Page template for request for services form in table format
+    change labels for form to text inside label tage
+-->
 <div class="container m-5">
     <div class="row text-center">
        <h1>Request Services</h1>
@@ -84,11 +88,10 @@
     $(function () {
         $("#form").on("submit", (e) => {
             e.preventDefault();
-
-            // prevent user change the checkbox on email 
-            $('input[type=checkbox]').attr('disabled', true);
-            const table = $("#table").html()
-
+            if($('input[type=checkbox]').is(":checked")){
+                // prevent user change the checkbox on email 
+                $('input[type=checkbox]').attr('disabled', true);
+                const table = $("#table").html()
              $.ajax({
                 type: "POST",
                 url: '{% url "access_services_email" %}',
@@ -105,11 +108,19 @@
                     alert("email sent failed");                                                                                                               
                 },
             });
+            // add checked attribute to checkboxes for email html body
+            $('input[type=checkbox]').change(function() {
+                (this.checked) ? $(this).attr('checked', true) : $(this).removeAttr('checked');
+            });
+        }
+        else{
+            alert("No checkboxed has been selected")
+        }
         })
         // add checked attribute to checkboxes for email html body
-        $('input[type=checkbox]').change(function() {
-            (this.checked) ? $(this).attr('checked', true) : $(this).removeAttr('checked');
-        });
+        //$('input[type=checkbox]').change(function() {
+            //(this.checked) ? $(this).attr('checked', true) : $(this).removeAttr('checked');
+        //});
     })
 
 </script>

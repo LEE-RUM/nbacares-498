@@ -30,27 +30,28 @@ from django.template.loader import render_to_string
 from datetime import datetime, timedelta, time
 from django.utils import timezone
 
-
+#Home page view
 def view_home(request):
-    images = GalleryImages.objects.all()
+    images = GalleryImages.objects.all() # Images to be shown in carousel
     context = {
         'images': images
     }
     return render(request, 'ProjectSite/home.html', context)
 
+
+#Tutorials
 def view_tutorials(request):
     return render(request, 'ProjectSite/tutorials.html')
 
 
-
+#Request for services page
+# If form is valid, email gets sent and redirects back to home page
 @login_required(login_url='login')
 def view_services(request):
     user = request.user
     if request.method == 'POST':
         form = RequestForm(request.POST)
         if form.is_valid():
-            # form.instance.user = request.user
-            # form.save()
             return redirect('home')
         return redirect('home')
     else:
@@ -58,18 +59,19 @@ def view_services(request):
     context = {'user': user, 'form': form}
     return render(request, 'ProjectSite/access-service.html',context)
 
+# Transform the request for services form into email format
 @login_required(login_url='login')
 def view_services_email(request):
     try:
-        table = str(request.POST.get('table'))
-        userEmail = request.user.email
-        emailBodyHTML = "<h3>This email is sent from user: <b>" + userEmail + "</b> <br><br>" + table
-        sendReqestFormEmail(emailBodyHTML)
-
-        data = { "message": "email sent successfully" }
+        table = str(request.POST.get('table')) # Get the request form table
+        userEmail = request.user.email #This is the user that filled out form
+        emailBodyHTML = "<h3>This email is sent from user: <b>" + userEmail + "</b> <br><br>" + table #Template for email
+        sendReqestFormEmail(emailBodyHTML) # Call function below that sends email
+        # If email is sent sucessfully show this pop up
+        data = { "message": "Email has been sent successfully to our providers" }
         return JsonResponse(data)
     except:
-        data = { "message": "email sent failed" }
+        data = { "message": "Email sent failed" } # Email has not been sent
         return JsonResponse(data)
 
 class upload_image(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -147,7 +149,7 @@ def view_resources(request):
             res_add.save()
             return redirect('resources')
 
-    selectedService = "All"
+    selectedService = "All" #Default the selected service is all
 
     if request.GET.get("service"):
         selectedService = request.GET.get("service")
@@ -155,10 +157,10 @@ def view_resources(request):
     allcontacts = Contact.objects.all()
     conFilters = ContactFilter({'service': selectedService}, queryset=allcontacts)
     filterdContacts = conFilters.qs  # filter contacts
-    p = Paginator(filterdContacts, 30)  # paginator based on filterd contacts
+    p = Paginator(filterdContacts, 30)  # paginator based on filtered contacts, value is how many services will show on each page 
     page = request.GET.get('page')
-    pagContacts = p.get_page(page)
-    categories = Category.objects.all().order_by('orderingID')
+    pagContacts = p.get_page(page) # Returns the paginated contacts to display in table
+    categories = Category.objects.all().order_by('orderingID') # Return catogories and services based on ordering id in database
     services = Service.objects.all().order_by('orderingID')
 
     context = {'form': form,'allcontacts': allcontacts, 'conFilters': conFilters, 'categories': categories, 'services': services,
@@ -177,13 +179,13 @@ def delete_resource(request, pk):
     return render(request, 'ProjectSite/delete-resource.html', context)
 
 
-# Auto suggest function
+# Auto suggest function for searching services in the resource directory
 def autosuggest(request):
     print(request.GET)
-    query = request.GET.get('term')
-    qs = Service.objects.filter(service__startswith=query)
+    query = request.GET.get('term') # Get term based of user input
+    qs = Service.objects.filter(service__startswith=query) #Start filtering services by the starting letter 
     mylist = []
-    mylist += [x.service for x in qs]
+    mylist += [x.service for x in qs] # Return the list based on what user types in search bar
     return JsonResponse(mylist, safe=False)
 
 
@@ -559,7 +561,10 @@ def sendNotificationEmail(event, user):
         fail_silently=False,
         html_message=emailBodyHTML,
     )
-
+# Send request form email function
+# Note:
+# Request form has renders differently with a outlook email
+# For best results use a gmail account to recieve the request services email
 def sendReqestFormEmail(emailBodyHTML):
     print("sending email")
     emailBodyTXT = "Request Form Txt"
@@ -567,7 +572,7 @@ def sendReqestFormEmail(emailBodyHTML):
         'Request Form',
         emailBodyTXT,
         settings.EMAIL_HOST_USER,
-        ["mikenasz123@gmail.com"], # Ken's email
+        ["khouse@nbhact.org"], # Replace with email to recieve the request form here
         fail_silently=False,
         html_message=emailBodyHTML,
     )
