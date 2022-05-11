@@ -38,21 +38,25 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="pagination">
+    <div class="pagination">
     <span class="step-links">
+        <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <span class="current" style= "margin-right: 1em">
+                 {{ page_obj.number }}
+             </span>
+                <br>
         {% if page_obj.has_previous %}
-            <a class="page-item" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+           <li class ="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</li></a>
         {% endif %}
-
-        <span class="current">
-          {{ page_obj.number }}
-        </span>
 
         {% if page_obj.has_next %}
-            <a class="page-item" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <li class = "page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</li></a>
         {% endif %}
+    </ul>
+    </nav>
     </span>
-        </div>
+    </div>
     </div>
 {% endblock %}
 
