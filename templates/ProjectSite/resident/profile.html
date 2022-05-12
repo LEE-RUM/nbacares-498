@@ -177,6 +177,7 @@
         unregisterEvent(event_id, unregister_page)
     })
 
+    // When clicking on the unregister button for an event, call ajax request and modify data on backend 
     function unregisterEvent(event_id, unregister_page) {
         $.ajax({
             type: "GET",
@@ -201,6 +202,7 @@
         });
     }
 
+    // Whenever user clicked on the NEXT (>) page button or PREV (>) page button, start an ajax request to get events for that specific page
     function changePage(page, type, scrollToTop=true) {
         $.ajax({
             type: "GET",
@@ -229,6 +231,7 @@
         });
     }
 
+    // with event data query from the database, render these data in a easy-to-read cards.
     function renderEventContainer(data, type) {
         let html = ''
         // event cards
@@ -262,6 +265,8 @@
         else 
             $("#upcoming-event-cards").html(html)
     }
+
+    // a helper funtion that create a html register button; (easier to read code)
     const createUnregisterBtn = (data, type, id) => {
         html = '';
         if (type === "upcoming") {
@@ -286,9 +291,11 @@
         return html;
     }
     
+    // disable the button for the category that is not displaying, and activate the button for the category that is currently displaying
+    // update current page number for later ajax query specific page events.  
     function renderButtons(data, type) {
         if (type === "past") {
-            $("#past-prev-page-num").val(data.previous_page_number)
+            $("#past-prev-page-num").val(data.previous_page_number) 
             $("#past-prev-btn").prop('disabled', !data.has_previous)
             $("#past-next-page-num").val(data.next_page_number)
             $("#past-next-btn").prop('disabled', !data.has_next)
